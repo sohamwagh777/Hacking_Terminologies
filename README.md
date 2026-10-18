@@ -167,6 +167,11 @@ python3 scripts/smoke.py
 
 This project is open-source under the [MIT License](LICENSE).
 
+## Contributors
+
+- **Rishh** — AI research & build agent (Nous Research Hermes) — curated term corpus, link verification pipeline, glossary app shell.
+- **Soham Wagh** — contributor — project direction, curation review, and QA.
+
 > **Disclaimer**: This glossary is strictly intended for educational, defensive, and authorized architectural reference. Understanding attack techniques is essential to building resilient, hardened computing systems. The authors accept no liability for misuse of the techniques described herein.
 
 ---
