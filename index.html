@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LEXICON — Cyber & Systems Security Glossary</title>
+  <meta name="description" content="An interactive, self-contained constellation glossary of 198 cybersecurity, systems architecture, and backend engineering terms.">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Styles -->
+  <link rel="stylesheet" href="./styles/main.css">
+  <link rel="stylesheet" href="./styles/atlas.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+</head>
+<body>
+
+  <!-- Top App Navigation Header -->
+  <header class="lexicon-header">
+    <div class="brand-section">
+      <a href="#/atlas" class="brand-logo" id="brand-home-link">
+        <span>🛡️</span> LEXICON
+      </a>
+      <span class="brand-tagline">CYBER &amp; SYSTEMS SECURITY GLOSSARY</span>
+    </div>
+
+    <!-- View Switcher Tabs -->
+    <nav class="view-tabs" aria-label="Views">
+      <button class="tab-btn active" id="tab-atlas" data-view="atlas">
+        <span>⚛</span> ATLAS
+      </button>
+      <button class="tab-btn" id="tab-index" data-view="index">
+        <span>🔤</span> INDEX (A-Z)
+      </button>
+      <button class="tab-btn" id="tab-paths" data-view="paths">
+        <span>🛤️</span> PATHS
+      </button>
+    </nav>
+
+    <!-- Search & Toolbar -->
+    <div class="toolbar-section">
+      <div class="search-box-wrapper">
+        <input 
+          type="search" 
+          id="global-search-input" 
+          class="search-input" 
+          placeholder="Search 198 terms..." 
+          autocomplete="off" 
+          spellcheck="false"
+          aria-label="Search glossary terms"
+        />
+        <span class="search-shortcut-hint">/</span>
+      </div>
+
+      <select id="category-filter-select" class="category-filter-select" aria-label="Filter by domain">
+        <option value="all">All Domains (10)</option>
+      </select>
+
+      <span id="search-results-count" class="count-badge">198 terms</span>
+    </div>
+  </header>
+
+  <!-- Main Viewports Container -->
+  <main class="app-container">
+
+    <!-- VIEW 1: ATLAS (Interactive Constellation Force Graph) -->
+    <section id="atlas-view" class="view-container active" aria-label="Atlas Constellation View">
+      <div id="atlas-container">
+        <canvas id="atlas-canvas"></canvas>
+
+        <div class="atlas-status-badge">
+          <span class="live-dot"></span>
+          <span>198 NODES • 594 FILAMENTS • 10 DOMAINS</span>
+        </div>
+
+        <div class="atlas-hud-controls">
+          <button id="atlas-zoom-in" class="hud-btn" title="Zoom In">+</button>
+          <button id="atlas-zoom-out" class="hud-btn" title="Zoom Out">−</button>
+          <button id="atlas-reset-view" class="hud-btn" title="Reset View">⊙</button>
+        </div>
+
+        <div id="atlas-legend-bar" class="atlas-legend-bar">
+          <!-- Dynamically populated category legend chips -->
+        </div>
+
+        <div id="atlas-tooltip" class="atlas-tooltip"></div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: INDEX (Alphabetical A-Z Catalog with Letter Rail) -->
+    <section id="index-view" class="view-container" aria-label="A to Z Index View">
+      <div class="index-layout">
+        <nav class="letter-rail" id="index-letter-rail" aria-label="Alphabetical jump rail">
+          <!-- Letters A-Z dynamically injected -->
+        </nav>
+        <div class="index-content" id="index-terms-container">
+          <!-- Alphabetical groups dynamically injected -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: PATHS (Category Domain Rail with Immersive Washes) -->
+    <section id="paths-view" class="view-container" aria-label="Curated Domain Paths View">
+      <div class="paths-layout">
+        <aside class="paths-sidebar" id="paths-sidebar" aria-label="Category Selection Rail">
+          <!-- Category buttons dynamically injected -->
+        </aside>
+        <div class="paths-main" id="paths-main-content">
+          <header class="paths-header-banner" id="paths-banner">
+            <h2 class="paths-domain-title" id="paths-active-title">Domain</h2>
+            <p class="paths-domain-desc" id="paths-active-desc">Domain description...</p>
+          </header>
+          <div class="paths-grid" id="paths-grid">
+            <!-- Term cards for selected category injected -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Slide-Over Detail Panel & Mobile Bottom Sheet -->
+  <div id="panel-backdrop" class="panel-backdrop"></div>
+  <aside id="detail-panel" class="detail-panel" aria-hidden="true">
+    <div class="panel-toolbar">
+      <div id="detail-breadcrumbs" class="detail-breadcrumbs">
+        <!-- Breadcrumbs injected -->
+      </div>
+      <button id="detail-close-btn" class="detail-close-btn" title="Close Panel (Esc)">
+        ESC ✕
+      </button>
+    </div>
+    <div class="detail-scroll-body" id="detail-content">
+      <!-- Term details dynamically rendered here -->
+    </div>
+  </aside>
+
+  <!-- Application Bootstrap -->
+  <script type="module">
+    import { loadTerms, getAllTerms, getCategoryMeta, CATEGORY_META, getTermsByCategory } from './scripts/data-loader.js';
+    import { initAtlasGraph, filterGraph } from './scripts/atlas-graph.js';
+    import { initDetailPanel, openTermDetail } from './scripts/detail.js';
+    import { initSearch, onSearchChange, getCurrentResults } from './scripts/search.js';
+    import { initRouter, onViewChange, navigateToView, getActiveView } from './scripts/router.js';
+
+    let currentSelectedCategory = 'web-exploitation';
+
+    async function init() {
+      // 1. Fetch & Index Data
+      await loadTerms();
+
+      // 2. Initialize Controllers
+      initDetailPanel();
+      initSearch();
+      initAtlasGraph();
+
+      // 3. Render View Structures
+      renderAtlasLegend();
+      renderIndexView(getAllTerms());
+      renderPathsSidebar();
+      renderPathsContent(currentSelectedCategory);
+
+      // 4. Setup Tab Switching Listeners
+      setupTabButtons();
+
+      // 5. Connect Search & Filters
+      onSearchChange(({ results }) => {
+        filterGraph(results);
+        renderIndexView(results);
+        if (getActiveView() === 'paths') {
+          renderPathsContent(currentSelectedCategory, results);
+        }
+      });
+
+      // 6. Connect Router
+      onViewChange(({ view, category, termId }) => {
+        switchView(view);
+        if (category && CATEGORY_META[category]) {
+          currentSelectedCategory = category;
+          renderPathsContent(category);
+        }
+      });
+
+      initRouter();
+    }
+
+    function setupTabButtons() {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const view = btn.getAttribute('data-view');
+          navigateToView(view);
+        });
+      });
+    }
+
+    function switchView(viewName) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-view') === viewName);
+      });
+
+      document.querySelectorAll('.view-container').forEach(view => {
+        view.classList.toggle('active', view.id === `${viewName}-view`);
+      });
+
+      if (viewName === 'paths') {
+        renderPathsContent(currentSelectedCategory);
+      }
+    }
+
+    function renderAtlasLegend() {
+      const legendBar = document.getElementById('atlas-legend-bar');
+      if (!legendBar) return;
+      legendBar.innerHTML = '';
+
+      for (const [key, meta] of Object.entries(CATEGORY_META)) {
+        const chip = document.createElement('button');
+        chip.className = 'legend-chip';
+        chip.innerHTML = `<span class="legend-color-dot" style="background: ${meta.color}; box-shadow: 0 0 6px ${meta.color};"></span> ${meta.name}`;
+        chip.title = `View ${meta.name} domain`;
+        chip.addEventListener('click', () => {
+          navigateToView('paths');
+          currentSelectedCategory = key;
+          renderPathsContent(key);
+        });
+        legendBar.appendChild(chip);
+      }
+    }
+
+    function renderIndexView(termList) {
+      const container = document.getElementById('index-terms-container');
+      const rail = document.getElementById('index-letter-rail');
+      if (!container || !rail) return;
+
+      container.innerHTML = '';
+      rail.innerHTML = '';
+
+      if (!termList || !termList.length) {
+        container.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--text-secondary);">No terms matched your search filter.</div>';
+        return;
+      }
+
+      // Group terms by first character
+      const groups = new Map();
+      termList.forEach(term => {
+        const first = term.name.charAt(0).toUpperCase();
+        const letter = (first >= '0' && first <= '9') ? '#' : first;
+        if (!groups.has(letter)) groups.set(letter, []);
+        groups.get(letter).push(term);
+      });
+
+      const sortedLetters = Array.from(groups.keys()).sort();
+
+      sortedLetters.forEach(letter => {
+        // Rail link
+        const railLink = document.createElement('a');
+        railLink.className = 'letter-link';
+        railLink.href = `#group-${letter === '#' ? 'num' : letter}`;
+        railLink.textContent = letter;
+        rail.appendChild(railLink);
+
+        // Group container
+        const grpDiv = document.createElement('div');
+        grpDiv.className = 'letter-group';
+        grpDiv.id = `group-${letter === '#' ? 'num' : letter}`;
+
+        const grpTerms = groups.get(letter);
+        grpDiv.innerHTML = `
+          <div class="letter-heading">
+            <span>${letter}</span>
+            <span class="letter-heading-count">${grpTerms.length} terms</span>
+          </div>
+          <div class="letter-group-items"></div>
+        `;
+
+        const itemsDiv = grpDiv.querySelector('.letter-group-items');
+
+        grpTerms.sort((a, b) => a.name.localeCompare(b.name)).forEach(term => {
+          const meta = getCategoryMeta(term.category);
+          const row = document.createElement('div');
+          row.className = 'term-card-row';
+          row.innerHTML = `
+            <div class="term-card-header">
+              <span class="term-card-title">${term.name}</span>
+              <div class="term-card-meta">
+                <span class="category-pill" style="border-color: ${meta.color}; color: ${meta.color}; background: ${meta.glow};">
+                  ${meta.icon} ${meta.name}
+                </span>
+                <span class="difficulty-pill diff-${term.difficulty.toLowerCase()}">
+                  ${term.difficulty.toUpperCase()}
+                </span>
+              </div>
+            </div>
+            <p class="term-card-summary">${term.definition}</p>
+          `;
+          row.addEventListener('click', () => {
+            openTermDetail(term.id, true);
+          });
+          itemsDiv.appendChild(row);
+        });
+
+        container.appendChild(grpDiv);
+      });
+    }
+
+    function renderPathsSidebar() {
+      const sidebar = document.getElementById('paths-sidebar');
+      if (!sidebar) return;
+      sidebar.innerHTML = '';
+
+      for (const [key, meta] of Object.entries(CATEGORY_META)) {
+        const count = getTermsByCategory(key).length;
+        const btn = document.createElement('button');
+        btn.className = `category-tab-btn ${key === currentSelectedCategory ? 'active' : ''}`;
+        btn.style.setProperty('--category-color', meta.color);
+        btn.style.setProperty('--category-glow', meta.glow);
+        btn.setAttribute('data-category', key);
+
+        btn.innerHTML = `
+          <span class="category-tab-title">
+            <span>${meta.icon}</span>
+            <span>${meta.name}</span>
+          </span>
+          <span class="category-tab-count">${count}</span>
+        `;
+
+        btn.addEventListener('click', () => {
+          currentSelectedCategory = key;
+          document.querySelectorAll('.category-tab-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-category') === key);
+          });
+          renderPathsContent(key);
+        });
+
+        sidebar.appendChild(btn);
+      }
+    }
+
+    function renderPathsContent(catKey, filteredList = null) {
+      const meta = getCategoryMeta(catKey);
+      const titleEl = document.getElementById('paths-active-title');
+      const descEl = document.getElementById('paths-active-desc');
+      const mainEl = document.getElementById('paths-main-content');
+      const grid = document.getElementById('paths-grid');
+
+      if (!grid) return;
+
+      if (titleEl) {
+        titleEl.innerHTML = `<span style="color: ${meta.color};">${meta.icon}</span> ${meta.name}`;
+      }
+      if (descEl) {
+        descEl.textContent = meta.description;
+      }
+      if (mainEl) {
+        mainEl.style.background = meta.wash;
+      }
+
+      grid.innerHTML = '';
+
+      let list = getTermsByCategory(catKey);
+      if (filteredList) {
+        const filterSet = new Set(filteredList.map(t => t.id));
+        list = list.filter(t => filterSet.has(t.id));
+      }
+
+      if (!list.length) {
+        grid.innerHTML = '<div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: var(--text-secondary);">No terms found matching current search filter in this domain.</div>';
+        return;
+      }
+
+      list.forEach(term => {
+        const card = document.createElement('div');
+        card.className = 'paths-term-card';
+        card.style.setProperty('--category-color', meta.color);
+        card.style.setProperty('--category-glow', meta.glow);
+
+        card.innerHTML = `
+          <div>
+            <div class="badge-row">
+              <span class="difficulty-pill diff-${term.difficulty.toLowerCase()}">
+                ${term.difficulty.toUpperCase()}
+              </span>
+              <span class="nature-badge nature-${term.nature.split(/\s+/)[0].toLowerCase()}">
+                ${term.nature.toUpperCase()}
+              </span>
+            </div>
+            <h3 class="paths-card-name">${term.name}</h3>
+            <p class="paths-card-def">${term.definition}</p>
+          </div>
+          <div class="paths-card-footer">
+            <span>${term.related.length} related links</span>
+            <span style="color: ${meta.color}; font-weight: 700;">Explore →</span>
+          </div>
+        `;
+
+        card.addEventListener('click', () => {
+          openTermDetail(term.id, true);
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    // Launch Application
+    init().catch(err => {
+      console.error('LEXICON bootstrap error:', err);
+    });
+  </script>
+</body>
+</html>
