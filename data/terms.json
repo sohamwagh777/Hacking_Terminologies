@@ -1269,8 +1269,8 @@
         "url": "https://www.postgresql.org/docs/current/explicit-locking.html#LOCKING-DEADLOCKS"
       },
       {
-        "title": "MySQL Documentation: Deadlocks in InnoDB",
-        "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-deadlock-handling.html"
+        "title": "MariaDB Knowledge Base: InnoDB Deadlock Handling",
+        "url": "https://mariadb.com/kb/en/innodb-deadlock-handling/"
       }
     ]
   },
@@ -1644,8 +1644,8 @@
         "url": "https://www.postgresql.org/docs/current/ddl-partitioning.html"
       },
       {
-        "title": "MySQL Documentation: Partitioning Overview",
-        "url": "https://dev.mysql.com/doc/refman/8.4/en/partitioning-types.html"
+        "title": "MariaDB Knowledge Base: Partitioning Overview",
+        "url": "https://mariadb.com/kb/en/partitioning/"
       }
     ]
   },
@@ -4145,7 +4145,7 @@
       },
       {
         "title": "Node.js Memory Leak Diagnostic Guide",
-        "url": "https://nodejs.org/en/learn/diagnostics/memory/using-heap-snapshot"
+        "url": "https://nodejs.org/learn/diagnostics/memory/using-heap-snapshot"
       }
     ]
   },
@@ -4265,8 +4265,8 @@
     ],
     "links": [
       {
-        "title": "W3C Trace Context Recommendation",
-        "url": "https://www.w3.org/TR/trace-context/"
+        "title": "W3C: Trace Context",
+        "url": "https://w3c.github.io/trace-context/"
       },
       {
         "title": "OpenTelemetry Documentation: Traces",
@@ -4319,8 +4319,8 @@
         "url": "https://www.enterpriseintegrationpatterns.com/patterns/messaging/CorrelationIdentifier.html"
       },
       {
-        "title": "W3C Trace Context Specification",
-        "url": "https://www.w3.org/TR/trace-context/"
+        "title": "W3C: Trace Context",
+        "url": "https://w3c.github.io/trace-context/"
       }
     ]
   },

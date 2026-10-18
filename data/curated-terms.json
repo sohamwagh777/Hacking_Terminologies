@@ -1167,7 +1167,7 @@
         "url": "https://www.postgresql.org/docs/current/explicit-locking.html#LOCKING-DEADLOCKS"
       },
       {
-        "title": "MySQL Documentation: Deadlocks in InnoDB",
+        "title": "MySQL 9.7 Reference Manual: Deadlocks in InnoDB (anti-bot 403 for scripted fetch; renders in browsers)",
         "url": "https://dev.mysql.com/doc/refman/en/innodb-deadlocks.html"
       }
     ]
@@ -1512,7 +1512,7 @@
         "url": "https://www.postgresql.org/docs/current/ddl-partitioning.html"
       },
       {
-        "title": "MySQL Documentation: Partitioning Overview",
+        "title": "MySQL 9.7 Reference Manual: Partitioning (anti-bot 403 for scripted fetch; renders in browsers)",
         "url": "https://dev.mysql.com/doc/refman/en/partitioning.html"
       }
     ]
@@ -3813,7 +3813,7 @@
       },
       {
         "title": "Node.js Memory Leak Diagnostic Guide",
-        "url": "https://nodejs.org/en/learn/diagnostics/memory/using-heap-snapshot"
+        "url": "https://nodejs.org/learn/diagnostics/memory/using-heap-snapshot"
       }
     ]
   },
@@ -3923,8 +3923,8 @@
     ],
     "links": [
       {
-        "title": "W3C Trace Context Recommendation",
-        "url": "https://www.w3.org/TR/trace-context/"
+        "title": "W3C: Trace Context",
+        "url": "https://w3c.github.io/trace-context/"
       },
       {
         "title": "OpenTelemetry Documentation: Traces",
@@ -3973,8 +3973,8 @@
         "url": "https://www.enterpriseintegrationpatterns.com/patterns/messaging/CorrelationIdentifier.html"
       },
       {
-        "title": "W3C Trace Context Specification",
-        "url": "https://www.w3.org/TR/trace-context/"
+        "title": "W3C: Trace Context",
+        "url": "https://w3c.github.io/trace-context/"
       }
     ]
   },
@@ -4548,8 +4548,8 @@
         "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches"
       },
       {
-        "title": "GitLab Documentation: Protected Branches",
-        "url": "https://docs.gitlab.com/ee/user/project/protected_branches.html"
+        "title": "GitLab Docs: Protected branches",
+        "url": "https://docs.gitlab.com/user/project/repository/branches/protected/"
       }
     ]
   }
