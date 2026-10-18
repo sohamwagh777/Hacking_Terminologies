@@ -142,11 +142,11 @@
 
   <!-- Application Bootstrap -->
   <script type="module">
-    import { loadTerms, getAllTerms, getCategoryMeta, CATEGORY_META, getTermsByCategory } from './scripts/data-loader.js';
-    import { initAtlasGraph, filterGraph } from './scripts/atlas-graph.js';
-    import { initDetailPanel, openTermDetail } from './scripts/detail.js';
-    import { initSearch, onSearchChange, getCurrentResults } from './scripts/search.js';
-    import { initRouter, onViewChange, navigateToView, getActiveView } from './scripts/router.js';
+    import { loadTerms, getAllTerms, getCategoryMeta, CATEGORY_META, getTermsByCategory } from './scripts/vendor/data-loader.js';
+    import { initAtlasGraph, filterGraph } from './scripts/vendor/atlas-graph.js';
+    import { initDetailPanel, openTermDetail } from './scripts/vendor/detail.js';
+    import { initSearch, onSearchChange, getCurrentResults } from './scripts/vendor/search.js';
+    import { initRouter, onViewChange, navigateToView, getActiveView } from './scripts/vendor/router.js';
 
     let currentSelectedCategory = 'web-exploitation';
 

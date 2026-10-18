@@ -22,11 +22,11 @@ def check_smoke():
         "index.html",
         "styles/main.css",
         "styles/atlas.css",
-        "scripts/data-loader.js",
-        "scripts/atlas-graph.js",
-        "scripts/detail.js",
-        "scripts/search.js",
-        "scripts/router.js",
+        "scripts/vendor/data-loader.js",
+        "scripts/vendor/atlas-graph.js",
+        "scripts/vendor/detail.js",
+        "scripts/vendor/search.js",
+        "scripts/vendor/router.js",
         "data/terms.json",
         "Terminology.txt"
     ]

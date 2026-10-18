@@ -1270,7 +1270,7 @@
       },
       {
         "title": "MySQL Documentation: Deadlocks in InnoDB",
-        "url": "https://dev.mysql.com/doc/refman/en/innodb-deadlocks.html"
+        "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-deadlock-handling.html"
       }
     ]
   },
@@ -1645,7 +1645,7 @@
       },
       {
         "title": "MySQL Documentation: Partitioning Overview",
-        "url": "https://dev.mysql.com/doc/refman/en/partitioning.html"
+        "url": "https://dev.mysql.com/doc/refman/8.4/en/partitioning-types.html"
       }
     ]
   },
@@ -4945,7 +4945,7 @@
       },
       {
         "title": "GitLab Documentation: Protected Branches",
-        "url": "https://docs.gitlab.com/ee/user/project/protected_branches.html"
+        "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches"
       }
     ]
   }
