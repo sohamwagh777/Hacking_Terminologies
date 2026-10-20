@@ -311,6 +311,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "sql-injection",
     "name": "SQL Injection",
+    "symbol": "SQLi",
+    "essence": "Untrusted input alters database queries to leak data or run commands.",
     "category": "web-exploitation",
     "difficulty": "beginner",
     "nature": "attack technique",
@@ -336,6 +338,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "xss",
     "name": "XSS",
+    "symbol": "XSS",
+    "essence": "Malicious scripts injected into trusted web pages execute in victim browsers.",
     "category": "web-exploitation",
     "difficulty": "beginner",
     "nature": "attack technique",
@@ -361,6 +365,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "csrf",
     "name": "CSRF",
+    "symbol": "CSRF",
+    "essence": "Tricked browser makes authenticated requests you didn't approve.",
     "category": "web-exploitation",
     "difficulty": "intermediate",
     "nature": "attack technique",
@@ -386,6 +392,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cors",
     "name": "CORS",
+    "symbol": "CORS",
+    "essence": "Browser header rules controlling cross-domain API access from client scripts.",
     "category": "http-networking",
     "difficulty": "intermediate",
     "nature": "defense concept",
@@ -411,6 +419,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "ssrf",
     "name": "SSRF",
+    "symbol": "SSRF",
+    "essence": "Flawed server fetches attacker-chosen URLs to access internal network resources.",
     "category": "web-exploitation",
     "difficulty": "advanced",
     "nature": "attack technique",
@@ -436,6 +446,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "idor",
     "name": "IDOR",
+    "symbol": "IDOR",
+    "essence": "Missing authorization check lets users view or alter records via predictable IDs.",
     "category": "auth-access",
     "difficulty": "intermediate",
     "nature": "attack concept",
@@ -461,10 +473,12 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "path-traversal",
     "name": "Path Traversal",
+    "symbol": "TRAV",
+    "essence": "Manipulating file paths with dot-dot-slash to read restricted server files.",
     "category": "web-exploitation",
     "difficulty": "intermediate",
     "nature": "attack technique",
-    "definition": "Path Traversal (also known as Directory Traversal or dot-dot-slash) involves manipulating variables referencing file paths with dot-dot-slash sequences to step out of the restricted root directory. Attackers access arbitrary files on the host filesystem, such as configuration files, source code, or password files. Defensive mitigations include canonicaliz\u0069ng paths and validating against a strict allowlist.",
+    "definition": "Path Traversal (also known as Directory Traversal or dot-dot-slash) involves manipulating variables referencing file paths with dot-dot-slash sequences to step out of the restricted root directory. Attackers access arbitrary files on the host filesystem, such as configuration files, source code, or password files. Defensive mitigations include canonicalizing paths and validating against a strict allowlist.",
     "why_matters": "Exposes sensitive system and application files, such as /etc/passwd or application secrets (.env), often escalating to full remote code execution if upload directories are accessible. It represents a classic CWE-22 flaw commonly found in web servers and CMS plugins.",
     "example": "GET /download?file=../../../../etc/passwd HTTP/1.1\nHost: vulnerable.example.com",
     "related": [
@@ -486,6 +500,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "mass-assignment",
     "name": "Mass Assignment",
+    "symbol": "MASGN",
+    "essence": "Unfiltered request payloads bind directly to internal models, elevating privilege.",
     "category": "web-exploitation",
     "difficulty": "intermediate",
     "nature": "attack concept",
@@ -511,6 +527,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "clickjacking",
     "name": "Clickjacking",
+    "symbol": "CLKJK",
+    "essence": "Invisible overlays trick users into clicking buttons they did not intend to click.",
     "category": "web-exploitation",
     "difficulty": "intermediate",
     "nature": "attack technique",
@@ -536,6 +554,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "content-security-policy",
     "name": "Content Security Policy",
+    "symbol": "CSP",
+    "essence": "HTTP header restricting which scripts, styles, and origins a browser may execute.",
     "category": "web-exploitation",
     "difficulty": "intermediate",
     "nature": "defense tooling",
@@ -561,6 +581,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "security-headers",
     "name": "Security Headers",
+    "symbol": "SECHDR",
+    "essence": "HTTP response headers that harden browsers against sniffing, clickjacking, and XSS.",
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -586,6 +608,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "input-validation",
     "name": "Input Validation",
+    "symbol": "INPVAL",
+    "essence": "Strict incoming data checks that block malformed payloads before execution.",
     "category": "secure-sdlc",
     "difficulty": "beginner",
     "nature": "defense concept",
@@ -611,6 +635,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "server-side-authorization",
     "name": "Server-Side Authorization",
+    "symbol": "SSAUTH",
+    "essence": "Enforces permissions on the server regardless of client-side UI manipulation.",
     "category": "auth-access",
     "difficulty": "intermediate",
     "nature": "defense concept",
@@ -636,6 +662,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "row-level-security",
     "name": "Row-Level Security",
+    "symbol": "RLS",
+    "essence": "Database engine filters table rows returned based on current user context.",
     "category": "data-databases",
     "difficulty": "advanced",
     "nature": "defense tooling",
@@ -661,6 +689,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "least-privilege",
     "name": "Least Privilege",
+    "symbol": "PoLP",
+    "essence": "Grants users and services only the bare minimum permissions needed to operate.",
     "category": "auth-access",
     "difficulty": "beginner",
     "nature": "defense concept",
@@ -686,6 +716,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "rbac",
     "name": "RBAC",
+    "symbol": "RBAC",
+    "essence": "Access permissions mapped to user roles rather than individual accounts.",
     "category": "auth-access",
     "difficulty": "intermediate",
     "nature": "defense concept",
@@ -711,6 +743,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "secrets-management",
     "name": "Secrets Management",
+    "symbol": "SECMGT",
+    "essence": "Secure centralized storage, rotation, and auditing for API keys and credentials.",
     "category": "crypto-identity",
     "difficulty": "intermediate",
     "nature": "defense tooling",
@@ -736,6 +770,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "env-in-gitignore",
     "name": ".env in .gitignore",
+    "symbol": "ENVIGN",
+    "essence": "Prevents accidental commits of local secrets and API keys to git repositories.",
     "category": "secure-sdlc",
     "difficulty": "beginner",
     "nature": "defense technique",
@@ -761,6 +797,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "api-key-rotation",
     "name": "API Key Rotation",
+    "symbol": "KEYROT",
+    "essence": "Scheduled invalidation and replacement of active API credentials to limit leaks.",
     "category": "crypto-identity",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -786,6 +824,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "secret-scanning",
     "name": "Secret Scanning",
+    "symbol": "SECSCN",
+    "essence": "Automated scanner detecting exposed tokens and keys in commits and pull requests.",
     "category": "secure-sdlc",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -811,6 +851,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "hashing-vs-encryption",
     "name": "Hashing vs Encryption",
+    "symbol": "HSH-ENC",
+    "essence": "One-way irreversible transforms for passwords versus reversible ciphertexts.",
     "category": "crypto-identity",
     "difficulty": "beginner",
     "nature": "concept",
@@ -836,10 +878,12 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "password-salting",
     "name": "Password Salting",
+    "symbol": "SALT",
+    "essence": "Random byte prefix added to passwords before hashing to defeat rainbow tables.",
     "category": "crypto-identity",
     "difficulty": "beginner",
     "nature": "defense technique",
-    "definition": "Password Salting is the security technique of appending a unique, cryptographically random byte sequence (the salt) to a plaintext password before passing it through a password hashing function. The salt is stored alongside the resulting hash in the database. Salting ensures that identical user passwords yield distinct hashes, completely neutraliz\u0069ng precomputed dictionary lookups and rainbow table attacks.",
+    "definition": "Password Salting is the security technique of appending a unique, cryptographically random byte sequence (the salt) to a plaintext password before passing it through a password hashing function. The salt is stored alongside the resulting hash in the database. Salting ensures that identical user passwords yield distinct hashes, completely neutralizing precomputed dictionary lookups and rainbow table attacks.",
     "why_matters": "Without unique salts per user, an attacker with a leaked hash database can compute a single rainbow table or reverse hash lookups across thousands of users simultaneously. Salting forces the attacker to crack each password hash individually.",
     "example": "import secrets, hashlib\n\n# Generate random 16-byte salt per user\nsalt = secrets.token_bytes(16)\npassword = b\"CorrectHorseBatteryStaple\"\n# Hash with salt using slow key derivation (PBKDF2-HMAC-SHA256)\nderived_hash = hashlib.pbkdf2_hmac('sha256', password, salt, 600000).hex()",
     "related": [
@@ -861,6 +905,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "bcrypt-and-argon2",
     "name": "bcrypt & Argon2",
+    "symbol": "BCRYPT",
+    "essence": "Memory-hard, slow hashing algorithms designed to resist GPU-based cracking.",
     "category": "crypto-identity",
     "difficulty": "intermediate",
     "nature": "defense tooling",
@@ -886,6 +932,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "jwt-expiry",
     "name": "JWT Expiry",
+    "symbol": "JWT",
+    "essence": "Strict token lifetime limits window of opportunity if a bearer token is stolen.",
     "category": "auth-access",
     "difficulty": "intermediate",
     "nature": "defense concept",
@@ -911,6 +959,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "refresh-tokens",
     "name": "Refresh Tokens",
+    "symbol": "RT",
+    "essence": "Long-lived credentials used to exchange for short-lived access tokens safely.",
     "category": "auth-access",
     "difficulty": "intermediate",
     "nature": "defense concept",
@@ -936,6 +986,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "oauth-2-0",
     "name": "OAuth 2.0",
+    "symbol": "OAUTH2",
+    "essence": "Delegated authorization standard letting third-party apps access APIs securely.",
     "category": "auth-access",
     "difficulty": "intermediate",
     "nature": "concept defense",
@@ -961,6 +1013,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "openid-connect",
     "name": "OpenID Connect",
+    "symbol": "OIDC",
+    "essence": "Identity authentication layer built on OAuth 2.0 issuing signed identity tokens.",
     "category": "auth-access",
     "difficulty": "intermediate",
     "nature": "defense concept",
@@ -986,6 +1040,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "session-fixation",
     "name": "Session Fixation",
+    "symbol": "SESSFIX",
+    "essence": "Attacker forces a known session ID onto a victim before authentication.",
     "category": "auth-access",
     "difficulty": "intermediate",
     "nature": "attack technique",
@@ -1011,6 +1067,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "mfa",
     "name": "MFA",
+    "symbol": "MFA",
+    "essence": "Requires two or more distinct verification factors to authenticate an identity.",
     "category": "auth-access",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -1036,6 +1094,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "brute-force-protection",
     "name": "Brute Force Protection",
+    "symbol": "ANTI-BF",
+    "essence": "Rate limiting and lockouts preventing automated credential guessing attempts.",
     "category": "auth-access",
     "difficulty": "beginner",
     "nature": "defense technique",
@@ -1061,6 +1121,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "account-enumeration",
     "name": "Account Enumeration",
+    "symbol": "ACCENUM",
+    "essence": "Probing login or reset forms to discover valid usernames via leaked error cues.",
     "category": "auth-access",
     "difficulty": "intermediate",
     "nature": "attack technique",
@@ -1086,6 +1148,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "timing-attacks",
     "name": "Timing Attacks",
+    "symbol": "TIMING",
+    "essence": "Extracting secret data by measuring subtle microsecond response-time variances.",
     "category": "crypto-identity",
     "difficulty": "advanced",
     "nature": "attack technique",
@@ -1111,6 +1175,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "file-upload-validation",
     "name": "File Upload Validation",
+    "symbol": "FILEVAL",
+    "essence": "Verifying file types, magic bytes, and sizes to block malicious web shell uploads.",
     "category": "web-exploitation",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -1136,6 +1202,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "webhook-signature-verification",
     "name": "Webhook Signature Verification",
+    "symbol": "WHSIG",
+    "essence": "Validates HMAC signatures so fake webhooks cannot trigger unauthorized actions.",
     "category": "crypto-identity",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -1161,6 +1229,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "tls-certificate-expiry",
     "name": "TLS Certificate Expiry",
+    "symbol": "TLS-EXP",
+    "essence": "Expired TLS certificates trigger browser security warnings and full site outages.",
     "category": "crypto-identity",
     "difficulty": "beginner",
     "nature": "concept defense",
@@ -1186,6 +1256,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "hsts",
     "name": "HSTS",
+    "symbol": "HSTS",
+    "essence": "Header forcing browsers to use secure HTTPS connections and reject plain HTTP.",
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -1211,6 +1283,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "encryption-at-rest",
     "name": "Encryption at Rest",
+    "symbol": "EAR",
+    "essence": "Cryptographically protects stored disk volumes and databases from physical theft.",
     "category": "crypto-identity",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -1236,6 +1310,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "dependency-vulnerabilities",
     "name": "Dependency Vulnerabilities",
+    "symbol": "DEPVULN",
+    "essence": "Flaws in third-party packages that expose your application to external exploits.",
     "category": "secure-sdlc",
     "difficulty": "beginner",
     "nature": "attack defense",
@@ -1261,6 +1337,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "supply-chain-attacks",
     "name": "Supply Chain Attacks",
+    "symbol": "SCA",
+    "essence": "Compromising dependencies or build systems to inject backdoors into software.",
     "category": "secure-sdlc",
     "difficulty": "advanced",
     "nature": "attack technique",
@@ -1286,10 +1364,12 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "threat-modeling",
     "name": "Threat Modeling",
+    "symbol": "THREAT",
+    "essence": "Structured process to identify architectural security flaws before writing code.",
     "category": "secure-sdlc",
     "difficulty": "intermediate",
     "nature": "defense concept",
-    "definition": "Threat Modeling is a structured engineering process for identifying, analyz\u0069ng, and prioritiz\u0069ng potential architectural security threats and attack vectors before and during system development. Popular frameworks include STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) and PASTA. It maps trust boundaries, data flows, and assets to design proportional defensive mitigations.",
+    "definition": "Threat Modeling is a structured engineering process for identifying, analyzing, and prioritizing potential architectural security threats and attack vectors before and during system development. Popular frameworks include STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) and PASTA. It maps trust boundaries, data flows, and assets to design proportional defensive mitigations.",
     "why_matters": "Remediating an architectural flaw during design is orders of magnitude cheaper than fixing an exploitable vulnerability in production. It ensures engineering teams systematically address attack surfaces rather than applying reactive patches.",
     "example": "# STRIDE Threat Model definition (YAML)\ncomponent: \"PasswordResetService\"\nthreats:\n  - type: \"Spoofing\"\n    description: \"Attacker requests reset token for victim email\"\n    mitigation: \"Generate single-use cryptographically random token sent via email\"\n  - type: \"Tampering\"\n    description: \"Token manipulation in transit\"\n    mitigation: \"Enforce HTTPS and sign token with HMAC-SHA256\" ",
     "related": [
@@ -1311,6 +1391,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "indexes",
     "name": "Indexes",
+    "symbol": "INDEX",
+    "essence": "B-Tree data structures that speed up query lookups by avoiding full table scans.",
     "category": "data-databases",
     "difficulty": "beginner",
     "nature": "technique concept",
@@ -1336,6 +1418,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "explain-analyze",
     "name": "EXPLAIN ANALYZE",
+    "symbol": "EXPLAIN",
+    "essence": "SQL profiling command revealing query execution plans and real row runtimes.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "tooling technique",
@@ -1361,6 +1445,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "n-plus-1-queries",
     "name": "N+1 Queries",
+    "symbol": "N+1",
+    "essence": "ORM execution antipattern issuing one query for a list and N queries for children.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -1386,6 +1472,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "full-table-scans",
     "name": "Full Table Scans",
+    "symbol": "SEQSCAN",
+    "essence": "Reading every page of a table sequentially because no usable index exists.",
     "category": "data-databases",
     "difficulty": "beginner",
     "nature": "concept",
@@ -1411,6 +1499,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "connection-pooling",
     "name": "Connection Pooling",
+    "symbol": "CPOOL",
+    "essence": "Reuses pre-established database connections to avoid handshake and fork overhead.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "technique tooling",
@@ -1436,6 +1526,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "database-migrations",
     "name": "Database Migrations",
+    "symbol": "MIGRATE",
+    "essence": "Version-controlled, reversible scripts that track and evolve database schemas.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "tooling technique",
@@ -1461,6 +1553,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "down-migrations",
     "name": "Down Migrations",
+    "symbol": "DOWNMIG",
+    "essence": "Rollback scripts that undo schema changes if a deployment or migration fails.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "technique defense",
@@ -1486,6 +1580,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "transactions",
     "name": "Transactions",
+    "symbol": "TX",
+    "essence": "Groups multiple database operations into an all-or-nothing atomic unit of work.",
     "category": "data-databases",
     "difficulty": "beginner",
     "nature": "concept",
@@ -1511,6 +1607,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "acid",
     "name": "ACID",
+    "symbol": "ACID",
+    "essence": "Guarantees atomicity, consistency, isolation, and durability for database transactions.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -1536,6 +1634,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "isolation-levels",
     "name": "Isolation Levels",
+    "symbol": "ISOLVL",
+    "essence": "Controls how concurrent transactions see intermediate uncommitted state changes.",
     "category": "data-databases",
     "difficulty": "advanced",
     "nature": "concept",
@@ -1561,6 +1661,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "deadlocks",
     "name": "Deadlocks",
+    "symbol": "DEADLCK",
+    "essence": "Concurrent transactions blocking each other on locked resources, causing aborts.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -1586,6 +1688,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "optimistic-locking",
     "name": "Optimistic Locking",
+    "symbol": "OCC",
+    "essence": "Validates version numbers at commit time to prevent overwriting concurrent updates.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -1611,6 +1715,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "pessimistic-locking",
     "name": "Pessimistic Locking",
+    "symbol": "PCC",
+    "essence": "Acquires exclusive row locks upfront to block concurrent conflicting modifications.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -1636,6 +1742,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "normalization",
     "name": "Normalization",
+    "symbol": "NORM",
+    "essence": "Organizing database schemas to eliminate redundant data and avoid update anomalies.",
     "category": "data-databases",
     "difficulty": "beginner",
     "nature": "concept",
@@ -1661,11 +1769,13 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "denormalization",
     "name": "Denormalization",
+    "symbol": "DENORM",
+    "essence": "Adding intentional redundancy to schemas to eliminate expensive multi-table JOINs.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "technique concept",
     "definition": "Denormalization is the intentional optimization strategy of adding redundant data or precomputed aggregated values into a normalized database schema to reduce costly JOIN operations and accelerate read queries. It trades write performance and storage space for dramatic read throughput improvements in high-traffic read-heavy environments.",
-    "why_matters": "In high-throughput systems, multi-table JOINs across millions of rows can overwhelm CPU caches and disk I/O. Denormaliz\u0069ng frequently accessed fields reduces query response times from hundreds of milliseconds to single digits.",
+    "why_matters": "In high-throughput systems, multi-table JOINs across millions of rows can overwhelm CPU caches and disk I/O. Denormalizing frequently accessed fields reduces query response times from hundreds of milliseconds to single digits.",
     "example": "-- Add denormalized order_count column to users table\nALTER TABLE users ADD COLUMN total_orders INT DEFAULT 0;\n\n-- Increment atomically upon new order placement:\nUPDATE users SET total_orders = total_orders + 1 WHERE id = 1042;",
     "related": [
       "normalization",
@@ -1686,6 +1796,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "foreign-keys",
     "name": "Foreign Keys",
+    "symbol": "FK",
+    "essence": "Database constraints linking child rows to parent rows to ensure referential integrity.",
     "category": "data-databases",
     "difficulty": "beginner",
     "nature": "defense concept",
@@ -1711,6 +1823,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "unique-constraints",
     "name": "Unique Constraints",
+    "symbol": "UNIQUE",
+    "essence": "Database rule guaranteeing that no duplicate values exist in specified columns.",
     "category": "data-databases",
     "difficulty": "beginner",
     "nature": "defense concept",
@@ -1736,6 +1850,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cascading-deletes",
     "name": "Cascading Deletes",
+    "symbol": "CASCADE",
+    "essence": "Automatically deletes child records when a parent record is removed from a table.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "technique concept",
@@ -1761,6 +1877,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "soft-deletes",
     "name": "Soft Deletes",
+    "symbol": "SOFTDEL",
+    "essence": "Marks rows as deleted with a flag instead of purging them from disk storage.",
     "category": "data-databases",
     "difficulty": "beginner",
     "nature": "technique defense",
@@ -1786,6 +1904,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "uuids-vs-auto-increment",
     "name": "UUIDs vs Auto-Increment",
+    "symbol": "UUID",
+    "essence": "Random 128-bit identifiers preventing enumeration attacks at the cost of index bloat.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "concept defense",
@@ -1811,6 +1931,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cursor-based-pagination",
     "name": "Cursor-Based Pagination",
+    "symbol": "CURSOR",
+    "essence": "Keyset pagination that avoids slow OFFSET scans by filtering on indexed sequential IDs.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "technique concept",
@@ -1836,6 +1958,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "full-text-search",
     "name": "Full-Text Search",
+    "symbol": "FTS",
+    "essence": "Parses, stems, and indexes natural language text for fast linguistic searches.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "technique tooling",
@@ -1861,6 +1985,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "read-replicas",
     "name": "Read Replicas",
+    "symbol": "REPLICA",
+    "essence": "Read-only database copies that offload query traffic from the primary write node.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "technique concept",
@@ -1886,6 +2012,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "replication-lag",
     "name": "Replication Lag",
+    "symbol": "REPLAG",
+    "essence": "Delay between a primary write and replica update that leads to stale read anomalies.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -1911,6 +2039,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "sharding",
     "name": "Sharding",
+    "symbol": "SHARD",
+    "essence": "Partitioning database tables across independent servers to scale out write throughput.",
     "category": "data-databases",
     "difficulty": "advanced",
     "nature": "technique concept",
@@ -1936,6 +2066,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "partitioning",
     "name": "Partitioning",
+    "symbol": "PART",
+    "essence": "Splitting a single table into physical segments to speed up queries and pruning.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "technique concept",
@@ -1961,6 +2093,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "hot-partitions",
     "name": "Hot Partitions",
+    "symbol": "HOTPART",
+    "essence": "Unbalanced key distributions that overload a single partition while others sit idle.",
     "category": "data-databases",
     "difficulty": "advanced",
     "nature": "concept",
@@ -1986,6 +2120,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "postgres-vacuum",
     "name": "Postgres VACUUM",
+    "symbol": "VACU",
+    "essence": "Reclaims disk storage from dead row versions in Postgres to prevent table bloat.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "tooling technique",
@@ -2011,6 +2147,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "materialized-views",
     "name": "Materialized Views",
+    "symbol": "MVIEW",
+    "essence": "Persists expensive query results to disk for sub-millisecond analytical reads.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "technique tooling",
@@ -2036,6 +2174,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "backups",
     "name": "Backups",
+    "symbol": "BACKUP",
+    "essence": "Preserved copies of critical data protecting against hardware failure and ransomware.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -2061,6 +2201,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "testing-your-restores",
     "name": "Testing Your Restores",
+    "symbol": "RESTORE",
+    "essence": "Regularly validating that backup snapshots actually restore successfully in a crisis.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -2086,6 +2228,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "point-in-time-recovery",
     "name": "Point-in-Time Recovery",
+    "symbol": "PITR",
+    "essence": "Replays WAL logs against base backups to restore databases to any precise past second.",
     "category": "data-databases",
     "difficulty": "advanced",
     "nature": "defense tooling",
@@ -2111,6 +2255,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "change-data-capture",
     "name": "Change Data Capture",
+    "symbol": "CDC",
+    "essence": "Streams row-level database insert and update events to caches and message buses.",
     "category": "data-databases",
     "difficulty": "advanced",
     "nature": "technique tooling",
@@ -2136,6 +2282,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "outbox-pattern",
     "name": "Outbox Pattern",
+    "symbol": "OUTBOX",
+    "essence": "Writes events to an outbox table in the same transaction to guarantee reliable delivery.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "defense technique",
@@ -2161,6 +2309,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "orm-lazy-loading",
     "name": "ORM Lazy Loading",
+    "symbol": "LAZYLD",
+    "essence": "Defers child entity fetches until accessed, silently spawning N+1 query storms.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -2186,6 +2336,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cap-theorem",
     "name": "CAP Theorem",
+    "symbol": "CAP",
+    "essence": "Trade-off proving a distributed store can guarantee at most two of C, A, and P.",
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -2211,10 +2363,12 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "eventual-consistency",
     "name": "Eventual Consistency",
+    "symbol": "EVCONS",
+    "essence": "Nodes eventually converge to the same state if no new updates are made.",
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "concept",
-    "definition": "Eventual Consistency is a weak consistency model in distributed systems where, in the absence of new update operations, all replicas will eventually converge to return the same value. Because nodes replicate writes asynchronously without blocking for global consensus, updates are immediately acknowledged, maximiz\u0069ng write throughput and partition tolerance at the expense of temporary stale reads.",
+    "definition": "Eventual Consistency is a weak consistency model in distributed systems where, in the absence of new update operations, all replicas will eventually converge to return the same value. Because nodes replicate writes asynchronously without blocking for global consensus, updates are immediately acknowledged, maximizing write throughput and partition tolerance at the expense of temporary stale reads.",
     "why_matters": "Powers global-scale architectures (DNS, Amazon DynamoDB, Cassandra, CDN caches) capable of handling millions of requests per second. However, developers must design user experiences that accommodate read lag and potential conflict resolution.",
     "example": "# 1. Write new record to primary database\ncurl -s -X POST https://api.example.com/v1/posts -d '{\"id\": 42, \"title\": \"New\"}'\n\n# 2. Immediate read against read-replica returns 404 while replication log streams\ncurl -s https://read-replica.example.com/v1/posts/42 # HTTP 404 Not Found\n\n# 3. Read after replication catch-up reaches consistency\nsleep 0.5 && curl -s https://read-replica.example.com/v1/posts/42 # HTTP 200 OK",
     "related": [
@@ -2236,6 +2390,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "strong-consistency",
     "name": "Strong Consistency",
+    "symbol": "STRCONS",
+    "essence": "Guarantees every read returns the most recent write across all distributed replicas.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "concept defense",
@@ -2261,6 +2417,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "raft-consensus",
     "name": "Raft Consensus",
+    "symbol": "RAFT",
+    "essence": "Consensus algorithm using leader election and replicated logs to agree on state.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "concept technique",
@@ -2286,10 +2444,12 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "leader-election",
     "name": "Leader Election",
+    "symbol": "LEADER",
+    "essence": "Protocol selecting a single coordinator node to manage cluster state safely.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "technique concept",
-    "definition": "Leader Election is the automated protocol used in distributed clusters to designate a single authoritative master node responsible for coordinating tasks, managing state transitions, or serializ\u0069ng writes. If the current leader crashes or is partitioned, remaining healthy nodes detect missing heartbeats and execute an election round to appoint a new leader with majority agreement.",
+    "definition": "Leader Election is the automated protocol used in distributed clusters to designate a single authoritative master node responsible for coordinating tasks, managing state transitions, or serializing writes. If the current leader crashes or is partitioned, remaining healthy nodes detect missing heartbeats and execute an election round to appoint a new leader with majority agreement.",
     "why_matters": "Without deterministic leader election, competing nodes attempt to process identical transactional workflows concurrently, causing race conditions, split-brain states, and data corruption.",
     "example": "# Kubernetes Lease-based Leader Election\napiVersion: coordination.k8s.io/v1\nkind: Lease\nmetadata:\n  name: controller-manager-lease\nspec:\n  holderIdentity: node-primary-zone-1\n  leaseDurationSeconds: 15",
     "related": [
@@ -2311,6 +2471,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "split-brain",
     "name": "Split Brain",
+    "symbol": "SPLIT",
+    "essence": "Network partition causes multiple sub-clusters to act as leader, corrupting data.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "concept",
@@ -2336,6 +2498,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "quorums",
     "name": "Quorums",
+    "symbol": "QUORUM",
+    "essence": "Majority node agreement required before reads or writes succeed during network splits.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "concept defense",
@@ -2361,6 +2525,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "clock-skew",
     "name": "Clock Skew",
+    "symbol": "SKEW",
+    "essence": "Time variance between hardware clocks causing silent data loss in distributed systems.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "concept",
@@ -2386,6 +2552,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "distributed-locks",
     "name": "Distributed Locks",
+    "symbol": "DISTLCK",
+    "essence": "Coordinates mutual exclusion across multiple servers to prevent concurrent execution.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "technique tooling",
@@ -2411,6 +2579,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "consistent-hashing",
     "name": "Consistent Hashing",
+    "symbol": "CHASH",
+    "essence": "Ring hashing minimizing key remapping when distributed nodes join or leave the cluster.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "technique concept",
@@ -2436,6 +2606,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "bloom-filters",
     "name": "Bloom Filters",
+    "symbol": "BLOOM",
+    "essence": "Space-efficient filter testing if an element might be in a set or is definitely not.",
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "technique concept",
@@ -2461,6 +2633,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "two-phase-commit",
     "name": "Two-Phase Commit",
+    "symbol": "2PC",
+    "essence": "Two-step voting protocol ensuring atomic transaction commits across distributed nodes.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "technique concept",
@@ -2486,6 +2660,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cqrs",
     "name": "CQRS",
+    "symbol": "CQRS",
+    "essence": "Separates read queries from write commands to scale and optimize each independently.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "technique concept",
@@ -2511,6 +2687,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "event-sourcing",
     "name": "Event Sourcing",
+    "symbol": "EVTSRC",
+    "essence": "Stores state changes as an immutable sequence of events rather than overwriting rows.",
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "technique concept",
@@ -2536,6 +2714,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "race-conditions",
     "name": "Race Conditions",
+    "symbol": "RACE",
+    "essence": "Concurrent operations executing in an unexpected order to produce corrupt data.",
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "attack concept",
@@ -2561,6 +2741,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "backpressure",
     "name": "Backpressure",
+    "symbol": "BACKPR",
+    "essence": "Signaling upstream producers to slow down when downstream consumers are overloaded.",
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "defense concept",
@@ -2586,6 +2768,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "load-shedding",
     "name": "Load Shedding",
+    "symbol": "SHED",
+    "essence": "Proactively dropping lower-priority requests when a system reaches capacity to survive.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -2611,6 +2795,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "bulkheads",
     "name": "Bulkheads",
+    "symbol": "BLKHEAD",
+    "essence": "Isolates thread pools and resources so failure in one service does not crash others.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "defense concept",
@@ -2636,6 +2822,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "jitter",
     "name": "Jitter",
+    "symbol": "JITTER",
+    "essence": "Randomizes retry delays to prevent synchronized stampedes against recovering servers.",
     "category": "distributed-systems",
     "difficulty": "beginner",
     "nature": "defense technique",
@@ -2661,6 +2849,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "retry-storms",
     "name": "Retry Storms",
+    "symbol": "RTSTORM",
+    "essence": "Cascading automated retries that overwhelm a struggling backend and prolong an outage.",
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -2686,6 +2876,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cascading-failures",
     "name": "Cascading Failures",
+    "symbol": "CASFAIL",
+    "essence": "Failure in one component overloads dependent systems, causing a chain-reaction blackout.",
     "category": "reliability-observability",
     "difficulty": "advanced",
     "nature": "concept",
@@ -2711,6 +2903,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "thundering-herd",
     "name": "Thundering Herd",
+    "symbol": "HERD",
+    "essence": "Massive concurrent requests overwhelming the database when a hot cached item expires.",
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -2736,6 +2930,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cache-invalidation",
     "name": "Cache Invalidation",
+    "symbol": "C-INVAL",
+    "essence": "Purging stale cached entries when underlying source records are updated.",
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "concept defense",
@@ -2761,6 +2957,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cache-hit-ratio",
     "name": "Cache Hit Ratio",
+    "symbol": "CHR",
+    "essence": "Percentage of requests served from cache rather than hitting the origin database.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "concept tooling",
@@ -2786,6 +2984,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "ttls",
     "name": "TTLs",
+    "symbol": "TTL",
+    "essence": "Time-to-live expiration setting that automatically purges stale data from caches.",
     "category": "distributed-systems",
     "difficulty": "beginner",
     "nature": "defense concept",
@@ -2811,6 +3011,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cache-warming",
     "name": "Cache Warming",
+    "symbol": "WARM",
+    "essence": "Preloading hot data into caches before launch to prevent cold-cache database spikes.",
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "technique tooling",
@@ -2836,6 +3038,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "write-through-vs-write-back",
     "name": "Write-Through vs Write-Back",
+    "symbol": "WTvWB",
+    "essence": "Writing synchronously to database and cache versus buffering writes for delayed flush.",
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "concept technique",
@@ -2861,6 +3065,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "redis-eviction-policies",
     "name": "Redis Eviction Policies",
+    "symbol": "EVICT",
+    "essence": "Rules deciding which keys to discard when an in-memory cache reaches its memory limit.",
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "tooling technique",
@@ -2886,6 +3092,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cdns",
     "name": "CDNs",
+    "symbol": "CDN",
+    "essence": "Edge proxy network serving cached assets physically closer to end users to cut latency.",
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -2911,6 +3119,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cache-control-headers",
     "name": "Cache-Control Headers",
+    "symbol": "C-CTRL",
+    "essence": "HTTP response headers defining how browsers and CDN edge caches store and expire assets.",
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "defense technique",
@@ -2936,6 +3146,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "etags",
     "name": "ETags",
+    "symbol": "ETAG",
+    "essence": "Content fingerprint header enabling 304 Not Modified responses to save bandwidth.",
     "category": "http-networking",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -2961,6 +3173,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "dead-letter-queues",
     "name": "Dead Letter Queues",
+    "symbol": "DLQ",
+    "essence": "Holding queue storing failed messages after retries exhaust for offline inspection.",
     "category": "messaging-streaming",
     "difficulty": "intermediate",
     "nature": "defense tooling",
@@ -2986,6 +3200,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "poison-messages",
     "name": "Poison Messages",
+    "symbol": "POISON",
+    "essence": "Malformed message payloads that crash consuming workers repeatedly in an infinite loop.",
     "category": "messaging-streaming",
     "difficulty": "intermediate",
     "nature": "attack concept",
@@ -3011,6 +3227,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "at-least-once-delivery",
     "name": "At-Least-Once Delivery",
+    "symbol": "ALOD",
+    "essence": "Guarantees every message arrives at least once, requiring consumers to be idempotent.",
     "category": "messaging-streaming",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -3036,6 +3254,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "exactly-once-semantics",
     "name": "Exactly-Once Semantics",
+    "symbol": "EOS",
+    "essence": "Stream processing guarantee ensuring each message modifies application state only once.",
     "category": "messaging-streaming",
     "difficulty": "advanced",
     "nature": "technique concept",
@@ -3061,6 +3281,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "message-ordering",
     "name": "Message Ordering",
+    "symbol": "MSG-ORD",
+    "essence": "Preserving publication sequence so consumers do not process events out of causal order.",
     "category": "messaging-streaming",
     "difficulty": "intermediate",
     "nature": "concept technique",
@@ -3086,6 +3308,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "kafka-consumer-groups",
     "name": "Kafka Consumer Groups",
+    "symbol": "K-GROUP",
+    "essence": "Cooperative pool of Kafka workers dividing topic partitions for horizontal scalability.",
     "category": "messaging-streaming",
     "difficulty": "advanced",
     "nature": "technique tooling",
@@ -3111,6 +3335,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "partition-keys",
     "name": "Partition Keys",
+    "symbol": "PARTKEY",
+    "essence": "Message attribute hashed to assign events to specific partitions and maintain order.",
     "category": "messaging-streaming",
     "difficulty": "intermediate",
     "nature": "technique concept",
@@ -3136,10 +3362,12 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "background-jobs",
     "name": "Background Jobs",
+    "symbol": "BG-JOB",
+    "essence": "Offloading slow or heavy tasks to worker pools to keep web request threads fast.",
     "category": "messaging-streaming",
     "difficulty": "beginner",
     "nature": "technique tooling",
-    "definition": "Background Jobs are asynchronous execution workers (e.g. Celery, Sidekiq, BullMQ) that decouple slow, blocking, or resource-heavy operations (generating PDFs, sending emails, processing payments, resiz\u0069ng images) from synchronous HTTP request-response cycles. Web handlers enqueue job payloads into Redis or RabbitMQ and return immediate 202 Accepted responses to users.",
+    "definition": "Background Jobs are asynchronous execution workers (e.g. Celery, Sidekiq, BullMQ) that decouple slow, blocking, or resource-heavy operations (generating PDFs, sending emails, processing payments, resizing images) from synchronous HTTP request-response cycles. Web handlers enqueue job payloads into Redis or RabbitMQ and return immediate 202 Accepted responses to users.",
     "why_matters": "Executing long-running blocking tasks inside synchronous web request threads exhausts HTTP server thread pools, causing 504 Gateway Timeouts and crippling user interface responsiveness.",
     "example": "# Celery asynchronous background task in Python\n@celery_app.task(bind=True, max_retries=3)\ndef generate_monthly_invoice_pdf(self, invoice_id):\n    # Expensive rendering happens asynchronously\n    render_and_email_invoice(invoice_id)",
     "related": [
@@ -3161,6 +3389,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "webhook-retries",
     "name": "Webhook Retries",
+    "symbol": "WHRETRY",
+    "essence": "Scheduled exponential backoff delivery attempts when a webhook destination is down.",
     "category": "messaging-streaming",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -3186,10 +3416,12 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "dns",
     "name": "DNS",
+    "symbol": "DNS",
+    "essence": "Hierarchical naming system resolving human-readable domain names into IP addresses.",
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "concept",
-    "definition": "The Domain Name System (DNS) is the hierarchical, decentralized internet naming protocol (RFC 1035) that translates human-readable hostnames (e.g., api.example.com) into numerical IP addresses (IPv4 A records, IPv6 AAAA records). DNS lookups traverse root servers, Top-Level Domain (TLD) servers, and authoritative nameservers, utiliz\u0069ng recursive resolvers and caching layers.",
+    "definition": "The Domain Name System (DNS) is the hierarchical, decentralized internet naming protocol (RFC 1035) that translates human-readable hostnames (e.g., api.example.com) into numerical IP addresses (IPv4 A records, IPv6 AAAA records). DNS lookups traverse root servers, Top-Level Domain (TLD) servers, and authoritative nameservers, utilizing recursive resolvers and caching layers.",
     "why_matters": "DNS is the foundational routing mechanism of the global internet. DNS misconfigurations, registrar hijacks, or DDoS attacks against authoritative nameservers (such as the Dyn cyberattack) cause immediate worldwide unavailability.",
     "example": "# Query authoritative DNS records via dig\ndig +trace api.github.com A",
     "related": [
@@ -3211,6 +3443,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "dns-propagation",
     "name": "DNS Propagation",
+    "symbol": "DNSPROP",
+    "essence": "Time required for updated DNS records to propagate through global resolver caches.",
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "concept",
@@ -3236,6 +3470,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "http-status-codes",
     "name": "HTTP Status Codes",
+    "symbol": "STATUS",
+    "essence": "Standardized 3-digit numeric codes indicating whether an HTTP request was successful.",
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "concept",
@@ -3261,6 +3497,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "http-method-semantics",
     "name": "HTTP Method Semantics",
+    "symbol": "VERBS",
+    "essence": "Defines safety and idempotency rules for HTTP methods like GET, POST, PUT, and DELETE.",
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "concept",
@@ -3286,6 +3524,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "keep-alive",
     "name": "Keep-Alive",
+    "symbol": "KEEP",
+    "essence": "Reuses a TCP connection for multiple HTTP requests to eliminate handshake latency.",
     "category": "http-networking",
     "difficulty": "intermediate",
     "nature": "technique concept",
@@ -3311,6 +3551,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "http-2",
     "name": "HTTP/2",
+    "symbol": "H2",
+    "essence": "Binary HTTP protocol multiplexing concurrent requests over a single TCP connection.",
     "category": "http-networking",
     "difficulty": "intermediate",
     "nature": "concept technique",
@@ -3336,6 +3578,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "websockets",
     "name": "WebSockets",
+    "symbol": "WS",
+    "essence": "Full-duplex bidirectional TCP communication channel for real-time interactive apps.",
     "category": "http-networking",
     "difficulty": "intermediate",
     "nature": "technique concept",
@@ -3361,6 +3605,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "server-sent-events",
     "name": "Server-Sent Events",
+    "symbol": "SSE",
+    "essence": "One-way server-to-client streaming protocol over standard HTTP with auto-reconnection.",
     "category": "http-networking",
     "difficulty": "intermediate",
     "nature": "technique concept",
@@ -3386,6 +3632,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "long-polling",
     "name": "Long Polling",
+    "symbol": "L-POLL",
+    "essence": "Client holds an HTTP request open until the server has new data to push back.",
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "technique concept",
@@ -3411,10 +3659,12 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "grpc",
     "name": "gRPC",
+    "symbol": "GRPC",
+    "essence": "High-performance RPC framework using HTTP/2 and Protocol Buffers for microservices.",
     "category": "http-networking",
     "difficulty": "advanced",
     "nature": "tooling technique",
-    "definition": "gRPC is an open-source, high-performance Remote Procedure Call (RPC) framework developed by Google. Operating over HTTP/2 transport and utiliz\u0069ng Protocol Buffers (Protobuf) as its Interface Definition Language (IDL) and wire format, gRPC supports bidirectional streaming, deadline propagation, pluggable authentication, and automated client/server code generation across dozens of programming languages.",
+    "definition": "gRPC is an open-source, high-performance Remote Procedure Call (RPC) framework developed by Google. Operating over HTTP/2 transport and utilizing Protocol Buffers (Protobuf) as its Interface Definition Language (IDL) and wire format, gRPC supports bidirectional streaming, deadline propagation, pluggable authentication, and automated client/server code generation across dozens of programming languages.",
     "why_matters": "Dramatically reduces serialization latency and network bandwidth in microservice mesh architectures compared to verbose JSON over HTTP/1.1 REST APIs, boosting inter-service RPC throughput.",
     "example": "// gRPC service definition in proto3\nservice UserService {\n  rpc GetUser (UserRequest) returns (UserResponse);\n  rpc StreamAuditEvents (AuditQuery) returns (stream AuditEvent);\n}",
     "related": [
@@ -3436,6 +3686,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "protocol-buffers",
     "name": "Protocol Buffers",
+    "symbol": "PROTO",
+    "essence": "Compact binary serialization format defining typed schemas for efficient data exchange.",
     "category": "http-networking",
     "difficulty": "intermediate",
     "nature": "tooling technique",
@@ -3461,6 +3713,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "api-versioning",
     "name": "API Versioning",
+    "symbol": "APIVER",
+    "essence": "Managing API evolution to introduce features without breaking existing client contracts.",
     "category": "http-networking",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -3486,6 +3740,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "openapi-specs",
     "name": "OpenAPI Specs",
+    "symbol": "OAS",
+    "essence": "Machine-readable interface definition standard documenting REST APIs and schemas.",
     "category": "http-networking",
     "difficulty": "intermediate",
     "nature": "tooling technique",
@@ -3511,6 +3767,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "backward-compatibility",
     "name": "Backward Compatibility",
+    "symbol": "BK-COMP",
+    "essence": "Ensuring new service versions work with older clients to enable zero-downtime deploys.",
     "category": "secure-sdlc",
     "difficulty": "intermediate",
     "nature": "defense concept",
@@ -3536,6 +3794,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "request-size-limits",
     "name": "Request Size Limits",
+    "symbol": "MAXBODY",
+    "essence": "Proxy and gateway limits capping request payload sizes to prevent memory exhaustion.",
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "defense technique",
@@ -3561,6 +3821,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "compression",
     "name": "Compression",
+    "symbol": "GZIP",
+    "essence": "Compressing HTTP payloads with Gzip or Brotli to reduce bandwidth and speed up delivery.",
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "technique tooling",
@@ -3586,6 +3848,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "latency-vs-throughput",
     "name": "Latency vs Throughput",
+    "symbol": "LATvTHR",
+    "essence": "Balancing time per individual request against total volume of requests processed.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -3611,6 +3875,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "egress-fees",
     "name": "Egress Fees",
+    "symbol": "EGRESS",
+    "essence": "Bandwidth fees charged by cloud providers when transferring data out of their network.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -3636,6 +3902,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "vpcs",
     "name": "VPCs",
+    "symbol": "VPC",
+    "essence": "Isolated virtual network partition in the cloud securing private backend workloads.",
     "category": "cloud-infra-ops",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -3661,11 +3929,13 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "subnets",
     "name": "Subnets",
+    "symbol": "SUBNET",
+    "essence": "Segmented IP range within a VPC dividing public edge tiers from private database tiers.",
     "category": "cloud-infra-ops",
     "difficulty": "beginner",
     "nature": "defense technique",
     "definition": "A Subnet (subnetwork) is a segmented logical subdivision of an IP network within a VPC, tied to a specific Availability Zone. Subnets are divided into Public Subnets (which route outbound traffic through an Internet Gateway and host load balancers) and Private Subnets (which lack direct internet routes and host application servers and database clusters).",
-    "why_matters": "Enforces defense-in-depth network segregation: databases residing in private subnets cannot be reached directly from the internet, neutraliz\u0069ng internet-wide port scans and automated exploits.",
+    "why_matters": "Enforces defense-in-depth network segregation: databases residing in private subnets cannot be reached directly from the internet, neutralizing internet-wide port scans and automated exploits.",
     "example": "# AWS Public and Private Subnets in Terraform\nresource \"aws_subnet\" \"public\" {\n  vpc_id                  = aws_vpc.main.id\n  cidr_block              = \"10.0.1.0/24\"\n  map_public_ip_on_launch = true\n}\n\nresource \"aws_subnet\" \"private\" {\n  vpc_id     = aws_vpc.main.id\n  cidr_block = \"10.0.10.0/24\"\n}",
     "related": [
       "vpcs",
@@ -3686,6 +3956,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "nat-gateways",
     "name": "NAT Gateways",
+    "symbol": "NAT-GW",
+    "essence": "Allows private subnet instances outbound internet access without exposing public IPs.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "defense tooling",
@@ -3711,6 +3983,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "firewalls",
     "name": "Firewalls",
+    "symbol": "FW",
+    "essence": "Network security system filtering inbound and outbound traffic based on defined rules.",
     "category": "cloud-infra-ops",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -3736,6 +4010,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "security-groups",
     "name": "Security Groups",
+    "symbol": "SG",
+    "essence": "Stateful virtual firewall rules controlling inbound and outbound traffic to instances.",
     "category": "cloud-infra-ops",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -3761,11 +4037,13 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "service-mesh",
     "name": "Service Mesh",
+    "symbol": "MESH",
+    "essence": "Dedicated infrastructure layer managing mTLS, traffic routing, and service telemetry.",
     "category": "cloud-infra-ops",
     "difficulty": "advanced",
     "nature": "tooling defense",
     "definition": "A Service Mesh is a dedicated infrastructure layer (e.g., Istio, Linkerd) that manages service-to-service communication across microservice clusters. Deployed as sidecar proxies (Envoy) alongside every application container, the service mesh provides transparent mutual TLS (mTLS) encryption, traffic routing (canary splits), dynamic circuit breaking, rate limiting, and distributed tracing without modifying application code.",
-    "why_matters": "Enforces zero-trust cryptographic identity and mutual encryption between internal microservices, neutraliz\u0069ng lateral movement attacks if an adversary compromises a single perimeter pod.",
+    "why_matters": "Enforces zero-trust cryptographic identity and mutual encryption between internal microservices, neutralizing lateral movement attacks if an adversary compromises a single perimeter pod.",
     "example": "# Istio Mutual TLS PeerAuthentication Policy\napiVersion: security.istio.io/v1beta1\nkind: PeerAuthentication\nmetadata:\n  name: default\n  namespace: production\nspec:\n  mtls:\n    mode: STRICT",
     "related": [
       "ingress-controllers",
@@ -3786,6 +4064,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "ingress-controllers",
     "name": "Ingress Controllers",
+    "symbol": "INGRESS",
+    "essence": "Kubernetes edge proxy routing external HTTP traffic to internal service endpoints.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "tooling defense",
@@ -3811,6 +4091,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "health-checks",
     "name": "Health Checks",
+    "symbol": "HLTHCHK",
+    "essence": "Automated probes checking if a service instance is alive and ready to accept traffic.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -3836,6 +4118,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "liveness-vs-readiness-probes",
     "name": "Liveness vs Readiness Probes",
+    "symbol": "PROBES",
+    "essence": "Distinguishes whether to restart a broken container versus withholding traffic from it.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "tooling defense",
@@ -3861,6 +4145,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "graceful-shutdown",
     "name": "Graceful Shutdown",
+    "symbol": "SIGTERM",
+    "essence": "Allows in-flight requests to finish processing before a service process stops.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -3886,6 +4172,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "connection-draining",
     "name": "Connection Draining",
+    "symbol": "DRAIN",
+    "essence": "Halts new traffic to retiring nodes while in-flight connections finish gracefully.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -3911,6 +4199,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "stateless-services",
     "name": "Stateless Services",
+    "symbol": "NOSTATE",
+    "essence": "Stores state externally so any server instance can process any incoming request.",
     "category": "cloud-infra-ops",
     "difficulty": "beginner",
     "nature": "concept defense",
@@ -3936,6 +4226,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "failover",
     "name": "Failover",
+    "symbol": "FAILOVR",
+    "essence": "Automatically redirecting production traffic to a standby node when the primary fails.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -3961,6 +4253,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "multi-region",
     "name": "Multi-Region",
+    "symbol": "MULTI-R",
+    "essence": "Deploying across multiple cloud regions to survive outages and lower local latency.",
     "category": "cloud-infra-ops",
     "difficulty": "advanced",
     "nature": "technique concept",
@@ -3986,6 +4280,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "availability-zones",
     "name": "Availability Zones",
+    "symbol": "AZ",
+    "essence": "Isolated data centers within a region providing redundancy against physical faults.",
     "category": "cloud-infra-ops",
     "difficulty": "beginner",
     "nature": "concept defense",
@@ -4011,6 +4307,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "single-points-of-failure",
     "name": "Single Points of Failure",
+    "symbol": "SPOF",
+    "essence": "Any lone component whose failure brings down the entire application or infrastructure.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "concept defense",
@@ -4036,6 +4334,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "disaster-recovery",
     "name": "Disaster Recovery",
+    "symbol": "DR",
+    "essence": "Procedures and architectures to restore operations following catastrophic outages.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -4061,6 +4361,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "rto-and-rpo",
     "name": "RTO & RPO",
+    "symbol": "RTO-RPO",
+    "essence": "Target metrics defining maximum acceptable downtime and data loss during a disaster.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "concept defense",
@@ -4086,6 +4388,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "slas",
     "name": "SLAs",
+    "symbol": "SLA",
+    "essence": "Contractual commitment defining uptime guarantees backed by financial refund penalties.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -4111,6 +4415,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "slos",
     "name": "SLOs",
+    "symbol": "SLO",
+    "essence": "Internal reliability target guiding engineering decisions on releases and stability.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "defense concept",
@@ -4136,6 +4442,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "error-budgets",
     "name": "Error Budgets",
+    "symbol": "ERRBDG",
+    "essence": "Allowable amount of downtime derived from SLOs, balancing innovation against stability.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "concept defense",
@@ -4161,6 +4469,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "incident-response",
     "name": "Incident Response",
+    "symbol": "IR",
+    "essence": "Structured process for detecting, triaging, and mitigating active production outages.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -4186,6 +4496,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "on-call",
     "name": "On-Call",
+    "symbol": "ONCALL",
+    "essence": "Rotating engineer schedule providing 24/7 paging response for production alerts.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "concept tooling",
@@ -4211,6 +4523,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "runbooks",
     "name": "Runbooks",
+    "symbol": "RUNBOOK",
+    "essence": "Step-by-step documentation guiding engineers through routine ops and incident triage.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -4236,11 +4550,13 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "postmortems",
     "name": "Postmortems",
+    "symbol": "POSTM",
+    "essence": "Blameless retrospective analyzing root causes and remediation actions after an incident.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "defense concept",
     "definition": "A Postmortem (retrospective or root cause analysis) is a structured, blameless written review conducted following a production incident. It documents the timeline of events, underlying technical contributing factors, business impact, what went well, what went poorly, and tracks actionable follow-up work (preventative guardrails, alerts, architectural changes) to prevent recurrence.",
-    "why_matters": "A culture of blameless postmortems transforms catastrophic failures into organizational learning. Blaming individuals creates fear and concealment, while analyz\u0069ng systemic vulnerabilities prevents repeat outages.",
+    "why_matters": "A culture of blameless postmortems transforms catastrophic failures into organizational learning. Blaming individuals creates fear and concealment, while analyzing systemic vulnerabilities prevents repeat outages.",
     "example": "## Postmortem: 2024-04-10 Redis Connection Exhaustion\n- **Severity**: SEV-1 | **Downtime**: 28 mins | **MTTD**: 3m | **MTTR**: 25m\n- **Root Cause**: Unindexed query exhausted backend connection pool\n- **Action Item**: [DB-204] Add composite index to orders(user_id, created_at)",
     "related": [
       "incident-response",
@@ -4261,6 +4577,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "chaos-engineering",
     "name": "Chaos Engineering",
+    "symbol": "CHAOS",
+    "essence": "Intentionally injecting failures to discover architectural weaknesses proactively.",
     "category": "reliability-observability",
     "difficulty": "advanced",
     "nature": "technique tooling",
@@ -4286,6 +4604,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "graceful-degradation",
     "name": "Graceful Degradation",
+    "symbol": "GRACDEG",
+    "essence": "Disabling non-critical features during high load to keep core functionality online.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -4311,6 +4631,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "autoscaling",
     "name": "Autoscaling",
+    "symbol": "AUTOSCL",
+    "essence": "Dynamically adjusting compute resources in response to real-time traffic demand.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "tooling technique",
@@ -4336,6 +4658,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "horizontal-vs-vertical-scaling",
     "name": "Horizontal vs Vertical Scaling",
+    "symbol": "H-V-SCL",
+    "essence": "Adding more machines versus upgrading machine hardware specs to handle increased load.",
     "category": "cloud-infra-ops",
     "difficulty": "beginner",
     "nature": "concept",
@@ -4361,6 +4685,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "cold-starts",
     "name": "Cold Starts",
+    "symbol": "COLDSTR",
+    "essence": "Initialization latency when serverless functions or containers spin up on demand.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -4378,7 +4704,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
         "url": "https://docs.aws.amazon.com/lambda/"
       },
       {
-        "title": "Google Cloud Functions: Minimiz\u0069ng cold starts",
+        "title": "Google Cloud Functions: Minimizing cold starts",
         "url": "https://cloud.google.com/functions/docs/bestpractices/tips#min-instances"
       }
     ]
@@ -4386,6 +4712,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "capacity-planning",
     "name": "Capacity Planning",
+    "symbol": "CAPPLAN",
+    "essence": "Forecasting compute, storage, and bandwidth needs to prevent overload and control costs.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "technique concept",
@@ -4411,6 +4739,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "load-testing",
     "name": "Load Testing",
+    "symbol": "LOADTST",
+    "essence": "Simulating peak traffic to discover bottlenecks and failure points before users do.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "tooling technique",
@@ -4436,6 +4766,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "memory-leaks",
     "name": "Memory Leaks",
+    "symbol": "MEMLEAK",
+    "essence": "Unreleased memory allocations causing gradual performance degradation and OOM crashes.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -4461,6 +4793,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "oom-killer",
     "name": "OOM Killer",
+    "symbol": "OOM",
+    "essence": "Kernel mechanism that terminates high-memory processes when physical RAM is exhausted.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "tooling concept",
@@ -4486,6 +4820,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "structured-logging",
     "name": "Structured Logging",
+    "symbol": "LOGJSON",
+    "essence": "Emitting logs as structured key-value JSON objects for fast search and aggregation.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -4511,6 +4847,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "log-levels",
     "name": "Log Levels",
+    "symbol": "LOGLVL",
+    "essence": "Categorizing log entries by severity from DEBUG to ERROR to control output verbosity.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "concept tooling",
@@ -4536,6 +4874,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "log-rotation",
     "name": "Log Rotation",
+    "symbol": "LOGROT",
+    "essence": "Archiving and purging old log files to prevent runaway disk space exhaustion.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "tooling technique",
@@ -4561,6 +4901,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "distributed-tracing",
     "name": "Distributed Tracing",
+    "symbol": "TRACE",
+    "essence": "Tracking requests end-to-end across microservices to identify latency bottlenecks.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "technique tooling",
@@ -4586,6 +4928,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "opentelemetry",
     "name": "OpenTelemetry",
+    "symbol": "OTEL",
+    "essence": "Vendor-neutral framework for collecting traces, metrics, and logs across systems.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "tooling defense",
@@ -4611,6 +4955,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "correlation-ids",
     "name": "Correlation IDs",
+    "symbol": "REQ-ID",
+    "essence": "Unique identifier passed across services to trace a single request through logs.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "technique defense",
@@ -4636,6 +4982,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "metrics-cardinality",
     "name": "Metrics Cardinality",
+    "symbol": "CARDIN",
+    "essence": "Number of unique metric label combinations, which can explode memory in time-series DBs.",
     "category": "reliability-observability",
     "difficulty": "advanced",
     "nature": "concept",
@@ -4661,6 +5009,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "p99-latency",
     "name": "p99 Latency",
+    "symbol": "P99",
+    "essence": "Response time threshold that 99% of requests beat, exposing worst-case user experiences.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "concept",
@@ -4686,6 +5036,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "alert-fatigue",
     "name": "Alert Fatigue",
+    "symbol": "ALT-FAT",
+    "essence": "Desensitization from non-actionable alerts, leading engineers to miss real emergencies.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "concept",
@@ -4711,6 +5063,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "error-tracking",
     "name": "Error Tracking",
+    "symbol": "ERRTRK",
+    "essence": "Aggregating and alerting on unhandled exceptions and stack traces in production.",
     "category": "reliability-observability",
     "difficulty": "beginner",
     "nature": "tooling defense",
@@ -4736,6 +5090,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "profiling",
     "name": "Profiling",
+    "symbol": "PROFILE",
+    "essence": "Measuring CPU and memory usage down to specific functions and lines of source code.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "tooling technique",
@@ -4761,6 +5117,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "flame-graphs",
     "name": "Flame Graphs",
+    "symbol": "FLAME",
+    "essence": "Visual representation of profiled software stacks highlighting CPU-consuming functions.",
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "tooling technique",
@@ -4786,6 +5144,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "infrastructure-as-code",
     "name": "Infrastructure as Code",
+    "symbol": "IAC",
+    "essence": "Managing and provisioning cloud resources through version-controlled declarative code.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "defense tooling",
@@ -4811,6 +5171,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "terraform-state",
     "name": "Terraform State",
+    "symbol": "TFSTATE",
+    "essence": "Tracks real-world cloud resource mappings to declarative configuration in Terraform.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "tooling defense",
@@ -4836,6 +5198,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "gitops",
     "name": "GitOps",
+    "symbol": "GITOPS",
+    "essence": "Using Git repositories as the single source of truth for declarative infrastructure.",
     "category": "secure-sdlc",
     "difficulty": "intermediate",
     "nature": "defense tooling",
@@ -4861,6 +5225,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "blue-green-deployments",
     "name": "Blue-Green Deployments",
+    "symbol": "BLUEGRN",
+    "essence": "Maintaining two identical environments to allow instant traffic switching and rollbacks.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -4886,6 +5252,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "canary-releases",
     "name": "Canary Releases",
+    "symbol": "CANARY",
+    "essence": "Rolling out changes to a tiny percentage of users first to limit blast radius of bugs.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "defense technique",
@@ -4911,6 +5279,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "rollbacks",
     "name": "Rollbacks",
+    "symbol": "ROLLBCK",
+    "essence": "Instantly reverting to the previous known good software version during an incident.",
     "category": "cloud-infra-ops",
     "difficulty": "beginner",
     "nature": "defense technique",
@@ -4936,6 +5306,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "feature-flags",
     "name": "Feature Flags",
+    "symbol": "FFLAG",
+    "essence": "Decoupling code deployment from feature release by toggling capabilities in runtime.",
     "category": "secure-sdlc",
     "difficulty": "beginner",
     "nature": "technique tooling",
@@ -4961,6 +5333,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "environment-parity",
     "name": "Environment Parity",
+    "symbol": "ENVPAR",
+    "essence": "Keeping dev, staging, and production as identical as possible to prevent surprise bugs.",
     "category": "secure-sdlc",
     "difficulty": "intermediate",
     "nature": "defense concept",
@@ -4986,6 +5360,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "staging-environments",
     "name": "Staging Environments",
+    "symbol": "STAGING",
+    "essence": "Pre-production environment mirroring live architecture to test changes safely.",
     "category": "secure-sdlc",
     "difficulty": "beginner",
     "nature": "defense concept",
@@ -5011,6 +5387,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "12-factor-apps",
     "name": "12-Factor Apps",
+    "symbol": "12FACT",
+    "essence": "Methodology for building scalable, cloud-native applications designed for automation.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "concept defense",
@@ -5036,6 +5414,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "multi-stage-builds",
     "name": "Multi-Stage Builds",
+    "symbol": "MSTAGE",
+    "essence": "Docker build pattern discarding build tools to produce minimal, secure container images.",
     "category": "secure-sdlc",
     "difficulty": "beginner",
     "nature": "defense technique",
@@ -5061,6 +5441,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "non-root-containers",
     "name": "Non-Root Containers",
+    "symbol": "NONROOT",
+    "essence": "Running container processes with unprivileged UIDs to prevent host container breakouts.",
     "category": "cloud-infra-ops",
     "difficulty": "beginner",
     "nature": "defense technique",
@@ -5086,6 +5468,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "image-scanning",
     "name": "Image Scanning",
+    "symbol": "IMGSCAN",
+    "essence": "Static analysis scanning container images for known vulnerabilities before deployment.",
     "category": "secure-sdlc",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -5111,6 +5495,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "resource-requests-and-limits",
     "name": "Resource Requests & Limits",
+    "symbol": "REQ-LIM",
+    "essence": "Guarantees minimum compute while capping maximum usage to prevent resource starvation.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "defense tooling",
@@ -5136,6 +5522,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "pod-disruption-budgets",
     "name": "Pod Disruption Budgets",
+    "symbol": "PDB",
+    "essence": "Kubernetes policy guaranteeing a minimum number of available pods during maintenance.",
     "category": "cloud-infra-ops",
     "difficulty": "intermediate",
     "nature": "defense tooling",
@@ -5161,6 +5549,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "semantic-versioning",
     "name": "Semantic Versioning",
+    "symbol": "SEMVER",
+    "essence": "MAJOR.MINOR.PATCH format communicating breaking changes, new features, and bug fixes.",
     "category": "secure-sdlc",
     "difficulty": "beginner",
     "nature": "concept defense",
@@ -5186,6 +5576,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "lockfiles",
     "name": "Lockfiles",
+    "symbol": "LOCK",
+    "essence": "Pins exact dependency versions to guarantee reproducible, tamper-free builds.",
     "category": "secure-sdlc",
     "difficulty": "beginner",
     "nature": "defense tooling",
@@ -5211,6 +5603,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "reproducible-builds",
     "name": "Reproducible Builds",
+    "symbol": "REPRO",
+    "essence": "Compiling the same source code repeatedly yields byte-for-byte identical binaries.",
     "category": "secure-sdlc",
     "difficulty": "advanced",
     "nature": "defense technique",
@@ -5236,6 +5630,8 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
   {
     "id": "branch-protection",
     "name": "Branch Protection",
+    "symbol": "BRANCH",
+    "essence": "Repository rules requiring reviews and passing CI checks before merging into main.",
     "category": "secure-sdlc",
     "difficulty": "beginner",
     "nature": "defense tooling",

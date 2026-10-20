@@ -25,6 +25,9 @@ try:
     print(f"PASS lex-data: parses, {len(terms)} terms (data file: {len(data)})")
     if len(terms) != len(data):
         fails.append(f"count mismatch inline {len(terms)} vs data {len(data)}")
+    elif terms != data:
+        fails.append("inline lex-data CONTENT differs from data/terms.json — re-run tools/inline_data.py")
+        print("FAIL: inline content != data file (stale bake)")
 except Exception as e:
     fails.append(f"lex-data JSON parse FAIL: {e}")
     print(f"FAIL lex-data: {e}")
