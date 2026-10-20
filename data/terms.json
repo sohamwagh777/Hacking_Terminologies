@@ -532,7 +532,7 @@
     "nature": "defense technique",
     "definition": "Password Salting is the security technique of appending a unique, cryptographically random byte sequence (the salt) to a plaintext password before passing it through a password hashing function. The salt is stored alongside the resulting hash in the database. Salting ensures that identical user passwords yield distinct hashes, completely neutralizing precomputed dictionary lookups and rainbow table attacks.",
     "why_matters": "Without unique salts per user, an attacker with a leaked hash database can compute a single rainbow table or reverse hash lookups across thousands of users simultaneously. Salting forces the attacker to crack each password hash individually.",
-    "example": "import secrets, hashlib\n\nsalt = secrets.token_hex(16)\npassword = \"CorrectHorseBatteryStaple\"\nsalted_hash = hashlib.sha256((salt + password).encode()).hexdigest()\n# Stored record: {'salt': salt, 'hash': salted_hash}",
+    "example": "import secrets, hashlib\n\n# Generate random 16-byte salt per user\nsalt = secrets.token_bytes(16)\npassword = b\"CorrectHorseBatteryStaple\"\n# Hash with salt using slow key derivation (PBKDF2-HMAC-SHA256)\nderived_hash = hashlib.pbkdf2_hmac('sha256', password, salt, 600000).hex()",
     "related": [
       "hashing-vs-encryption",
       "bcrypt-and-argon2",
@@ -594,7 +594,7 @@
         "url": "https://datatracker.ietf.org/doc/html/rfc7519"
       },
       {
-        "title": "OWASP JSON Web Token Cheat Sheet",
+        "title": "OWASP Authentication Cheat Sheet",
         "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
       }
     ]
@@ -655,7 +655,7 @@
     "category": "auth-access",
     "difficulty": "intermediate",
     "nature": "defense concept",
-    "definition": "OpenID Connect (OIDC) is an identity layer built on top of the OAuth 2.0 authorization framework. While OAuth 2.0 authorizes access to resources via opaque access tokens, OIDC standardizes federated authentication by introducing the ID Token—a signed JSON Web Token containing cryptographically verified identity claims about the authenticated end-user. It also defines a standardized /userinfo endpoint.",
+    "definition": "OpenID Connect (OIDC) is an identity layer built on top of the OAuth 2.0 authorization framework. While OAuth 2.0 authorizes access to resources via opaque access tokens, OIDC standardizes federated authentication by introducing the ID Token\u2014a signed JSON Web Token containing cryptographically verified identity claims about the authenticated end-user. It also defines a standardized /userinfo endpoint.",
     "why_matters": "OIDC provides a interoperable Single Sign-On (SSO) protocol across enterprise identity providers (Okta, Azure AD, Google). Using vanilla OAuth for authentication without OIDC claims often leads to insecure custom token handling and impersonation vulnerabilities.",
     "example": "# Decoded OIDC ID Token Payload\n{\n  \"iss\": \"https://accounts.google.com\",\n  \"sub\": \"10982390192039\",\n  \"aud\": \"my-app-client-id\",\n  \"email\": \"user@example.com\",\n  \"email_verified\": true,\n  \"exp\": 1718003600\n}",
     "related": [
@@ -682,7 +682,7 @@
     "nature": "attack technique",
     "definition": "Session Fixation is an attack where an adversary establishes a legitimate session identifier on a target application and tricks the victim into authenticating using that predetermined session ID (e.g., via query parameters or subdomain cookie tossing). If the application fails to invalidate the pre-authentication session and issue a fresh session token upon login, the attacker retains access to the authenticated session.",
     "why_matters": "Allows an attacker to bypass authentication mechanisms without guessing or stealing passwords. The canonical defense is to renew the session token immediately upon any privilege escalation or successful login attempt.",
-    "example": "# Attacker sends victim a link with fixed session:\nhttps://vulnerable.example.com/login?PHPSESSID=attacker_controlled_session_123\n# If server does not regenerate ID upon login, attacker reuses PHPSESSID",
+    "example": "// Prevent session fixation: regenerate session ID upon successful login\nsession_start();\nif (authenticate_user($username, $password)) {\n    session_regenerate_id(true); // Deletes old session file and issues fresh token\n    $_SESSION['authenticated'] = true;\n}",
     "related": [
       "jwt-expiry",
       "csrf",
@@ -794,7 +794,7 @@
         "url": "https://docs.python.org/3/library/hmac.html#hmac.compare_digest"
       },
       {
-        "title": "OWASP Side Channel Attack",
+        "title": "NIST Computer Security Resource Center: Side Channel Attack",
         "url": "https://csrc.nist.gov/glossary/term/side_channel_attack"
       }
     ]
@@ -982,7 +982,7 @@
     "nature": "defense concept",
     "definition": "Threat Modeling is a structured engineering process for identifying, analyzing, and prioritizing potential architectural security threats and attack vectors before and during system development. Popular frameworks include STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) and PASTA. It maps trust boundaries, data flows, and assets to design proportional defensive mitigations.",
     "why_matters": "Remediating an architectural flaw during design is orders of magnitude cheaper than fixing an exploitable vulnerability in production. It ensures engineering teams systematically address attack surfaces rather than applying reactive patches.",
-    "example": "# STRIDE Threat Matrix Example\n# Component: Password Reset Endpoint\n# Threat: Spoofing (Attacker requests reset for victim)\n# Mitigation: Send cryptographically random single-use token to verified email\n# Threat: Tampering (Modifying reset token in transit)\n# Mitigation: Enforce HTTPS and sign token with HMAC",
+    "example": "# STRIDE Threat Model definition (YAML)\ncomponent: \"PasswordResetService\"\nthreats:\n  - type: \"Spoofing\"\n    description: \"Attacker requests reset token for victim email\"\n    mitigation: \"Generate single-use cryptographically random token sent via email\"\n  - type: \"Tampering\"\n    description: \"Token manipulation in transit\"\n    mitigation: \"Enforce HTTPS and sign token with HMAC-SHA256\" ",
     "related": [
       "input-validation",
       "least-privilege",
@@ -1205,9 +1205,9 @@
     "category": "data-databases",
     "difficulty": "intermediate",
     "nature": "concept",
-    "definition": "ACID is the foundational acronym for Atomicity, Consistency, Isolation, and Durability—the four core guarantees that ensure reliable transaction processing in database management systems. Atomicity guarantees all-or-nothing execution; Consistency enforces schema constraints and invariants; Isolation prevents concurrent transactions from interfering; Durability guarantees committed data survives power failures via write-ahead logging (WAL).",
+    "definition": "ACID is the foundational acronym for Atomicity, Consistency, Isolation, and Durability\u2014the four core guarantees that ensure reliable transaction processing in database management systems. Atomicity guarantees all-or-nothing execution; Consistency enforces schema constraints and invariants; Isolation prevents concurrent transactions from interfering; Durability guarantees committed data survives power failures via write-ahead logging (WAL).",
     "why_matters": "ACID compliance is indispensable for financial ledgers, inventory systems, and transactional commerce where data corruption or lost writes can cause catastrophic monetary and legal liability.",
-    "example": "-- ACID relies heavily on Write-Ahead Logging (WAL)\n-- Every committed mutation is flushed to disk in the WAL before returning success:\nCOMMIT; -- Durability achieved through synchronous WAL flush",
+    "example": "-- Atomic bank transfer: both accounts update or neither does\nBEGIN;\nUPDATE accounts SET balance = balance - 250 WHERE id = 101;\nUPDATE accounts SET balance = balance + 250 WHERE id = 102;\nCOMMIT; -- Durably written to WAL before success is acknowledged",
     "related": [
       "transactions",
       "isolation-levels",
@@ -1257,7 +1257,7 @@
     "nature": "concept",
     "definition": "A Deadlock is an impasse where two or more concurrent transactions hold locks on resources that the other transactions need, creating a circular dependency where no participant can proceed. Database engines run internal deadlock detection algorithms that periodically scan lock dependency graphs, detect cycles, and terminate one transaction (the deadlock victim) with a serialization error to break the lock.",
     "why_matters": "Frequent deadlocks cause sudden transaction aborts, user-facing 500 errors, and application retry storms. Enforcing consistent global lock acquisition order across queries eliminates circular lock dependencies.",
-    "example": "-- Transaction 1: Locks row A, attempts to lock row B\n-- Transaction 2: Locks row B, attempts to lock row A\n-- Engine triggers:\n-- ERROR: deadlock detected\n-- DETAIL: Process 14002 waits for ShareLock on transaction; blocked by 14003.",
+    "example": "-- Session 1:\nBEGIN;\nUPDATE accounts SET balance = balance - 100 WHERE id = 1;\n-- Session 2 (concurrent):\nBEGIN;\nUPDATE accounts SET balance = balance - 50 WHERE id = 2;\n-- Cross-row updates cause deadlock:\n-- Session 1: UPDATE accounts SET balance = balance + 100 WHERE id = 2;\n-- Session 2: UPDATE accounts SET balance = balance + 50 WHERE id = 1;\n-- Triggers: ERROR: deadlock detected",
     "related": [
       "pessimistic-locking",
       "optimistic-locking",
@@ -1357,7 +1357,7 @@
     "nature": "technique concept",
     "definition": "Denormalization is the intentional optimization strategy of adding redundant data or precomputed aggregated values into a normalized database schema to reduce costly JOIN operations and accelerate read queries. It trades write performance and storage space for dramatic read throughput improvements in high-traffic read-heavy environments.",
     "why_matters": "In high-throughput systems, multi-table JOINs across millions of rows can overwhelm CPU caches and disk I/O. Denormalizing frequently accessed fields reduces query response times from hundreds of milliseconds to single digits.",
-    "example": "-- Adding denormalized order_count directly to users table\nALTER TABLE users ADD COLUMN total_orders INT DEFAULT 0;\n-- Updated via application logic or database trigger on new orders",
+    "example": "-- Add denormalized order_count column to users table\nALTER TABLE users ADD COLUMN total_orders INT DEFAULT 0;\n\n-- Increment atomically upon new order placement:\nUPDATE users SET total_orders = total_orders + 1 WHERE id = 1042;",
     "related": [
       "normalization",
       "materialized-views",
@@ -1531,7 +1531,7 @@
     "difficulty": "intermediate",
     "nature": "technique tooling",
     "definition": "Full-Text Search (FTS) is a database search capability that parses natural language text into tokens, strips linguistic stop words, applies stemming algorithms (reducing words to their root forms), and indexes documents using inverted indexes (GIN in PostgreSQL, Lucene in Elasticsearch). FTS enables fast fuzzy matching, relevance ranking, and boolean search queries across millions of text documents.",
-    "why_matters": "Executing wildcard SQL queries like LIKE '%search_term%' forces disastrous full table scans across text columns. Inverted index full-text search returns ranked results in milliseconds without dedicated search clusters.",
+    "why_matters": "Executing wildcard SQL queries such as LIKE '%search_term%' forces disastrous full table scans across text columns. Inverted index full-text search returns ranked results in milliseconds without dedicated search clusters.",
     "example": "-- PostgreSQL Full Text Search\nSELECT title, ts_rank(to_tsvector('english', content), query) AS rank\nFROM articles, to_tsquery('english', 'security & vulnerability') query\nWHERE to_tsvector('english', content) @@ query\nORDER BY rank DESC LIMIT 10;",
     "related": [
       "indexes",
@@ -1615,7 +1615,7 @@
     ],
     "links": [
       {
-        "title": "PostgreSQL Documentation: Distributed Sharding with Citus",
+        "title": "Citus Documentation: Distributed PostgreSQL Sharding",
         "url": "https://docs.citusdata.com/"
       },
       {
@@ -1657,7 +1657,7 @@
     "nature": "concept",
     "definition": "A Hot Partition (or hot-spotting) occurs in partitioned or sharded systems when traffic, read requests, or write operations concentrate disproportionately onto a single partition or shard due to skewed key distribution (e.g. celebrity accounts or sequential timestamp keys). While neighboring shards sit idle, the hot partition exhausts CPU, disk IOPS, and memory buffers.",
     "why_matters": "Degrades the performance of the entire distributed storage cluster to the speed of the overloaded bottleneck node. Mitigations include compound shard keys, salted hash keys, and secondary caching tiers.",
-    "example": "# Key salting to prevent hot-spotting on write timestamps\nshard_key = f\"{tenant_id}_{random.randint(0, 15)}\"",
+    "example": "# Key salting in DynamoDB / Cassandra: append random partition suffix\nimport random\n\ndef compute_partition_key(tenant_id, date_str, salt_buckets=16):\n    salt = random.randint(0, salt_buckets - 1)\n    return f\"{tenant_id}#{date_str}#{salt}",
     "related": [
       "partitioning",
       "sharding",
@@ -1882,7 +1882,7 @@
     "nature": "concept",
     "definition": "The CAP Theorem (Brewer's Theorem) states that any distributed data store can simultaneously provide at most two out of three guarantees: Consistency (every read receives the most recent write or an error), Availability (every non-failing node returns a non-error response without guarantee of latest data), and Partition Tolerance (the system continues operating despite arbitrary network dropped messages). Because network partitions are inevitable in distributed networks, systems must fundamentally choose between CP or AP during partitions.",
     "why_matters": "Defines the fundamental design trade-offs of modern distributed databases. Misunderstanding CAP leads teams to make false architectural assumptions about data consistency and uptime guarantees during network splits.",
-    "example": "# CAP Trade-off during network partition:\n# CP (e.g. Raft / Spanner / etcd): Reject writes to minority partitions to preserve consistency.\n# AP (e.g. Cassandra / Dynamo): Accept writes on all partitions, resulting in eventual consistency.",
+    "example": "-- Cassandra consistency level per query (AP vs CP tradeoff):\n-- AP mode: return local replica data without network wait\nCONSISTENCY ONE;\nSELECT * FROM user_profiles WHERE user_id = 'usr_1042';\n\n-- CP mode: reject query if quorum cannot be achieved across partition\nCONSISTENCY QUORUM;\nSELECT * FROM account_balances WHERE user_id = 'usr_1042';",
     "related": [
       "eventual-consistency",
       "strong-consistency",
@@ -1907,7 +1907,7 @@
     "nature": "concept",
     "definition": "Eventual Consistency is a weak consistency model in distributed systems where, in the absence of new update operations, all replicas will eventually converge to return the same value. Because nodes replicate writes asynchronously without blocking for global consensus, updates are immediately acknowledged, maximizing write throughput and partition tolerance at the expense of temporary stale reads.",
     "why_matters": "Powers global-scale architectures (DNS, Amazon DynamoDB, Cassandra, CDN caches) capable of handling millions of requests per second. However, developers must design user experiences that accommodate read lag and potential conflict resolution.",
-    "example": "# DNS propagation is a classic real-world example of eventual consistency:\n# Nameservers globally update records asynchronously over TTL windows.",
+    "example": "# 1. Write new record to primary database\ncurl -s -X POST https://api.example.com/v1/posts -d '{\"id\": 42, \"title\": \"New\"}'\n\n# 2. Immediate read against read-replica returns 404 while replication log streams\ncurl -s https://read-replica.example.com/v1/posts/42 # HTTP 404 Not Found\n\n# 3. Read after replication catch-up reaches consistency\nsleep 0.5 && curl -s https://read-replica.example.com/v1/posts/42 # HTTP 200 OK",
     "related": [
       "cap-theorem",
       "strong-consistency",
@@ -1957,7 +1957,7 @@
     "nature": "concept technique",
     "definition": "Raft is a distributed consensus algorithm designed to be understandable and maintainable while providing equivalent fault tolerance and performance to Multi-Paxos. Raft decomposes consensus into three key sub-problems: Leader Election via randomized election timers, Log Replication where the elected leader appends and commits log entries across a majority quorum, and Safety guarantees ensuring committed entries are permanent.",
     "why_matters": "Underpins critical cloud infrastructure components including Kubernetes (etcd), HashiCorp Consul/Vault, and distributed databases (CockroachDB, TiKV), ensuring cluster coordination survives server failures.",
-    "example": "# Raft election timeout visualization\n# Follower nodes expect heartbeat every 150ms-300ms;\n# If heartbeat missed, node increments term and requests votes from peers.",
+    "example": "// Raft RequestVote RPC payload sent by candidate during election\n{\n  \"term\": 4,\n  \"candidateId\": \"node-us-east-2\",\n  \"lastLogIndex\": 1042,\n  \"lastLogTerm\": 3\n}",
     "related": [
       "leader-election",
       "split-brain",
@@ -2007,7 +2007,7 @@
     "nature": "concept",
     "definition": "Split-Brain is a catastrophic condition in distributed systems where a network partition divides a single cluster into two or more disconnected sub-clusters, and each disconnected partition independently elects its own leader and continues accepting writes. Because both leaders believe they are the authoritative cluster, the shared state diverges irrecoverably.",
     "why_matters": "Produces conflicting data modifications that cannot be resolved automatically, requiring manual data reconciliation and lengthy emergency outages. Quorum requirements (strict majority) prevent split-brain by disabling minority partitions.",
-    "example": "# 5-Node Cluster partitioned into [3 nodes] and [2 nodes]:\n# Majority partition (3 > 5/2) can safely elect leader and commit writes;\n# Minority partition (2 < 3) refuses writes, preventing split-brain.",
+    "example": "# Elasticsearch / ZooKeeper cluster quorum configuration to prevent split-brain\ncluster.initial_master_nodes: [\"master-node-1\", \"master-node-2\", \"master-node-3\"]\n# Require majority quorum: (N / 2) + 1 = (3 / 2) + 1 = 2\ndiscovery.zen.minimum_master_nodes: 2",
     "related": [
       "quorums",
       "raft-consensus",
@@ -2032,7 +2032,7 @@
     "nature": "concept defense",
     "definition": "A Quorum is the minimum number of participating nodes that must agree and acknowledge a read or write operation for it to be considered valid and committed in a distributed system. In majority-based consensus, a quorum requires Q = floor(N/2) + 1 nodes. In quorum-based storage systems (R + W > N), ensuring the read quorum R and write quorum W overlap by at least one node guarantees strong consistency.",
     "why_matters": "Enforcing quorum boundaries ensures that no two partitions can simultaneously claim majority consensus during network partitions, mathematically preventing split-brain data corruption.",
-    "example": "# 3-node cluster quorum calculation:\n# N = 3 -> Quorum = (3 // 2) + 1 = 2 nodes required.\n# Can tolerate loss of 1 node while retaining quorum.",
+    "example": "-- Cassandra quorum write: requires acknowledgment from (RF / 2) + 1 replicas\nINSERT INTO user_sessions (session_id, user_id, last_active)\nVALUES ('sess_8819ab', 1042, toTimestamp(now()))\nUSING CONSISTENCY QUORUM;",
     "related": [
       "raft-consensus",
       "split-brain",
@@ -2057,7 +2057,7 @@
     "nature": "concept",
     "definition": "Clock Skew is the drift and physical time variance between the hardware quartz crystal clocks on different independent servers in a network. Because physical clocks drift due to temperature fluctuations and Network Time Protocol (NTP) synchronization jumps, distributed systems cannot rely on absolute physical wall-clock timestamps to establish causal ordering of events. Systems use logical clocks (Lamport timestamps, Vector clocks) or TrueTime bounded intervals.",
     "why_matters": "Relying on wall-clock time for distributed concurrency control causes silent data loss in 'Last-Write-Wins' databases, where an update with a fast clock silently overwrites a later update with a lagging clock.",
-    "example": "# Measuring clock offset with chrony or ntp\nchronyc sources -v\n# Output shows jitter and offset in milliseconds between peers",
+    "example": "# Verify clock synchronization and NTP offset with chrony\nchronyc tracking\n# Inspect 'System time' and 'Last offset' to detect clock skew between nodes",
     "related": [
       "distributed-locks",
       "strong-consistency",
@@ -2107,7 +2107,7 @@
     "nature": "technique concept",
     "definition": "Consistent Hashing is a distributed hashing technique where both storage nodes and cache keys are mapped to points on a circular 360-degree hash ring. When nodes are added or removed, only K/N keys need to be remapped to adjacent nodes (where K is total keys and N is total nodes), unlike traditional modulo hashing (key % N) where adding a single server invalidates nearly 100% of cached keys.",
     "why_matters": "Enables horizontal scaling of distributed caches (Memcached, Redis clusters) and distributed key-value stores (Dynamo, Cassandra) with minimal cache misses and zero downtime during node churn.",
-    "example": "# Consistent Hash Ring concept:\n# Ring space: 0 to 2^32 - 1\n# Keys map to the nearest clockwise server node on the ring.\n# Virtual nodes prevent hot spots.",
+    "example": "import bisect, hashlib\n\ndef get_node(ring_keys, node_map, key):\n    # Hash key to 32-bit integer and find nearest clockwise node on ring\n    h = int(hashlib.md5(key.encode()).hexdigest(), 16)\n    idx = bisect.bisect_right(ring_keys, h) % len(ring_keys)\n    return node_map[ring_keys[idx]]",
     "related": [
       "sharding",
       "hot-partitions",
@@ -2130,7 +2130,7 @@
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "technique concept",
-    "definition": "A Bloom Filter is a space-efficient, probabilistic data structure used to test whether an element is a member of a set. It uses an array of m bits and k independent cryptographic hash functions. A Bloom filter can yield false positive matches (reporting an element might be in the set), but it never produces false negatives (guaranteeing an element is definitely not in the set).",
+    "definition": "A Bloom Filter is a space-efficient, probabilistic data structure used to test whether an element is a member of a set. It uses an array of m bits and k independent hash functions (typically fast non-cryptographic hashes like Murmur3 or xxHash). A Bloom filter can yield false positive matches (reporting an element might be in the set), but it never produces false negatives (guaranteeing an element is definitely not in the set).",
     "why_matters": "Drastically reduces expensive disk I/O and network round-trips. LSM-tree storage engines (RocksDB, Cassandra, PostgreSQL) use Bloom filters to verify whether a key exists in an SSTable before performing costly disk reads.",
     "example": "# Bloom filter check before disk lookup:\nif not bloom_filter.contains(user_id):\n    return None  # Definitive 100% proof item does not exist, zero disk I/O!\nreturn read_from_slow_disk_sstable(user_id)",
     "related": [
@@ -2157,7 +2157,7 @@
     "nature": "technique concept",
     "definition": "Two-Phase Commit (2PC) is a distributed transaction consensus protocol that guarantees atomic commits across multiple autonomous database nodes. It operates in two phases: the Prepare Phase, where the coordinator asks all participants whether they can commit, and the Commit Phase, where the coordinator issues a global COMMIT if all agreed, or a global ABORT if any participant voted no.",
     "why_matters": "Provides strict distributed ACID guarantees across heterogeneous systems (e.g. XA transactions). However, 2PC is a blocking protocol: if the coordinator crashes during the commit phase, participants remain locked, holding precious database resources indefinitely.",
-    "example": "-- Phase 1: PREPARE TRANSACTION 'tx_transfer_123';\n-- Phase 2 (Coordinator issues across all nodes):\nCOMMIT PREPARED 'tx_transfer_123';",
+    "example": "-- Phase 1 (Prepare phase across participants):\nBEGIN;\nUPDATE inventory SET stock = stock - 1 WHERE sku = 'WIDGET-01';\nPREPARE TRANSACTION 'tx_order_9981';\n\n-- Phase 2 (Coordinator issues Commit once all participants agree):\nCOMMIT PREPARED 'tx_order_9981';",
     "related": [
       "acid",
       "distributed-locks",
@@ -2207,7 +2207,7 @@
     "nature": "technique concept",
     "definition": "Event Sourcing is an architectural pattern where the state of a business entity is not stored as a mutable current-state database record, but as an append-only sequence of immutable domain events (e.g., AccountOpened, MoneyDeposited, MoneyWithdrawn). The current state of any entity is reconstructed by replaying its historical stream of events from the beginning.",
     "why_matters": "Provides an immutable, tamper-evident audit trail and eliminates write-lock contention on mutable database rows. It enables temporal queries ('what was customer state on April 2nd?') and simplified debugging.",
-    "example": "# Event stream for Bank Account #1042:\n# [1] AccountCreated { initial_balance: 0, at: '2024-01-01' }\n# [2] FundsDeposited { amount: 500, at: '2024-01-02' }\n# [3] FundsWithdrawn { amount: 150, at: '2024-01-03' }\n# Reconstructed Current Balance: 350",
+    "example": "// Immutable append-only event stream for BankAccount #1042\n[\n  {\"event\": \"AccountCreated\", \"accountId\": 1042, \"initialBalance\": 0, \"version\": 1},\n  {\"event\": \"FundsDeposited\", \"accountId\": 1042, \"amount\": 500, \"version\": 2},\n  {\"event\": \"FundsWithdrawn\", \"accountId\": 1042, \"amount\": 150, \"version\": 3}\n]",
     "related": [
       "cqrs",
       "change-data-capture",
@@ -2357,7 +2357,7 @@
     "nature": "concept",
     "definition": "A Retry Storm occurs when a transient error or slowdown in a backend service causes hundreds or thousands of upstream clients to simultaneously dispatch automated retry requests. Because each failed request triggers multiple new retry attempts, the incoming request volume multiplies exponentially, transforming a minor momentary hiccup into a prolonged total system outage.",
     "why_matters": "Overwhelms recovering infrastructure and prevents services from returning to healthy operating states even after underlying bugs or network partitions have been resolved. Mitigations include circuit breakers, jitter, and aggressive retry budgets.",
-    "example": "# Outage scenario: 10,000 clients fail -> 3 retries each without jitter = 40,000 requests crushing recovering database within 5 seconds.",
+    "example": "import random, time\n\ndef exponential_backoff_with_jitter(attempt, base_delay=1.0, max_delay=30.0):\n    # Full jitter desynchronizes retrying clients to prevent retry stampedes\n    temp = min(max_delay, base_delay * (2 ** attempt))\n    sleep_time = random.uniform(0, temp)\n    time.sleep(sleep_time)",
     "related": [
       "jitter",
       "thundering-herd",
@@ -2382,7 +2382,7 @@
     "nature": "concept",
     "definition": "A Cascading Failure is a catastrophic failure mode where an initial localized fault in one microservice, database node, or cache tier triggers a domino effect that causes failures in successive components across an entire infrastructure. For example, when one service node crashes from overload, load balancers redistribute its traffic to surviving nodes, overloading and crashing them in rapid sequence.",
     "why_matters": "Turns minor transient glitches into enterprise-wide total outages that are notoriously difficult to recover from without dropping all incoming traffic and staging cold restarts.",
-    "example": "# Domino effect: Cache layer crashes -> Uncached traffic hits Database -> DB maxes out connections -> Application servers block on DB -> Reverse proxies return 504 Gateway Timeout globally.",
+    "example": "# Envoy circuit breaker configuration to isolate failing services and halt cascades\ncircuit_breakers:\n  thresholds:\n    - priority: DEFAULT\n      max_connections: 100\n      max_pending_requests: 50\n      max_requests: 200",
     "related": [
       "retry-storms",
       "load-shedding",
@@ -2569,8 +2569,8 @@
         "url": "https://redis.io/docs/latest/develop/reference/eviction/"
       },
       {
-        "title": "Redis Documentation: Memory Optimization",
-        "url": "https://redis.io/docs/latest/develop/reference/eviction/"
+        "title": "Redis Documentation: Overview",
+        "url": "https://redis.io/docs/"
       }
     ]
   },
@@ -2857,7 +2857,7 @@
     "nature": "defense technique",
     "definition": "Webhook Retries refer to the automated delivery policy employed by event producers to reliably re-dispatch HTTP webhook notifications when recipient endpoints return 5xx errors or connection timeouts. Senders implement exponential backoff with jitter across multiple days (e.g., retrying after 5s, 5m, 1h, 6h, 24h) before finally marking the delivery as failed.",
     "why_matters": "Network blips and receiver maintenance windows are inevitable; without structured retries, downstream consumers permanently miss critical payment notifications and customer state updates.",
-    "example": "# Stripe Webhook Retry Policy: Retries up to 3 days with exponential backoff\n# Headers include Stripe-Signature and timestamp to prevent replay attacks.",
+    "example": "import time, requests\n\ndef deliver_webhook(url, payload, max_retries=5):\n    for attempt in range(max_retries):\n        delay = (2 ** attempt) + (time.time() % 1)\n        res = requests.post(url, json=payload, timeout=5)\n        if res.status_code < 500:\n            return res.status_code\n        time.sleep(delay)",
     "related": [
       "webhook-signature-verification",
       "retry-storms",
@@ -2869,8 +2869,8 @@
         "url": "https://docs.stripe.com/webhooks#delivery-attempts-and-retries"
       },
       {
-        "title": "Svix: Webhook Retry Best Practices",
-        "url": "https://docs.stripe.com/webhooks"
+        "title": "Svix Documentation: Webhook Retries",
+        "url": "https://docs.svix.com/retries"
       }
     ]
   },
@@ -2957,7 +2957,7 @@
     "nature": "concept",
     "definition": "HTTP Method Semantics define the intended action and architectural properties of HTTP request verbs: GET (safe and idempotent retrieval), POST (non-idempotent resource creation or processing), PUT (idempotent complete replacement), PATCH (partial mutation), and DELETE (idempotent removal). 'Safe' methods must not induce server-side state mutations, while 'idempotent' methods guarantee that multiple identical requests produce the same end state.",
     "why_matters": "Violating method semantics (such as executing state mutations inside GET requests) opens applications to CSRF exploitation, unintended browser prefetching data mutations, and improper CDN caching.",
-    "example": "# Safe and Idempotent: GET /api/v1/users/42\n# Idempotent mutation: PUT /api/v1/users/42\n# Non-idempotent mutation: POST /api/v1/orders/charge",
+    "example": "POST /v1/charges HTTP/1.1\nHost: api.stripe.com\nIdempotency-Key: 7b84a6c8-04f1-4db9-8b64-81d392576b50\nContent-Type: application/json\n\n{\"amount\": 2000, \"currency\": \"usd\", \"customer\": \"cus_123\"}",
     "related": [
       "http-status-codes",
       "csrf",
@@ -3256,7 +3256,7 @@
     "difficulty": "beginner",
     "nature": "technique tooling",
     "definition": "HTTP Compression is the process of reducing the byte size of HTTP message payloads transmitted across networks using algorithms such as Gzip, Brotli (br), or Deflate. Handshaked via client Accept-Encoding and server Content-Encoding headers, compression transforms repetitive text payloads (JSON, HTML, JavaScript) into compact binary streams.",
-    "why_matters": "Reduces network bandwidth consumption by 60% to 80%, speeding up page load times and slashing cloud cloud egress fees. However, compression of encrypted sensitive tokens over HTTPS can expose systems to side-channel attacks (BREACH/CRIME).",
+    "why_matters": "Reduces network bandwidth consumption by 60% to 80%, speeding up page load times and slashing cloud egress fees. However, compression of encrypted sensitive tokens over HTTPS can expose systems to side-channel attacks (BREACH/CRIME).",
     "example": "# Client Request:\nAccept-Encoding: gzip, deflate, br\n\n# Server Compressed Response:\nContent-Encoding: br\nContent-Type: application/json",
     "related": [
       "egress-fees",
@@ -3282,7 +3282,7 @@
     "nature": "concept",
     "definition": "Latency and Throughput are the two fundamental metrics of system performance: Latency measures the time delay required to complete a single operation (e.g., round-trip time in milliseconds), while Throughput measures the volume of operations a system can process over a given time unit (e.g., requests per second or megabits per second). Architectural optimizations often trade one for the other; batching increases throughput at the cost of latency.",
     "why_matters": "Conflating throughput with latency leads to flawed capacity planning. A database may achieve 100,000 queries per second while individual query p99 latency degrades to seconds under queue congestion.",
-    "example": "# Little's Law: L = λ * W\n# Concurrency (L) = Arrival Rate (λ) * Average Latency (W)\n# 1,000 req/sec with 50ms latency requires 50 concurrent server workers.",
+    "example": "# Benchmark latency vs throughput using wrk:\nwrk -t4 -c100 -d30s --latency https://api.example.com/v1/items\n# Little's Law: Concurrency (100) = Arrival Rate (req/sec) * Mean Latency (seconds)",
     "related": [
       "p99-latency",
       "connection-pooling",
@@ -3307,7 +3307,7 @@
     "nature": "concept",
     "definition": "Egress Fees are the financial costs charged by cloud service providers (AWS, Azure, GCP) for outbound data transferred across cloud network boundaries, availability zones, regions, or out to the public internet. While inbound data ingress is virtually always free, egress charges can exceed thousands of dollars per terabyte transferred across non-peered connections.",
     "why_matters": "Unoptimized cross-region database queries, multi-region replication, and serving static assets directly from cloud compute rather than CDNs result in budget-destroying surprise cloud invoices.",
-    "example": "# Architecture cost optimization: Route assets through Cloudflare/CloudFront CDN\n# Eliminates direct AWS S3 / EC2 internet egress bandwidth pricing.",
+    "example": "# Route asset traffic through CDN to eliminate direct AWS S3 internet egress fees\nresource \"aws_cloudfront_distribution\" \"s3_cdn\" {\n  origin {\n    domain_name = aws_s3_bucket.media.bucket_regional_domain_name\n    origin_id   = \"s3-media-origin\"\n  }\n  enabled = true\n}",
     "related": [
       "cdns",
       "vpcs",
@@ -3357,7 +3357,7 @@
     "nature": "defense technique",
     "definition": "A Subnet (subnetwork) is a segmented logical subdivision of an IP network within a VPC, tied to a specific Availability Zone. Subnets are divided into Public Subnets (which route outbound traffic through an Internet Gateway and host load balancers) and Private Subnets (which lack direct internet routes and host application servers and database clusters).",
     "why_matters": "Enforces defense-in-depth network segregation: databases residing in private subnets cannot be reached directly from the internet, neutralizing internet-wide port scans and automated exploits.",
-    "example": "# AWS Private and Public Subnet CIDR allocation\n# VPC CIDR: 10.0.0.0/16\n# Public Subnet (ALB): 10.0.1.0/24 (Routes to Internet Gateway)\n# Private Subnet (DB):  10.0.10.0/24 (No route to IGW)",
+    "example": "# AWS Public and Private Subnets in Terraform\nresource \"aws_subnet\" \"public\" {\n  vpc_id                  = aws_vpc.main.id\n  cidr_block              = \"10.0.1.0/24\"\n  map_public_ip_on_launch = true\n}\n\nresource \"aws_subnet\" \"private\" {\n  vpc_id     = aws_vpc.main.id\n  cidr_block = \"10.0.10.0/24\"\n}",
     "related": [
       "vpcs",
       "nat-gateways",
@@ -3632,7 +3632,7 @@
     "nature": "defense technique",
     "definition": "Failover is the automated operational procedure of switching production workloads from a primary active system component (database master, compute node, availability zone, or cloud region) to a redundant standby or secondary system when the primary becomes unavailable. Automated failover systems evaluate heartbeats, execute split-brain fencing, and redirect traffic seamlessly via DNS or virtual IP reassignment.",
     "why_matters": "Minimizes system downtime and eliminates manual human intervention during hardware failures, power outages, and network splits, preserving business continuity.",
-    "example": "# Patroni / PostgreSQL automated failover trigger:\n# Standby detects missing leader lease in etcd, promotes itself via pg_ctl promote",
+    "example": "# Patroni PostgreSQL automated failover configuration\nscope: postgres-prod\nttl: 30\nloop_wait: 10\nretry_timeout: 10\netcd3:\n  hosts: [\"10.0.1.5:2379\", \"10.0.1.6:2379\", \"10.0.1.7:2379\"]",
     "related": [
       "multi-region",
       "availability-zones",
@@ -3657,7 +3657,7 @@
     "nature": "technique concept",
     "definition": "Multi-Region Architecture is the deployment of application workloads, compute instances, and database replicas across two or more geographically isolated cloud regions (e.g. us-east-1 and eu-west-1). Designed as active-passive (for disaster recovery) or active-active (serving local traffic globally with cross-region data replication), multi-region systems provide the highest tier of availability.",
     "why_matters": "Protects critical systems against catastrophic whole-region cloud outages, natural disasters, and fiber optic cuts while serving international users with ultra-low latency.",
-    "example": "# Route 53 Geolocation or Latency-based routing\n# us-east-1 ALB -> Primary North America\n# eu-west-1 ALB -> Primary Europe",
+    "example": "# AWS Route 53 latency-based routing between regions\nresource \"aws_route53_record\" \"api\" {\n  zone_id = aws_route53_zone.primary.zone_id\n  name    = \"api.example.com\"\n  type    = \"A\"\n  latency_routing_policy { region = \"us-east-1\" }\n  set_identifier = \"us-east-1\"\n  alias {\n    name    = aws_lb.us_alb.dns_name\n    zone_id = aws_lb.us_alb.zone_id\n    evaluate_target_health = true\n  }\n}",
     "related": [
       "availability-zones",
       "disaster-recovery",
@@ -3707,7 +3707,7 @@
     "nature": "concept defense",
     "definition": "A Single Point of Failure (SPOF) is any individual hardware component, software service, network link, configuration setting, or third-party dependency whose failure will cause the entire overall system or application to stop functioning. Robust system engineering identifies and systematically eliminates SPOFs through redundancy, graceful degradation, and decoupled fallback mechanisms.",
     "why_matters": "A single non-redundant database master, an unbuffered reverse proxy, or a third-party billing API with no circuit breaker can bring down an otherwise highly scalable enterprise application.",
-    "example": "# Eliminating SPOF on database layer:\n# Unreplicated Master DB (SPOF!) -> Replaced with Multi-AZ Auto-Failover Cluster",
+    "example": "# Eliminate database SPOF with AWS RDS Multi-AZ standby replica\nresource \"aws_db_instance\" \"production\" {\n  allocated_storage   = 100\n  engine              = \"postgres\"\n  instance_class      = \"db.r6g.xlarge\"\n  multi_az            = true\n  skip_final_snapshot = false\n}",
     "related": [
       "failover",
       "disaster-recovery",
@@ -3732,7 +3732,7 @@
     "nature": "defense technique",
     "definition": "Disaster Recovery (DR) comprises the strategies, automated playbooks, technical architectures, and policies designed to restore application systems and data operations following catastrophic infrastructure destruction, severe cyberattacks, or natural disasters. Standard DR architectures range from Backup & Restore, Pilot Light, Warm Standby, to fully active Multi-Site Active/Active configurations.",
     "why_matters": "Without an articulated and tested disaster recovery plan, a catastrophic cloud region failure or ransomware infection can result in permanent business insolvency.",
-    "example": "# Pilot light DR model:\n# Minimal database replication running continuously in secondary region;\n# Compute instances provisioned on-demand via Terraform during declared disaster.",
+    "example": "# Automated cross-region disaster recovery copy plan in Terraform\nresource \"aws_backup_plan\" \"dr_plan\" {\n  name = \"cross-region-dr-plan\"\n  rule {\n    rule_name         = \"daily-backup\"\n    target_vault_name = aws_backup_vault.primary.name\n    schedule          = \"cron(0 1 * * ? *)\"\n    copy_action {\n      destination_vault_arn = aws_backup_vault.secondary.arn\n    }\n  }\n}",
     "related": [
       "rto-and-rpo",
       "backups",
@@ -3757,7 +3757,7 @@
     "nature": "concept defense",
     "definition": "Recovery Time Objective (RTO) and Recovery Point Objective (RPO) are the two core business metrics that govern disaster recovery and business continuity: RTO defines the maximum acceptable duration of system downtime before service must be restored. RPO defines the maximum acceptable volume of data loss measured in time (e.g. data created in the last 5 minutes) that can be lost without causing irreparable business harm.",
     "why_matters": "Determines technical architecture budgets: achieving near-zero RTO and RPO requires costly active-active multi-region replication, while higher tolerances allow cost-effective daily snapshot regimes.",
-    "example": "# Business SLA definition:\n# Mission-Critical Banking Core: RTO < 60s, RPO = 0s (Synchronous multi-AZ)\n# Internal Reporting BI: RTO < 24h, RPO < 4h (Nightly snapshots)",
+    "example": "# AWS Aurora Global Database configured for sub-minute RTO and sub-second RPO\nresource \"aws_rds_global_cluster\" \"global_db\" {\n  global_cluster_identifier = \"global-db-cluster\"\n  engine                    = \"aurora-postgresql\"\n  deletion_protection       = true\n}",
     "related": [
       "disaster-recovery",
       "point-in-time-recovery",
@@ -3782,7 +3782,7 @@
     "nature": "concept",
     "definition": "A Service Level Agreement (SLA) is a formal, legally binding contract between a service provider and its customers defining the expected level of service, uptime percentage (e.g. 99.9% or 'three nines'), latency guarantees, and the financial penalties or service credits incurred if the commitments are breached. SLAs are derived from internal SLOs with conservative safety margins.",
     "why_matters": "Contractual uptime failures incur direct financial refunds and reputation damage. SRE teams ensure internal service objectives are far stricter than customer-facing SLAs.",
-    "example": "# 99.9% Uptime SLA Allowance:\n# Allowed downtime per year: 8.76 hours\n# 99.99% Uptime SLA Allowance:\n# Allowed downtime per year: 52.56 minutes",
+    "example": "# OpenSLO Specification for contractual 99.9% availability SLA\napiVersion: openslo/v1\nkind: SLA\nmetadata:\n  name: payment-api-sla\nspec:\n  service: payment-gateway\n  threshold: 0.999\n  timeWindow:\n    - duration: 30d\n      isRolling: true",
     "related": [
       "slos",
       "error-budgets",
@@ -3805,7 +3805,7 @@
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "defense concept",
-    "definition": "A Service Level Objective (SLO) is an internal target reliability goal agreed upon by engineering and product teams to measure system health over a rolling window (e.g. 99.95% of successful HTTP responses under 200ms over 30 days). SLOs are computed from Service Level Indicators (SLIs)—quantifiable metrics like request success rate or p99 latency.",
+    "definition": "A Service Level Objective (SLO) is an internal target reliability goal agreed upon by engineering and product teams to measure system health over a rolling window (e.g. 99.95% of successful HTTP responses under 200ms over 30 days). SLOs are computed from Service Level Indicators (SLIs)\u2014quantifiable metrics like request success rate or p99 latency.",
     "why_matters": "Provides an objective, data-driven framework that aligns feature delivery speed with operational reliability, preventing subjective disputes between developers and operations teams.",
     "example": "# Prometheus Alert rule checking SLO burn rate\nalert: SLOAvailabilityBurnRateHigh\nexpr: (sum(rate(http_requests_total{status=~\"5..\"}[1h])) / sum(rate(http_requests_total[1h]))) > 0.01\nfor: 5m",
     "related": [
@@ -3832,7 +3832,7 @@
     "nature": "concept defense",
     "definition": "An Error Budget is the mathematical inverse of a Service Level Objective (100% - SLO). It represents the exact amount of acceptable downtime, failed requests, or latency degradation a system can experience without breaching customer trust (e.g. a 99.9% SLO allows a 0.1% error budget). When the error budget is exhausted, feature deployments halt in favor of reliability engineering.",
     "why_matters": "Balances rapid innovation against system stability. It transforms uptime from an abstract ideal into a tangible currency that product managers and engineers budget for risky new releases.",
-    "example": "# 30-day rolling window with 10,000,000 total requests\n# SLO: 99.9% success\n# Error Budget: 0.1% = 10,000 allowed failed requests.",
+    "example": "# PromQL remaining 30d error budget percentage for 99.9% SLO\n1 - (\n  sum(increase(http_requests_total{status=~\"5..\"}[30d]))\n  /\n  (sum(increase(http_requests_total[30d])) * (1 - 0.999))\n)",
     "related": [
       "slos",
       "slas",
@@ -3857,7 +3857,7 @@
     "nature": "defense technique",
     "definition": "Incident Response is the structured operational workflow followed by engineering teams to detect, triage, contain, mitigate, and resolve production service disruptions or security breaches. Governed by formal roles (Incident Commander, Operations Lead, Communications Lead), it emphasizes clear communication channels, rapid mitigation over root-cause diagnosis during outages, and blame-free retrospective analysis.",
     "why_matters": "Chaotic, uncoordinated incident response prolongs system downtime and multiplies financial losses. Standardized protocols reduce Mean Time to Resolution (MTTR) under high-stress conditions.",
-    "example": "# Incident Command Hierarchy:\n# Incident Commander (IC): Directs overall mitigation strategy\n# Ops Lead: Executes technical fixes and runs diagnostic commands\n# Scribe / Comms: Updates internal stakeholders and public status page",
+    "example": "# Trigger high-urgency incident via PagerDuty Events API v2\ncurl -X POST https://events.pagerduty.com/v2/enqueue \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"routing_key\": \"$PD_INTEGRATION_KEY\", \"event_action\": \"trigger\", \"payload\": {\"summary\": \"Payment Service 5xx Spikes (>5%)\", \"severity\": \"critical\", \"source\": \"prod-monitoring\"}}'",
     "related": [
       "on-call",
       "runbooks",
@@ -3882,7 +3882,7 @@
     "nature": "concept tooling",
     "definition": "On-Call is an operational staffing model where designated engineers are scheduled on rotating shifts to remain available outside standard business hours to respond immediately to critical automated alerts and production outages. Effective on-call regimes prioritize actionable alerts, sustainable paging thresholds, fair rotation schedules, and post-shift handoffs.",
     "why_matters": "Ensures 24/7/365 production service reliability and prompt incident resolution. However, poor on-call hygiene characterized by frequent non-actionable alarms leads to alert fatigue and engineer burnout.",
-    "example": "# PagerDuty / Opsgenie escalation policy:\n# Level 1: Page Primary On-Call engineer (Wait 10 min)\n# Level 2: Page Secondary On-Call engineer (Wait 10 min)\n# Level 3: Page Engineering Manager",
+    "example": "# Terraform PagerDuty escalation policy resource\nresource \"pagerduty_escalation_policy\" \"primary\" {\n  name      = \"Production Escalation Policy\"\n  num_loops = 2\n  rule {\n    escalation_delay_in_minutes = 10\n    target {\n      type = \"schedule_reference\"\n      id   = pagerduty_schedule.primary_rotation.id\n    }\n  }\n}",
     "related": [
       "incident-response",
       "alert-fatigue",
@@ -3932,7 +3932,7 @@
     "nature": "defense concept",
     "definition": "A Postmortem (retrospective or root cause analysis) is a structured, blameless written review conducted following a production incident. It documents the timeline of events, underlying technical contributing factors, business impact, what went well, what went poorly, and tracks actionable follow-up work (preventative guardrails, alerts, architectural changes) to prevent recurrence.",
     "why_matters": "A culture of blameless postmortems transforms catastrophic failures into organizational learning. Blaming individuals creates fear and concealment, while analyzing systemic vulnerabilities prevents repeat outages.",
-    "example": "# Postmortem Template Sections:\n- Incident Summary & Severity\n- Timeline (UTC timestamps of detection, escalation, mitigation)\n- Root Cause & Contributing Factors\n- Action Items (Jira tickets with assigned owners and deadlines)",
+    "example": "## Postmortem: 2024-04-10 Redis Connection Exhaustion\n- **Severity**: SEV-1 | **Downtime**: 28 mins | **MTTD**: 3m | **MTTR**: 25m\n- **Root Cause**: Unindexed query exhausted backend connection pool\n- **Action Item**: [DB-204] Add composite index to orders(user_id, created_at)",
     "related": [
       "incident-response",
       "runbooks",
@@ -3944,8 +3944,8 @@
         "url": "https://sre.google/sre-book/postmortem-culture/"
       },
       {
-        "title": "Etsy: Blameless Postmortems and Just Culture",
-        "url": "https://sre.google/sre-book/postmortem-culture/"
+        "title": "PagerDuty Incident Response: Post-Mortem Process",
+        "url": "https://response.pagerduty.com/"
       }
     ]
   },
@@ -3969,8 +3969,8 @@
         "url": "https://principlesofchaos.org/"
       },
       {
-        "title": "Netflix Technology Blog: Chaos Monkey",
-        "url": "https://principlesofchaos.org/"
+        "title": "Chaos Engineering (Wikipedia)",
+        "url": "https://en.wikipedia.org/wiki/Chaos_engineering"
       }
     ]
   },
@@ -4032,7 +4032,7 @@
     "nature": "concept",
     "definition": "Horizontal Scaling (scaling out/in) and Vertical Scaling (scaling up/down) represent the two core paradigms for handling increased computational demand: Vertical scaling adds more physical CPU, RAM, or faster NVMe disks to a single machine. Horizontal scaling adds more independent server nodes or container instances across a network, distributing traffic via load balancers.",
     "why_matters": "Vertical scaling has hard physical hardware ceilings and requires downtime to resize machines. Horizontal scaling offers virtually unlimited scale and higher fault tolerance, though it requires stateless application design.",
-    "example": "# Vertical Scaling: Upgrading EC2 instance from t3.micro to m6i.4xlarge\n# Horizontal Scaling: Increasing Kubernetes replicaCount from 2 to 20 instances",
+    "example": "# Horizontal scaling: scale pods dynamically\nkubectl scale deployment api-gateway --replicas=10\n\n# Vertical scaling: patch pod resource limits\nkubectl set resources deployment api-gateway -c=api --limits=cpu=2000m,memory=4Gi",
     "related": [
       "autoscaling",
       "stateless-services",
@@ -4082,7 +4082,7 @@
     "nature": "technique concept",
     "definition": "Capacity Planning is the systematic forecasting of computing, storage, network bandwidth, and database I/O requirements to ensure systems can absorb future organic growth, seasonal spikes (e.g. Black Friday), and catastrophic failovers without degradation. It combines historical growth metrics, stress testing data, and resource headroom calculations.",
     "why_matters": "Underestimating capacity leads to catastrophic outages during peak marketing campaigns, while overestimating leads to millions of dollars in wasted cloud infrastructure spend.",
-    "example": "# Headroom formula: Headroom = (Peak Demand * 1.5) / Node Capacity\n# Ensures cluster can absorb peak traffic even if one full Availability Zone fails.",
+    "example": "# PromQL: Predict days until disk fills at current write rate (linear regression)\npredict_linear(node_filesystem_free_bytes[1d], 86400 * 7) < 0",
     "related": [
       "load-testing",
       "autoscaling",
@@ -4244,8 +4244,8 @@
         "url": "https://man7.org/linux/man-pages/man8/logrotate.8.html"
       },
       {
-        "title": "Red Hat Enterprise Linux: Managing Log Files with Logrotate",
-        "url": "https://man7.org/linux/man-pages/man8/logrotate.8.html"
+        "title": "Debian Wiki: Logrotate",
+        "url": "https://wiki.debian.org/Logrotate"
       }
     ]
   },
@@ -4344,8 +4344,8 @@
         "url": "https://prometheus.io/docs/practices/naming/"
       },
       {
-        "title": "Grafana Labs: What is high cardinality and why should you care?",
-        "url": "https://prometheus.io/docs/practices/naming/"
+        "title": "Grafana Labs Documentation: Metrics Cardinality",
+        "url": "https://grafana.com/docs/"
       }
     ]
   },
@@ -4382,7 +4382,7 @@
     "nature": "concept",
     "definition": "Alert Fatigue is the psychological desensitization experienced by on-call engineers when bombarded by a continuous stream of low-priority, non-actionable, flaky, or false-positive alarms. Engineers gradually develop habituated apathy, missing or ignoring genuine critical outages buried within notification noise.",
     "why_matters": "Alert fatigue leads to severe engineer burnout, high team attrition, and delayed incident triage that transforms small glitches into multi-hour customer outages. High-reliability teams mandate that every page must be actionable or deleted.",
-    "example": "# Alert Hygiene Rule:\n# IF an alert fires at 3 AM and the engineer only needs to click 'Ack' and go back to sleep,\n# THEN that alert must be downgraded to a ticket or eliminated entirely.",
+    "example": "# Prometheus alerting rule with 'for' clause to prevent flaky paging fatigue\n- alert: HighAPIErrorRate\n  expr: sum(rate(http_requests_total{status=~\"5..\"}[5m])) / sum(rate(http_requests_total[5m])) > 0.05\n  for: 10m  # Requires sustained breach before triggering pager\n  labels:\n    severity: page",
     "related": [
       "on-call",
       "incident-response",
@@ -4455,7 +4455,7 @@
     "category": "reliability-observability",
     "difficulty": "intermediate",
     "nature": "tooling technique",
-    "definition": "A Flame Graph is an interactive visualization of profiled software software call stacks invented by Brendan Gregg. The X-axis represents the population of call stacks sorted alphabetically (where box width corresponds directly to CPU time or memory allocated), while the Y-axis shows stack depth from bottom (caller) to top (callee).",
+    "definition": "A Flame Graph is an interactive visualization of profiled software call stacks invented by Brendan Gregg. The X-axis represents the population of call stacks sorted alphabetically (where box width corresponds directly to CPU time or memory allocated), while the Y-axis shows stack depth from bottom (caller) to top (callee).",
     "why_matters": "Allows developers to visually identify hot methods and costly call chains across millions of profile samples at a glance. Wide plateaus immediately expose CPU-hogging algorithms.",
     "example": "# Generate flame graph using Linux perf and Brendan Gregg scripts\nperf record -F 99 -a -g -- sleep 30\nperf script | stackcollapse-perf.pl | flamegraph.pl > flamegraph.svg",
     "related": [
@@ -4519,7 +4519,7 @@
         "url": "https://developer.hashicorp.com/terraform/language/state"
       },
       {
-        "title": "AWS Best Practices for Managing Terraform State",
+        "title": "HashiCorp Terraform Documentation: Remote Backends",
         "url": "https://developer.hashicorp.com/terraform/language/state/backends"
       }
     ]
@@ -4719,8 +4719,8 @@
         "url": "https://12factor.net/"
       },
       {
-        "title": "Martin Fowler: Twelve Factor Apps",
-        "url": "https://12factor.net/"
+        "title": "Twelve-Factor App Methodology (Wikipedia)",
+        "url": "https://en.wikipedia.org/wiki/Twelve-Factor_App_methodology"
       }
     ]
   },
@@ -4857,7 +4857,7 @@
     "nature": "concept defense",
     "definition": "Semantic Versioning (SemVer 2.0.0) is a formal versioning specification formatted as MAJOR.MINOR.PATCH: MAJOR increments introduce incompatible API breaking changes; MINOR increments add backward-compatible functionality; PATCH increments provide backward-compatible bug fixes. Pre-release tags and build metadata are appended using hyphens and plus signs.",
     "why_matters": "Enables package managers and developers to specify safe dependency update constraints (e.g. ^1.2.0 accepting patch and minor updates) without risking sudden breaking API changes in production builds.",
-    "example": "# SemVer Version progression:\n# 1.0.0 (Initial release)\n# 1.0.1 (Patch: fix memory leak bug)\n# 1.1.0 (Minor: add optional endpoint)\n# 2.0.0 (Major: remove deprecated endpoints)",
+    "example": "{\n  \"dependencies\": {\n    \"express\": \"^4.19.2\",\n    \"pg\": \"~8.11.3\"\n  }\n}",
     "related": [
       "api-versioning",
       "backward-compatibility",
@@ -4919,8 +4919,8 @@
         "url": "https://reproducible-builds.org/"
       },
       {
-        "title": "Debian Reproducible Builds Documentation",
-        "url": "https://reproducible-builds.org/"
+        "title": "Debian Wiki: Reproducible Builds",
+        "url": "https://wiki.debian.org/ReproducibleBuilds"
       }
     ]
   },
@@ -4932,7 +4932,7 @@
     "nature": "defense tooling",
     "definition": "Branch Protection Rules are source code repository governance policies (GitHub, GitLab) configured on critical branches (such as main or production) that prohibit direct code pushes. Protection rules mandate peer code reviews, require status checks (unit tests, SAST, secret scanners) to pass before merging, enforce linear git history, and restrict administrative bypasses.",
     "why_matters": "Prevents unauthorized, unreviewed, or rogue commits from being pushed directly to production branches, establishing a mandatory audit and review trail for every code change.",
-    "example": "# GitHub Branch Protection Settings:\n- Require pull request reviews before merging (minimum 1 approval)\n- Require status checks to pass before merging (CI / security scans)\n- Require signed commits\n- Do not allow force pushes\n- Include administrators",
+    "example": "# Terraform GitHub branch protection resource\nresource \"github_branch_protection\" \"main\" {\n  repository_id = github_repository.repo.node_id\n  pattern       = \"main\"\n  enforce_admins = true\n  required_status_checks {\n    strict   = true\n    contexts = [\"ci/test\", \"security/secret-scan\"]\n  }\n  required_pull_request_reviews {\n    required_approving_review_count = 1\n  }\n}",
     "related": [
       "gitops",
       "secret-scanning",
@@ -4944,8 +4944,8 @@
         "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches"
       },
       {
-        "title": "GitLab Documentation: Protected Branches",
-        "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches"
+        "title": "GitLab Docs: Protected branches",
+        "url": "https://docs.gitlab.com/user/project/repository/branches/protected/"
       }
     ]
   }

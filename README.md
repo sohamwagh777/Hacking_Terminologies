@@ -154,11 +154,16 @@ Open your browser to `http://localhost:8000/`.
 
 Run validation checks:
 ```bash
-# Validates data contract (198 terms, unique IDs, valid categories, resolve related IDs, verified links)
-python3 scripts/validate.py
+# Validates data contract (198 terms, unique IDs, no empty fields, related IDs
+# resolve, https links, curated keys resolve)
+python3 tools/validate_data.py
 
-# Verifies static asset existence, DOM bindings, and JSON parsing
-python3 scripts/smoke.py
+# Browser-equivalent page gate: lex-data block parses as the browser sees it,
+# every inline <script> passes node --check, and the app boots under a DOM stub
+python3 tools/verify_page.py
+
+# After editing data/terms.json, re-inline it into index.html
+python3 tools/inline_data.py
 ```
 
 ---
