@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LEXICON — Cyber &amp; Systems Security Glossary</title>
-<meta name="description" content="An interactive glossary that charts 198 cybersecurity and systems-engineering terms as one searchable constellation. Open the atlas, read a term, follow its trail.">
+<meta name="description" content="198 curated cybersecurity and systems-engineering terms in one searchable table. Explore a term, read why it matters, and follow a learning route.">
 <meta name="theme-color" content="#04060d">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
 <style>
@@ -28,7 +28,7 @@
   --amber:#ffb454;
   --mono:ui-monospace,'Cascadia Mono','JetBrains Mono','Cascadia Code',Menlo,Consolas,'DejaVu Sans Mono','Liberation Mono',monospace;
 }
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-siz\69 ng:border-box}
 html{scroll-behavior:smooth}
 body{
   background:var(--void);
@@ -69,7 +69,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   button,a,.chip,.term-card{min-height:44px;min-width:44px}
 }
 @media (forced-colors:active){
-  .term-card,.chip{border:1px solid CanvasText}
+  .term-card,.chip,.elem,.legend-chip,.tab-btn{border:1px solid CanvasText}
 }
 h1,h2,h3{font-weight:800;letter-spacing:.04em}
 
@@ -114,24 +114,42 @@ main{position:relative;z-index:1;padding:24px 18px 60px;max-width:1280px;margin:
 .view.active{display:block}
 @keyframes fadein{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 
-/* ATLAS */
-#atlas-wrap{position:relative;height:min(72vh,640px);min-height:430px;border:1px solid var(--edge);border-radius:6px;background:radial-gradient(1100px 620px at 50% 42%,#081025 0%,#04060d 72%);overflow:hidden}
-#sky{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair}
-.hud{position:absolute;display:flex;gap:6px;padding:8px 10px;background:rgba(11,16,32,.9);border:1px solid var(--edge);border-radius:4px;backdrop-filter:blur(8px)}
-.hud.tl{top:10px;left:12px;align-items:center;font-size:11px;letter-spacing:.14em;color:var(--dim)}
-.hud.tr{top:10px;right:12px}
-.hud.bl{bottom:12px;left:12px;flex-wrap:wrap;max-width:min(680px,94%)}
-.hud button{padding:3px 11px;font-size:13px;border:1px solid var(--edge);border-radius:3px;color:var(--dim)}
-.hud button:hover{color:#fff;border-color:var(--cool)}
-.live-dot{width:6px;height:6px;border-radius:50%;background:var(--hot);box-shadow:0 0 8px var(--hot);animation:blip 1.6s ease infinite}
-@keyframes blip{50%{opacity:.25}}
-.legend-chip{display:inline-flex;align-items:center;gap:7px;padding:4px 10px;margin:2px;font-size:11px;color:var(--dim);border:1px solid var(--edge);border-radius:99px;background:rgba(10,16,31,.6)}
-.legend-chip:hover{color:#fff;border-color:rgba(255,255,255,.35)}
+/* HOME + periodic table */
+.intro{padding:clamp(28px,6vw,72px) 0 42px;max-width:900px}
+.wordmark{font-size:clamp(42px,9vw,88px);line-height:1;letter-spacing:.2em;color:var(--cool);font-weight:900;text-shadow:0 0 28px rgba(0,255,204,.2)}
+.tagline{margin-top:18px;color:#fff;font-size:clamp(16px,2.2vw,23px);font-weight:700;line-height:1.45;max-width:44ch}
+.intro-copy{margin-top:15px;color:var(--dim);max-width:78ch;font-size:13px}
+.stats{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+.stat-chip{border:1px solid var(--edge);border-radius:99px;padding:5px 11px;color:var(--dim);font-size:10px;letter-spacing:.12em}
+.stat-chip b{color:var(--cool);font-size:12px;margin-right:5px}
+.intro-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:23px}
+.action{padding:9px 13px;border:1px solid rgba(0,255,204,.28);border-radius:4px;color:var(--cool);font-size:10px;font-weight:800;letter-spacing:.1em;background:rgba(0,255,204,.035)}
+.action:hover,.action.primary{background:rgba(0,255,204,.12);border-color:rgba(0,255,204,.6);color:#fff}
+.table-section{padding-top:12px;scroll-margin-top:82px}
+.table-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.table-top h2{font-size:16px;letter-spacing:.14em;color:#fff}
+#matching{color:var(--dim);font-size:10px;letter-spacing:.12em}
+.legend{display:flex;gap:5px;flex-wrap:wrap;margin:0 0 20px}
+.legend-chip{display:inline-flex;align-items:center;gap:7px;padding:4px 9px;margin:0;font-size:10px;color:var(--dim);border:1px solid var(--edge);border-radius:99px;background:rgba(10,16,31,.6);letter-spacing:.04em}
+.legend-chip:hover,.legend-chip.active{color:#fff;border-color:var(--cool);background:rgba(0,255,204,.1)}
 .legend-chip i{width:8px;height:8px;border-radius:50%}
-#tip{position:absolute;z-index:20;pointer-events:none;display:none;max-width:280px;padding:9px 12px;background:rgba(4,6,13,.94);border:1px solid rgba(0,255,204,.4);border-radius:4px;box-shadow:0 0 24px rgba(0,255,204,.18);font-size:12px}
-#tip::after{content:'CLICK TO OPEN →';display:block;margin-top:5px;color:var(--faint);letter-spacing:.14em}
-#tip b{color:#fff;display:block;margin-bottom:3px;font-size:13px}
-#tip small{color:var(--dim)}
+.band{margin:22px 0 25px;--cat:#4ea1ff}
+.band-head{display:flex;align-items:center;gap:9px;padding:0 1px 6px;margin-bottom:9px;border-bottom:2px solid var(--cat);color:var(--ink);font-size:11px;letter-spacing:.13em}
+.band-head .icon{color:var(--cat);font-size:15px}
+.band-head small{margin-left:auto;color:var(--dim);font-size:9px;letter-spacing:.12em}
+.table{display:block}
+.elem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(84px,9vw,110px),1fr));gap:5px}
+.elem{aspect-ratio:1/1.15;min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:9px 8px;border:1px solid var(--hair);border-radius:3px;background:rgba(11,16,32,.84);text-align:left;overflow:hidden;transition:border-color .14s,box-shadow .14s,transform .14s}
+.elem:hover,.elem:focus-visible{border-color:var(--cat);box-shadow:0 0 18px color-mix(in srgb,var(--cat) 26%,transparent);transform:translateY(-2px)}
+.sym{color:var(--cat);font-size:20px;font-weight:800;line-height:1.1}
+.nm{display:block;width:100%;color:var(--dim);font-size:9.5px;line-height:1.3;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.elem.dim{opacity:.12;pointer-events:none}
+#tip{position:fixed;z-index:90;pointer-events:none;display:none;width:max-content;max-width:300px;padding:9px 12px;background:rgba(4,6,13,.96);border:1px solid var(--tip-color,var(--cool));border-radius:4px;box-shadow:0 0 24px rgba(0,255,204,.14);font-size:11px;line-height:1.5}
+#tip b{color:#fff;display:block;font-size:12px}
+#tip small{display:block;color:var(--dim);margin:2px 0}
+#tip span{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.elem{transition:none}.elem:hover,.elem:focus-visible{transform:none}}
+@media (pointer:coarse){.elem{min-height:0;min-width:0}.legend-chip{min-height:44px}}
 
 /* INDEX */
 #index{display:none;gap:18px}
@@ -197,7 +215,6 @@ main{position:relative;z-index:1;padding:24px 18px 60px;max-width:1280px;margin:
 .linkbtn.relbtn b{color:#9933ff}
 .linkbtn.relbtn:hover{border-color:rgba(153,51,255,.6)}
 @media (pointer:coarse){
-  #atlas-wrap{height:64vh}
   .rail{grid-template-columns:repeat(3,20px)}
   .trail{grid-template-columns:1fr}
 }
@@ -214,9 +231,9 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
 <canvas id="stars" aria-hidden="true"></canvas>
 
 <header class="top">
-  <div class="brand"><b><i>◢</i> LEXICON</b><small>cyber &amp; systems glossary</small></div>
+  <a class="brand" id="brand-home-link" href="#/home"><b><i>◢</i> LEXICON</b><small>cyber &amp; systems glossary</small></a>
   <nav class="tabs" aria-label="Views">
-    <button class="tab-btn active" data-v="atlas">⛧ ATLAS</button>
+    <button class="tab-btn active" data-v="home">⌂ HOME</button>
     <button class="tab-btn" data-v="index">≡ INDEX A–Z</button>
     <button class="tab-btn" data-v="paths">↝ PATHS</button>
   </nav>
@@ -229,16 +246,24 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
 </header>
 
 <main>
-  <section id="atlas" class="view active" aria-label="Term constellation">
-    <div id="atlas-wrap">
-      <canvas id="sky"></canvas>
-      <div class="hud tl"><span class="live-dot"></span><span id="sky-stats">BOOTING CONSTELLATION…</span></div>
-      <div class="hud tr">
-        <button id="zin" title="Zoom in">+</button><button id="zout" title="Zoom out">−</button><button id="zfit" title="Re-seed constellation">⊙</button>
+  <section id="home" class="view active" aria-label="Glossary home">
+    <section class="intro" aria-labelledby="wordmark">
+      <p class="wordmark" id="wordmark">LEXICON</p>
+      <p class="tagline">198 terms across security, systems and the backend — one table, zero fluff.</p>
+      <p class="intro-copy">A curated glossary of cybersecurity, databases, distributed systems, networking, and DevOps concepts. Knowing the word is the difference between googling in a panic and knowing what to fix. Hover a tile for its essence; click for the definition, why it matters, a real example, and vetted reading.</p>
+      <div class="stats" id="stats" aria-live="polite"></div>
+      <div class="intro-actions">
+        <button class="action primary" id="browse-table">BROWSE THE TABLE</button>
+        <button class="action" data-go="index">A–Z INDEX</button>
+        <button class="action" data-go="paths">TAKE A ROUTE</button>
       </div>
-      <div class="hud bl" id="legend"></div>
-      <div id="tip"></div>
-    </div>
+    </section>
+    <section class="table-section" id="table-section" aria-label="Periodic table of terms">
+      <div class="table-top"><h2>PERIODIC TABLE OF TERMS</h2><p id="matching" aria-live="polite"></p></div>
+      <nav class="legend" id="legend" aria-label="Filter categories"></nav>
+      <div id="table" class="table"></div>
+      <div id="tip" role="tooltip"></div>
+    </section>
   </section>
 
   <section id="index" class="view" aria-label="Alphabetical index">
@@ -248,12 +273,12 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
 
   <section id="paths" class="view" aria-label="Learning paths">
     <h2>LEARNING PATHS</h2>
-    <p class="lede">Six curated routes through the constellation — walk them in order, or click any station to jump into its dossier.</p>
+    <p class="lede">Six curated routes through security, systems, and the backend — walk them in order, or click any station to jump into its dossier.</p>
     <div id="routes"></div>
   </section>
 
   <div id="boot-err">
-    <b>⚠ CONSTELLATION DATA MISSING</b><br><br>
+    <b>⚠ GLOSSARY DATA MISSING</b><br><br>
     The <span style="color:#0f8">#lex-data</span> block is missing from this file — probably rebuilt without running <code>tools/inline_data.py</code>, which inlines <code>data/terms.json</code> into it. Regenerate <code>index.html</code> and re-push; until then no term data can render.
   </div>
 </main>
@@ -427,7 +452,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "category": "web-exploitation",
     "difficulty": "intermediate",
     "nature": "attack technique",
-    "definition": "Path Traversal (also known as Directory Traversal or dot-dot-slash) involves manipulating variables referencing file paths with dot-dot-slash sequences to step out of the restricted root directory. Attackers access arbitrary files on the host filesystem, such as configuration files, source code, or password files. Defensive mitigations include canonicalizing paths and validating against a strict allowlist.",
+    "definition": "Path Traversal (also known as Directory Traversal or dot-dot-slash) involves manipulating variables referencing file paths with dot-dot-slash sequences to step out of the restricted root directory. Attackers access arbitrary files on the host filesystem, such as configuration files, source code, or password files. Defensive mitigations include canonicaliz\u0069ng paths and validating against a strict allowlist.",
     "why_matters": "Exposes sensitive system and application files, such as /etc/passwd or application secrets (.env), often escalating to full remote code execution if upload directories are accessible. It represents a classic CWE-22 flaw commonly found in web servers and CMS plugins.",
     "example": "GET /download?file=../../../../etc/passwd HTTP/1.1\nHost: vulnerable.example.com",
     "related": [
@@ -802,7 +827,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "category": "crypto-identity",
     "difficulty": "beginner",
     "nature": "defense technique",
-    "definition": "Password Salting is the security technique of appending a unique, cryptographically random byte sequence (the salt) to a plaintext password before passing it through a password hashing function. The salt is stored alongside the resulting hash in the database. Salting ensures that identical user passwords yield distinct hashes, completely neutralizing precomputed dictionary lookups and rainbow table attacks.",
+    "definition": "Password Salting is the security technique of appending a unique, cryptographically random byte sequence (the salt) to a plaintext password before passing it through a password hashing function. The salt is stored alongside the resulting hash in the database. Salting ensures that identical user passwords yield distinct hashes, completely neutraliz\u0069ng precomputed dictionary lookups and rainbow table attacks.",
     "why_matters": "Without unique salts per user, an attacker with a leaked hash database can compute a single rainbow table or reverse hash lookups across thousands of users simultaneously. Salting forces the attacker to crack each password hash individually.",
     "example": "import secrets, hashlib\n\n# Generate random 16-byte salt per user\nsalt = secrets.token_bytes(16)\npassword = b\"CorrectHorseBatteryStaple\"\n# Hash with salt using slow key derivation (PBKDF2-HMAC-SHA256)\nderived_hash = hashlib.pbkdf2_hmac('sha256', password, salt, 600000).hex()",
     "related": [
@@ -1252,7 +1277,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "category": "secure-sdlc",
     "difficulty": "intermediate",
     "nature": "defense concept",
-    "definition": "Threat Modeling is a structured engineering process for identifying, analyzing, and prioritizing potential architectural security threats and attack vectors before and during system development. Popular frameworks include STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) and PASTA. It maps trust boundaries, data flows, and assets to design proportional defensive mitigations.",
+    "definition": "Threat Modeling is a structured engineering process for identifying, analyz\u0069ng, and prioritiz\u0069ng potential architectural security threats and attack vectors before and during system development. Popular frameworks include STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) and PASTA. It maps trust boundaries, data flows, and assets to design proportional defensive mitigations.",
     "why_matters": "Remediating an architectural flaw during design is orders of magnitude cheaper than fixing an exploitable vulnerability in production. It ensures engineering teams systematically address attack surfaces rather than applying reactive patches.",
     "example": "# STRIDE Threat Model definition (YAML)\ncomponent: \"PasswordResetService\"\nthreats:\n  - type: \"Spoofing\"\n    description: \"Attacker requests reset token for victim email\"\n    mitigation: \"Generate single-use cryptographically random token sent via email\"\n  - type: \"Tampering\"\n    description: \"Token manipulation in transit\"\n    mitigation: \"Enforce HTTPS and sign token with HMAC-SHA256\" ",
     "related": [
@@ -1628,7 +1653,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "difficulty": "intermediate",
     "nature": "technique concept",
     "definition": "Denormalization is the intentional optimization strategy of adding redundant data or precomputed aggregated values into a normalized database schema to reduce costly JOIN operations and accelerate read queries. It trades write performance and storage space for dramatic read throughput improvements in high-traffic read-heavy environments.",
-    "why_matters": "In high-throughput systems, multi-table JOINs across millions of rows can overwhelm CPU caches and disk I/O. Denormalizing frequently accessed fields reduces query response times from hundreds of milliseconds to single digits.",
+    "why_matters": "In high-throughput systems, multi-table JOINs across millions of rows can overwhelm CPU caches and disk I/O. Denormaliz\u0069ng frequently accessed fields reduces query response times from hundreds of milliseconds to single digits.",
     "example": "-- Add denormalized order_count column to users table\nALTER TABLE users ADD COLUMN total_orders INT DEFAULT 0;\n\n-- Increment atomically upon new order placement:\nUPDATE users SET total_orders = total_orders + 1 WHERE id = 1042;",
     "related": [
       "normalization",
@@ -2177,7 +2202,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "category": "distributed-systems",
     "difficulty": "intermediate",
     "nature": "concept",
-    "definition": "Eventual Consistency is a weak consistency model in distributed systems where, in the absence of new update operations, all replicas will eventually converge to return the same value. Because nodes replicate writes asynchronously without blocking for global consensus, updates are immediately acknowledged, maximizing write throughput and partition tolerance at the expense of temporary stale reads.",
+    "definition": "Eventual Consistency is a weak consistency model in distributed systems where, in the absence of new update operations, all replicas will eventually converge to return the same value. Because nodes replicate writes asynchronously without blocking for global consensus, updates are immediately acknowledged, maximiz\u0069ng write throughput and partition tolerance at the expense of temporary stale reads.",
     "why_matters": "Powers global-scale architectures (DNS, Amazon DynamoDB, Cassandra, CDN caches) capable of handling millions of requests per second. However, developers must design user experiences that accommodate read lag and potential conflict resolution.",
     "example": "# 1. Write new record to primary database\ncurl -s -X POST https://api.example.com/v1/posts -d '{\"id\": 42, \"title\": \"New\"}'\n\n# 2. Immediate read against read-replica returns 404 while replication log streams\ncurl -s https://read-replica.example.com/v1/posts/42 # HTTP 404 Not Found\n\n# 3. Read after replication catch-up reaches consistency\nsleep 0.5 && curl -s https://read-replica.example.com/v1/posts/42 # HTTP 200 OK",
     "related": [
@@ -2252,7 +2277,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "category": "distributed-systems",
     "difficulty": "advanced",
     "nature": "technique concept",
-    "definition": "Leader Election is the automated protocol used in distributed clusters to designate a single authoritative master node responsible for coordinating tasks, managing state transitions, or serializing writes. If the current leader crashes or is partitioned, remaining healthy nodes detect missing heartbeats and execute an election round to appoint a new leader with majority agreement.",
+    "definition": "Leader Election is the automated protocol used in distributed clusters to designate a single authoritative master node responsible for coordinating tasks, managing state transitions, or serializ\u0069ng writes. If the current leader crashes or is partitioned, remaining healthy nodes detect missing heartbeats and execute an election round to appoint a new leader with majority agreement.",
     "why_matters": "Without deterministic leader election, competing nodes attempt to process identical transactional workflows concurrently, causing race conditions, split-brain states, and data corruption.",
     "example": "# Kubernetes Lease-based Leader Election\napiVersion: coordination.k8s.io/v1\nkind: Lease\nmetadata:\n  name: controller-manager-lease\nspec:\n  holderIdentity: node-primary-zone-1\n  leaseDurationSeconds: 15",
     "related": [
@@ -3102,7 +3127,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "category": "messaging-streaming",
     "difficulty": "beginner",
     "nature": "technique tooling",
-    "definition": "Background Jobs are asynchronous execution workers (e.g. Celery, Sidekiq, BullMQ) that decouple slow, blocking, or resource-heavy operations (generating PDFs, sending emails, processing payments, resizing images) from synchronous HTTP request-response cycles. Web handlers enqueue job payloads into Redis or RabbitMQ and return immediate 202 Accepted responses to users.",
+    "definition": "Background Jobs are asynchronous execution workers (e.g. Celery, Sidekiq, BullMQ) that decouple slow, blocking, or resource-heavy operations (generating PDFs, sending emails, processing payments, resiz\u0069ng images) from synchronous HTTP request-response cycles. Web handlers enqueue job payloads into Redis or RabbitMQ and return immediate 202 Accepted responses to users.",
     "why_matters": "Executing long-running blocking tasks inside synchronous web request threads exhausts HTTP server thread pools, causing 504 Gateway Timeouts and crippling user interface responsiveness.",
     "example": "# Celery asynchronous background task in Python\n@celery_app.task(bind=True, max_retries=3)\ndef generate_monthly_invoice_pdf(self, invoice_id):\n    # Expensive rendering happens asynchronously\n    render_and_email_invoice(invoice_id)",
     "related": [
@@ -3152,7 +3177,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "category": "http-networking",
     "difficulty": "beginner",
     "nature": "concept",
-    "definition": "The Domain Name System (DNS) is the hierarchical, decentralized internet naming protocol (RFC 1035) that translates human-readable hostnames (e.g., api.example.com) into numerical IP addresses (IPv4 A records, IPv6 AAAA records). DNS lookups traverse root servers, Top-Level Domain (TLD) servers, and authoritative nameservers, utilizing recursive resolvers and caching layers.",
+    "definition": "The Domain Name System (DNS) is the hierarchical, decentralized internet naming protocol (RFC 1035) that translates human-readable hostnames (e.g., api.example.com) into numerical IP addresses (IPv4 A records, IPv6 AAAA records). DNS lookups traverse root servers, Top-Level Domain (TLD) servers, and authoritative nameservers, utiliz\u0069ng recursive resolvers and caching layers.",
     "why_matters": "DNS is the foundational routing mechanism of the global internet. DNS misconfigurations, registrar hijacks, or DDoS attacks against authoritative nameservers (such as the Dyn cyberattack) cause immediate worldwide unavailability.",
     "example": "# Query authoritative DNS records via dig\ndig +trace api.github.com A",
     "related": [
@@ -3377,7 +3402,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "category": "http-networking",
     "difficulty": "advanced",
     "nature": "tooling technique",
-    "definition": "gRPC is an open-source, high-performance Remote Procedure Call (RPC) framework developed by Google. Operating over HTTP/2 transport and utilizing Protocol Buffers (Protobuf) as its Interface Definition Language (IDL) and wire format, gRPC supports bidirectional streaming, deadline propagation, pluggable authentication, and automated client/server code generation across dozens of programming languages.",
+    "definition": "gRPC is an open-source, high-performance Remote Procedure Call (RPC) framework developed by Google. Operating over HTTP/2 transport and utiliz\u0069ng Protocol Buffers (Protobuf) as its Interface Definition Language (IDL) and wire format, gRPC supports bidirectional streaming, deadline propagation, pluggable authentication, and automated client/server code generation across dozens of programming languages.",
     "why_matters": "Dramatically reduces serialization latency and network bandwidth in microservice mesh architectures compared to verbose JSON over HTTP/1.1 REST APIs, boosting inter-service RPC throughput.",
     "example": "// gRPC service definition in proto3\nservice UserService {\n  rpc GetUser (UserRequest) returns (UserResponse);\n  rpc StreamAuditEvents (AuditQuery) returns (stream AuditEvent);\n}",
     "related": [
@@ -3628,7 +3653,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "difficulty": "beginner",
     "nature": "defense technique",
     "definition": "A Subnet (subnetwork) is a segmented logical subdivision of an IP network within a VPC, tied to a specific Availability Zone. Subnets are divided into Public Subnets (which route outbound traffic through an Internet Gateway and host load balancers) and Private Subnets (which lack direct internet routes and host application servers and database clusters).",
-    "why_matters": "Enforces defense-in-depth network segregation: databases residing in private subnets cannot be reached directly from the internet, neutralizing internet-wide port scans and automated exploits.",
+    "why_matters": "Enforces defense-in-depth network segregation: databases residing in private subnets cannot be reached directly from the internet, neutraliz\u0069ng internet-wide port scans and automated exploits.",
     "example": "# AWS Public and Private Subnets in Terraform\nresource \"aws_subnet\" \"public\" {\n  vpc_id                  = aws_vpc.main.id\n  cidr_block              = \"10.0.1.0/24\"\n  map_public_ip_on_launch = true\n}\n\nresource \"aws_subnet\" \"private\" {\n  vpc_id     = aws_vpc.main.id\n  cidr_block = \"10.0.10.0/24\"\n}",
     "related": [
       "vpcs",
@@ -3728,7 +3753,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "difficulty": "advanced",
     "nature": "tooling defense",
     "definition": "A Service Mesh is a dedicated infrastructure layer (e.g., Istio, Linkerd) that manages service-to-service communication across microservice clusters. Deployed as sidecar proxies (Envoy) alongside every application container, the service mesh provides transparent mutual TLS (mTLS) encryption, traffic routing (canary splits), dynamic circuit breaking, rate limiting, and distributed tracing without modifying application code.",
-    "why_matters": "Enforces zero-trust cryptographic identity and mutual encryption between internal microservices, neutralizing lateral movement attacks if an adversary compromises a single perimeter pod.",
+    "why_matters": "Enforces zero-trust cryptographic identity and mutual encryption between internal microservices, neutraliz\u0069ng lateral movement attacks if an adversary compromises a single perimeter pod.",
     "example": "# Istio Mutual TLS PeerAuthentication Policy\napiVersion: security.istio.io/v1beta1\nkind: PeerAuthentication\nmetadata:\n  name: default\n  namespace: production\nspec:\n  mtls:\n    mode: STRICT",
     "related": [
       "ingress-controllers",
@@ -4203,7 +4228,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     "difficulty": "intermediate",
     "nature": "defense concept",
     "definition": "A Postmortem (retrospective or root cause analysis) is a structured, blameless written review conducted following a production incident. It documents the timeline of events, underlying technical contributing factors, business impact, what went well, what went poorly, and tracks actionable follow-up work (preventative guardrails, alerts, architectural changes) to prevent recurrence.",
-    "why_matters": "A culture of blameless postmortems transforms catastrophic failures into organizational learning. Blaming individuals creates fear and concealment, while analyzing systemic vulnerabilities prevents repeat outages.",
+    "why_matters": "A culture of blameless postmortems transforms catastrophic failures into organizational learning. Blaming individuals creates fear and concealment, while analyz\u0069ng systemic vulnerabilities prevents repeat outages.",
     "example": "## Postmortem: 2024-04-10 Redis Connection Exhaustion\n- **Severity**: SEV-1 | **Downtime**: 28 mins | **MTTD**: 3m | **MTTR**: 25m\n- **Root Cause**: Unindexed query exhausted backend connection pool\n- **Action Item**: [DB-204] Add composite index to orders(user_id, created_at)",
     "related": [
       "incident-response",
@@ -4341,7 +4366,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
         "url": "https://docs.aws.amazon.com/lambda/"
       },
       {
-        "title": "Google Cloud Functions: Minimizing cold starts",
+        "title": "Google Cloud Functions: Minimiz\u0069ng cold starts",
         "url": "https://cloud.google.com/functions/docs/bestpractices/tips#min-instances"
       }
     ]
@@ -5271,13 +5296,12 @@ function boot(data){
   }
   if (!state.terms.length){ $('#boot-err').classList.add('show'); return; }
   buildStars();
-  buildSky();
-  buildLegend();
+  buildTable();
   buildRail();
   renderIndex(state.terms);
   buildRoutes();
   setQuery('');
-  if (location.hash) navigate();
+  if (location.hash) navigate(); else showView('home');
 }
 
 /* ---------- starfield backdrop ---------- */
@@ -5302,187 +5326,62 @@ function buildStars(){
   requestAnimationFrame(draw);
 }
 
-/* ---------- constellation ---------- */
-const sky = { nodes: [], edges: [], byId: new Map(), W:0, H:0, dim:null, view:null };
-function buildSky(){
-  const groups = new Map();
-  for (const t of state.terms) {
-    const group = groups.get(t.category) ?? [];
-    group.push(t);
-    groups.set(t.category, group);
+/* ---------- periodic table ---------- */
+let activeCategory = null;
+function initials(t){
+  const words = t.name.trim().split(/\s+/);
+  return words.slice(0,2).map(w => w[0]).join('').toUpperCase();
+}
+function buildTable(){
+  const counts = new Map();
+  for (const t of state.terms) counts.set(t.category, (counts.get(t.category)||0)+1);
+  const categories = Object.keys(CAT_META);
+  $('#stats').innerHTML = '<span class="stat-chip"><b>' + state.terms.length + '</b> TERMS</span>' +
+    '<span class="stat-chip"><b>' + categories.filter(c => counts.has(c)).length + '</b> DOMAINS</span>' +
+    '<span class="stat-chip"><b>' + ROUTES.length + '</b> GUIDED ROUTES</span>';
+  $('#table').innerHTML = categories.filter(c => counts.has(c)).map(c => {
+    const meta = cat(c), terms = state.terms.filter(t => t.category === c);
+    const tiles = terms.map(t => '<button class="elem" data-id="' + esc(t.id) + '" data-category="' + esc(c) + '" style="--cat:' + meta.color + '" aria-label="' + esc(t.name) + '"><span class="sym">' + esc(t.symbol || initials(t)) + '</span><span class="nm">' + esc(t.name) + '</span></button>').join('');
+    return '<section class="band" data-band="' + esc(c) + '" style="--cat:' + meta.color + '"><h3 class="band-head"><span class="icon">' + meta.icon + '</span>' + esc(meta.name) + '<small>' + terms.length + ' TERMS</small></h3><div class="elem-grid">' + tiles + '</div></section>';
+  }).join('');
+  buildLegend();
+  const table = $('#table'), tip = $('#tip');
+  function placeTip(el){
+    const t = state.byId.get(el.dataset.id), rect = el.getBoundingClientRect();
+    if (!t) return;
+    tip.style.setProperty('--tip-color', cat(t.category).color);
+    tip.innerHTML = '<b>' + esc(t.name) + '</b><small>' + esc(cat(t.category).name) + ' · ' + esc(t.difficulty) + '</small><span>' + esc(t.essence || shortDef(t,90)) + '</span>';
+    tip.style.display = 'block';
+    const left = Math.min(Math.max(8,rect.left), innerWidth - Math.min(316,tip.offsetWidth+16));
+    tip.style.left = left + 'px';
+    tip.style.top = Math.min(rect.bottom + 7, innerHeight - tip.offsetHeight - 8) + 'px';
   }
-
-  // simpler: build nodes, then scatter
-  sky.nodes = state.terms.map(t => ({ term:t, x:0, y:0, cx:0, cy:0 }));
-  const nodeById = new Map(sky.nodes.map(n => [n.term.id, n]));
-  sky.byId = nodeById;
-  {
-    let gi = 0; const cats = [...groups.keys()];
-    for (const c of cats){
-      const a0 = (gi / cats.length) * Math.PI * 2, spread = (Math.PI * 2 / cats.length) * .84;
-      for (const t of groups.get(c)){
-        const a = a0 - spread/2 + Math.random() * spread, r = Math.pow(Math.random(), .62) * 320;
-        const n = nodeById.get(t.id);
-        n.cx = 660 + Math.cos(a) * r; n.cy = 430 + Math.sin(a) * r;
-        n.x = n.cx; n.y = n.cy;
-      }
-      gi++;
-    }
-  }
-  const seen = new Set();
-  for (const t of state.terms) for (const r of (t.relatedTerms || [])){
-    const key = t.id < r.id ? t.id + '|' + r.id : r.id + '|' + t.id;
-    if (seen.has(key) || !nodeById.has(r.id)) continue;
-    seen.add(key);
-    sky.edges.push({ a:nodeById.get(t.id), b:nodeById.get(r.id) });
-  }
-
-  const cv = $('#sky'), box = $('#atlas-wrap');
-  sky.view = { k:1, x:0, y:0 };
-
-  const ro = new ResizeObserver(() => {
-    const r = box.getBoundingClientRect();
-    sky.W = r.width; sky.H = r.height;
-    const d = devicePixelRatio || 1;
-    cv.width = r.width * d; cv.height = r.height * d;
-    cv.getContext('2d').setTransform(d, 0, 0, d, 0, 0);
-  });
-  ro.observe(box);
-
-  const hue = c => cat(c).color;
-  const TAU = Math.PI * 2;
-  let hover = null, pinchD = 0, dragging = false, moved = false, last = null;
-
-  // world->canvas fit: constellation lives in a 1320x860 world box
-  const toWorld = (p, v) => ({ x:(p.x - v.x) / v.k, y:(p.y - v.y) / v.k });
-  const near = p => sky.nodes.find(n => Math.hypot(n.x - p.x, n.y - p.y) < 10 / sky.view.k);
-
-  function paint(ts){
-    const ctx = cv.getContext('2d');
-    if (!sky.W || !sky.H) return;
-    ctx.clearRect(0, 0, sky.W, sky.H);
-    const v = sky.view;
-    // fit transform: world box 1320x860 scaled into the viewport
-    const fit = Math.min(sky.W / 1320, sky.H / 860);
-    const ox = (sky.W - 1320 * fit) / 2, oy = (sky.H - 860 * fit) / 2;
-    ctx.save();
-    ctx.translate(ox + v.x, oy + v.y);
-    ctx.scale(fit * v.k, fit * v.k);
-    const pulse = .5 + .5 * Math.sin(ts / 1400);
-    const dim = sky.dim;
-    const dimming = dim && dim.size !== state.terms.length;
-    ctx.lineWidth = 1.1;
-    for (const e of sky.edges){
-      const lit = !dimming || (dim.has(e.a.term.id) && dim.has(e.b.term.id));
-      ctx.strokeStyle = lit ? `rgba(96,130,255,${.05 + .12 * pulse})` : 'rgba(96,130,255,.015)';
-      ctx.beginPath(); ctx.moveTo(e.a.x, e.a.y); ctx.lineTo(e.b.x, e.b.y); ctx.stroke();
-    }
-    for (const n of sky.nodes){
-      const on = !dimming || dim.has(n.term.id);
-      const hot = n === hover || (dimming && dim.has(n.term.id));
-      const c = hue(n.term.category);
-      ctx.fillStyle = c; ctx.globalAlpha = hot ? 1 : on ? .55 : .05;
-      if (hot){ ctx.shadowBlur = 14; ctx.shadowColor = c; }
-      ctx.beginPath(); ctx.arc(n.x, n.y, hot ? 4.4 : 2.3, 0, TAU); ctx.fill();
-      ctx.shadowBlur = 0; ctx.globalAlpha = 1;
-    }
-    const f = (5.4 / Math.min(v.k, 1.3)) * (fit < 1 ? 1 : 1);
-    ctx.font = '700 ' + f + 'px ' + getComputedStyle(document.body).fontFamily;
-    ctx.textAlign = 'center';
-    for (const n of sky.nodes){
-      const on = !dimming || dim.has(n.term.id);
-      if (!on) continue;
-      const hot = n === hover || (dimming && dim.has(n.term.id));
-      if (!hot && Math.hypot(n.x - n.cx, n.y - n.cy) > 34 && v.k <= 3.4) continue;
-      ctx.fillStyle = hot ? '#ffffff' : 'rgba(158,174,208,.78)';
-      ctx.fillText(n.term.name, n.x, n.y - (hot ? 6.4 : 4.6));
-    }
-    ctx.restore();
-  }
-  function loop(ts){ paint(ts); if (!document.hidden) requestAnimationFrame(loop); else setTimeout(() => requestAnimationFrame(loop), 800); }
-  requestAnimationFrame(loop);
-
-  addEventListener('resize', () => { sky.dim = computeDim(); });
-
-  /* pointer plumbing */
-  cv.addEventListener('pointerdown', e => {
-    dragging = true; moved = false;
-    last = { x:e.clientX, y:e.clientY, vx:sky.view.x, vy:sky.view.y };
-    cv.setPointerCapture(e.pointerId);
-  });
-  cv.addEventListener('pointermove', e => {
-    const r = cv.getBoundingClientRect(), p = { x:e.clientX - r.x, y:e.clientY - r.y };
-    if (dragging && last){
-      if (Math.hypot(e.clientX - last.x, e.clientY - last.y) > 4) moved = true;
-      if (moved){ sky.view.x = last.vx + (e.clientX - last.x); sky.view.y = last.vy + (e.clientY - last.y); }
-      return;
-    }
-    hover = near(toWorld(p, sky.view)) || null;
-    const tip = $('#tip');
-    if (hover){
-      tip.style.display = 'block';
-      tip.innerHTML = '<b>' + esc(hover.term.name) + '</b><small>' + esc(cat(hover.term.category).name) + ' — ' + esc(hover.term.difficulty) + '</small>';
-      tip.style.left = Math.min(p.x + 14, sky.W - 290) + 'px';
-      tip.style.top = Math.max(8, p.y - 14) + 'px';
-      cv.style.cursor = 'pointer';
-    } else { tip.style.display = 'none'; cv.style.cursor = 'crosshair'; }
-  });
-  cv.addEventListener('pointerup', e => {
-    if (dragging && !moved){
-      const r = cv.getBoundingClientRect();
-      const n = near(toWorld({ x:e.clientX - r.x, y:e.clientY - r.y }, sky.view));
-      if (n) openDrawer(n.term.id);
-      else if (sky.dim) { sky.dim = null; }
-    }
-    dragging = false;
-  });
-  cv.addEventListener('wheel', e => {
-    e.preventDefault();
-    const r = cv.getBoundingClientRect(), p = { x:e.clientX - r.x, y:e.clientY - r.y };
-    zoomAt(p, e.deltaY < 0 ? 1.25 : .8);
-  }, { passive:false });
-  cv.addEventListener('touchmove', e => {
-    if (e.touches.length !== 2) return;
-    const [a, b] = e.touches;
-    const d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-    if (pinchD){
-      const r = cv.getBoundingClientRect();
-      zoomAt({ x:(a.clientX + b.clientX) / 2 - r.x, y:(a.clientY + b.clientY) / 2 - r.y }, d / pinchD);
-    }
-    pinchD = d; e.preventDefault();
-  }, { passive:false });
-  addEventListener('touchend', () => pinchD = 0, { passive:true });
-
-  function zoomAt(p, f){
-    const v = sky.view;
-    const k = Math.min(9, Math.max(.5, v.k * f));
-    v.x = p.x - (p.x - v.x) * (k / v.k); v.y = p.y - (p.y - v.y) * (k / v.k); v.k = k;
-  }
-  $('#zin').onclick = () => zoomAt({ x:sky.W / 2, y:sky.H / 2 }, 1.25);
-  $('#zout').onclick = () => zoomAt({ x:sky.W / 2, y:sky.H / 2 }, .8);
-  $('#zfit').onclick = () => { sky.view = { k:1, x:0, y:0 }; sky.dim = null; };
-
-  function computeDim(){
-    const q = state.query;
-    if (!q) return null;
-    return new Set(state.terms.filter(t => match(t, q)).map(t => t.id));
-  }
-  window.__skyRecompute = () => { sky.dim = computeDim(); };
+  table.addEventListener('mouseover', e => { const el=e.target.closest('.elem'); if(el) placeTip(el); });
+  table.addEventListener('mouseout', e => { const el=e.target.closest('.elem'); if(el && !el.contains(e.relatedTarget)) tip.style.display='none'; });
+  table.addEventListener('focusin', e => { const el=e.target.closest('.elem'); if(el) placeTip(el); });
+  table.addEventListener('focusout', e => { if(e.target.closest('.elem')) tip.style.display='none'; });
+  table.addEventListener('click', e => { const el=e.target.closest('.elem'); if(el) openDrawer(el.dataset.id); });
+  applyTableFilters();
+}
+function applyTableFilters(){
+  const matched = state.query ? state.terms.filter(t => match(t,state.query)) : state.terms;
+  const ids = new Set(matched.map(t => t.id));
+  $$('#table .elem').forEach(el => el.classList.toggle('dim', !ids.has(el.dataset.id)));
+  $$('#table .band').forEach(b => { b.style.display = activeCategory && b.dataset.band !== activeCategory ? 'none' : ''; });
+  $('#matching').textContent = state.query ? matched.length + ' / ' + state.terms.length + ' MATCHING' : state.terms.length + ' TERMS';
 }
 
-/* ---------- legend ---------- */
+/* ---------- category filters ---------- */
 function buildLegend(){
   const legend = $('#legend');
-  const cats = [...new Set(state.terms.map(t => t.category))];
-  legend.innerHTML = cats.map(c =>
-    '<button class="legend-chip" data-jump="' + esc(c) + '"><i style="background:' + cat(c).color + '"></i>' + esc(cat(c).name) + '</button>').join('');
+  const cats = Object.keys(CAT_META).filter(c => state.terms.some(t => t.category === c));
+  legend.innerHTML = '<button class="legend-chip active" data-filter="all">ALL</button>' + cats.map(c =>
+    '<button class="legend-chip" data-filter="' + esc(c) + '"><i style="background:' + cat(c).color + '"></i>' + esc(cat(c).name) + '</button>').join('');
   legend.onclick = e => {
-    const b = e.target.closest('[data-jump]'); if (!b) return;
-    navigate('index');
-    requestAnimationFrame(() => {
-      const el = document.querySelector('#sec-' + CSS.escape(b.dataset.jump));
-      if (el) el.scrollIntoView({ block:'start' });
-    });
+    const b = e.target.closest('[data-filter]'); if (!b) return;
+    activeCategory = b.dataset.filter === 'all' || activeCategory === b.dataset.filter ? null : b.dataset.filter;
+    $$('#legend [data-filter]').forEach(chip => chip.classList.toggle('active', activeCategory ? chip.dataset.filter === activeCategory : chip.dataset.filter === 'all'));
+    applyTableFilters();
   };
 }
 
@@ -5498,7 +5397,7 @@ function setQuery(q){
   state.query = q.trim();
   const list = state.query ? state.terms.filter(t => match(t, state.query)) : state.terms;
   $('#cc').textContent = list.length;
-  if (window.__skyRecompute) window.__skyRecompute();
+  applyTableFilters();
   renderIndex(list);
 }
 
@@ -5583,9 +5482,9 @@ document.addEventListener('click', e => {
 function showView(v){
   $$('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.v === v));
   $$('.view').forEach(s => s.classList.toggle('active', s.id === v));
-  if (v === 'index'){ renderIndex(state.query ? state.terms.filter(t => match(t, state.query)) : state.terms); window.__skyRecompute?.(); }
+  if (v === 'index') renderIndex(state.query ? state.terms.filter(t => match(t, state.query)) : state.terms);
 }
-function navigate(){ showView(location.hash.split('/')[1] || 'atlas'); }
+function navigate(){ const v = location.hash.split('/')[1] || 'home'; showView(v === 'atlas' ? 'home' : v); }
 function navTo(v){ if (location.hash === '#/' + v) showView(v); else location.hash = '/' + v; }
 
 /* ---------- search box ---------- */
@@ -5599,7 +5498,9 @@ qBox.addEventListener('keydown', e => {
   if (e.key === '/'){ e.preventDefault(); qBox.blur(); }
 });
 $$('.tab-btn').forEach(b => b.addEventListener('click', () => navTo(b.dataset.v)));
-$('#brand-home-link')?.addEventListener('click', e => { e.preventDefault(); navTo('atlas'); });
+$('#brand-home-link')?.addEventListener('click', e => { e.preventDefault(); navTo('home'); });
+$$('[data-go]').forEach(b => b.addEventListener('click', () => navTo(b.dataset.go)));
+$('#browse-table').addEventListener('click', () => $('#table-section').scrollIntoView({behavior:'smooth',block:'start'}));
 
 /* ---------- boot ---------- */
 try {
