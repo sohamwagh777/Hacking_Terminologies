@@ -120,13 +120,18 @@ global.MutationObserver = class { observe(){} disconnect(){} };
 global.ResizeObserver = class { observe(){} disconnect(){} };
 global.IntersectionObserver = class { observe(){} disconnect(){} };
 global.AudioContext = class { createOscillator(){ return { connect(){}, start(){}, stop(){}, frequency:{value:0,exponentialRampToValueAtTime(){}} }; } createGain(){ return { connect(){}, gain:{value:0,linearRampToValueAtTime(){},setValueAtTime(){}} }; } get currentTime(){return 0;} get destination(){return {};} };
-for (const f of process.argv.slice(3)) {
-  const src = fs.readFileSync(f, "utf-8");
+process.argv.slice(3).forEach((f, i, a) => {
+  let src = fs.readFileSync(f, "utf-8");
+  if (i === a.length - 1) src += "\n;globalThis.__booted = (typeof state !== 'undefined' && state.terms) ? state.terms.length : -1;";
   try { new Function(src)(); console.log("LOADED", f); }
   catch (e) { console.error("THROW in", f, ":", e.message); process.exit(1); }
-}
+});
+console.log("BOOTED_TERMS", globalThis.__booted);
+if (globalThis.__booted !== expectedCount) { console.error("BOOT FAIL: state.terms =", globalThis.__booted, "expected", expectedCount); process.exit(1); }
 console.log("SMOKE PASS");
 '''
+smoke = smoke.replace('const lexData = fs.readFileSync(process.argv[2], "utf-8");',
+                      'const lexData = fs.readFileSync(process.argv[2], "utf-8");\nconst expectedCount = JSON.parse(lexData).length;')
 smoke_path = os.path.join(tmp, "smoke.js")
 open(smoke_path, "w", encoding="utf-8").write(smoke)
 js_files = []

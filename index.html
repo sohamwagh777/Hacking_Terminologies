@@ -93,6 +93,20 @@ header.top{
 .tab-btn:hover{color:#fff}
 .tab-btn.active{color:#fff;background:rgba(78,161,255,.09);border-color:rgba(78,161,255,.35);box-shadow:0 0 14px rgba(78,161,255,.18)}
 .searchwrap{position:relative;flex:1 1 260px;max-width:430px}
+#suggests{
+  position:absolute;top:calc(100% + 8px);right:0;z-index:90;
+  min-width:340px;max-width:min(460px,92vw);
+  background:rgba(9,15,29,.98);border:1px solid var(--edge);border-radius:6px;
+  box-shadow:0 14px 40px rgba(0,0,0,.6);overflow:hidden;
+}
+#suggests[hidden]{display:none}
+#suggests .sg{display:flex;align-items:baseline;gap:10px;width:100%;text-align:left;padding:8px 12px;border:0;background:none;color:var(--ink);border-bottom:1px solid rgba(120,140,190,.08);font-family:var(--mono)}
+#suggests .sg:last-child{border-bottom:0}
+#suggests .sg b{color:var(--cat,#4ea1ff);font-size:12px;min-width:58px;font-weight:800}
+#suggests .sg em{font-style:normal;color:#fff;font-size:12px;font-weight:700;white-space:nowrap}
+#suggests .sg small{color:var(--dim);font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+#suggests .sg.sel,#suggests .sg:hover{background:rgba(78,161,255,.12)}
+#suggests .sg-empty{display:block;padding:10px 12px;color:var(--dim);font-size:11px}
 .searchwrap>svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;fill:var(--faint);pointer-events:none}
 #q{
   width:100%;padding:9px 64px 9px 32px;
@@ -253,6 +267,7 @@ footer{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:22px 1
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2a8 8 0 1 0 5.3 14l5.1 5.1 1.4-1.4-5.1-5.1A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/></svg>
     <input id="q" type="search" placeholder="search terms…" autocomplete="off" spellcheck="false" aria-label="Search glossary terms">
     <span class="scanbar"></span>
+    <div id="suggests" role="listbox" aria-label="Search suggestions" hidden></div>
   </div>
   <span id="count"><b>◉</b> <span id="cc">0</span> TERMS</span>
 </header>
@@ -5813,6 +5828,7 @@ function setQuery(q){
   state.query = q.trim();
   const list = state.query ? state.terms.filter(t => match(t, state.query)) : state.terms;
   $('#cc').textContent = list.length;
+  renderSuggestions(list);
   applyTableFilters();
   renderIndex(list);
 }
@@ -5956,13 +5972,46 @@ addEventListener('hashchange', navigate);
 
 /* ---------- search box ---------- */
 const qBox = $('#q');
+
+/* ---------- search suggestions container ---------- */
+const suggests = { items: [], sel: -1 };
+function highlightSug(){
+  $$('#suggests .sg').forEach((el, i) => el.classList.toggle('sel', i === suggests.sel));
+  qBox.setAttribute('aria-activedescendant', suggests.sel >= 0 ? 'sg-' + suggests.sel : '');
+}
+function renderSuggestions(list){
+  const box = $('#suggests');
+  if (!state.query){ box.hidden = true; box.innerHTML = ''; suggests.items = []; suggests.sel = -1; return; }
+  suggests.items = list.slice(0, 8);
+  suggests.sel = suggests.items.length ? 0 : -1;
+  box.innerHTML = suggests.items.length
+    ? suggests.items.map((t, i) => {
+        const c = cat(t.category);
+        return '<button class="sg" role="option" id="sg-' + i + '" data-id="' + esc(t.id) + '" style="--cat:' + c.color + '">' +
+          '<b>' + esc(t.symbol || initials(t)) + '</b><em>' + esc(t.name) + '</em>' +
+          '<small>' + esc(t.essence || shortDef(t, 70)) + '</small></button>';
+      }).join('') + '<button class="sg" role="option" id="sg-all" data-all="1"><b>≡</b><em>VIEW ALL ' + list.length + '</em><small>open full results in INDEX</small></button>'
+    : '<p class="sg-empty">NO MATCH — TRY ANOTHER QUERY</p>';
+  box.hidden = false;
+  highlightSug();
+}
+$('#suggests').addEventListener('click', e => {
+  const s = e.target.closest('.sg');
+  if (!s) return;
+  if (s.dataset.all){ $('#suggests').hidden = true; navTo('index'); return; }
+  $('#suggests').hidden = true;
+  openDrawer(s.dataset.id);
+});
 qBox.addEventListener('input', () => setQuery(qBox.value));
+qBox.addEventListener('focus', () => { if (suggests.items.length) $('#suggests').hidden = false; });
+qBox.addEventListener('blur', () => setTimeout(() => { $('#suggests').hidden = true; }, 120));
 qBox.addEventListener('keydown', e => {
-  if (e.key === 'Enter'){
-    const c = document.querySelector('#alpha .card');
-    if (c) openDrawer(c.dataset.id);
-  }
-  if (e.key === '/'){ e.preventDefault(); qBox.blur(); }
+  const n = suggests.items.length;
+  if (e.key === 'ArrowDown'){ e.preventDefault(); if (n){ suggests.sel = (suggests.sel + 1) % n; highlightSug(); } }
+  else if (e.key === 'ArrowUp'){ e.preventDefault(); if (n){ suggests.sel = (suggests.sel - 1 + n) % n; highlightSug(); } }
+  else if (e.key === 'Enter'){ if (n){ const pick = suggests.items[Math.max(suggests.sel, 0)]; $('#suggests').hidden = true; openDrawer(pick.id); } }
+  else if (e.key === 'Escape'){ $('#suggests').hidden = true; }
+  else if (e.key === '/'){ e.preventDefault(); qBox.blur(); }
 });
 $$('.tab-btn').forEach(b => b.addEventListener('click', () => navTo(b.dataset.v)));
 $('#brand-home-link')?.addEventListener('click', e => { e.preventDefault(); navTo('home'); });
