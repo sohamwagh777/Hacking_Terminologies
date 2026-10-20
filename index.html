@@ -177,6 +177,7 @@ main{position:relative;z-index:1;padding:24px 18px 60px;max-width:1280px;margin:
 #paths h2{font-size:18px;margin-bottom:4px}
 #paths .lede{color:var(--dim);margin-bottom:20px;max-width:70ch}
 .route{margin-bottom:22px;padding:18px 20px;background:rgba(11,16,32,.9);border:1px solid var(--edge);border-radius:6px;position:relative;overflow:hidden}
+.route{cursor:pointer;transition:border-color .18s,box-shadow .18s}.route:hover{border-color:rgba(0,255,204,.38);box-shadow:0 0 22px rgba(0,255,204,.08)}
 .route::before{content:'';position:absolute;inset:0;background:radial-gradient(640px 220px at 0% 0%,rgba(78,161,255,.08),transparent 70%);pointer-events:none}
 .route h3{font-size:14px;letter-spacing:.16em;color:#fff;margin-bottom:2px}
 .route .goal{color:var(--cool);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px}
@@ -187,6 +188,17 @@ main{position:relative;z-index:1;padding:24px 18px 60px;max-width:1280px;margin:
 .stop:last-child::before{bottom:auto;height:20px}
 .stop span::before{content:'';position:absolute;left:7px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--void);border:2px solid var(--hot);box-shadow:0 0 9px var(--hot)}
 .stop:hover{color:#fff;text-decoration:underline dotted}
+.route-actions{display:flex;justify-content:flex-end;margin-top:9px}.route-play,.theater-btn{padding:7px 11px;border:1px solid rgba(0,255,204,.35);border-radius:4px;color:var(--cool);font-size:10px;font-weight:800;letter-spacing:.1em}.route-play:hover,.theater-btn:hover{background:rgba(0,255,204,.12);color:#fff}
+#routes.theater-open>.route{display:none}#theater{display:none}#routes.theater-open>#theater{display:block}
+.theater-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.theater-head h3{color:#fff;font-size:14px;letter-spacing:.12em;flex:1}
+.theater-stage{position:relative;padding:22px 12px;min-height:190px;background:rgba(5,10,21,.92);border:1px solid var(--edge);border-radius:6px;overflow:hidden}
+.theater-rows{position:relative;z-index:1;display:flex;flex-direction:column;gap:20px}.theater-row{display:flex;justify-content:space-around;gap:12px}.theater-row.reverse{flex-direction:row-reverse}
+.theater-node{--node-color:#4ea1ff;position:relative;z-index:2;width:min(145px,16%);min-height:82px;padding:9px 7px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center;border:1px solid color-mix(in srgb,var(--node-color) 34%,transparent);border-radius:5px;background:rgba(9,15,29,.96);color:#78839a;opacity:.42;transform:scale(.94);transition:opacity .25s,border-color .25s,box-shadow .25s,transform .25s}
+.theater-node .sym{font-size:19px}.theater-node .nm{white-space:normal;font-size:9px}.theater-node.done{opacity:.68}.theater-node.active{opacity:1;color:#fff;border-color:var(--node-color);box-shadow:0 0 21px color-mix(in srgb,var(--node-color) 48%,transparent),inset 0 0 14px color-mix(in srgb,var(--node-color) 15%,transparent);transform:scale(1)}
+.theater-node.future{opacity:.32}.theater-links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:0;pointer-events:none}.theater-links path{fill:none;stroke:var(--cool);stroke-width:2;opacity:.62;stroke-dasharray:var(--length);stroke-dashoffset:var(--length)}.theater-links path.drawn{stroke-dashoffset:0;transition:stroke-dashoffset .5s linear}
+.theater-caption{min-height:62px;margin-top:12px;padding:9px 12px;border:1px solid var(--edge);border-left:3px solid var(--cool);background:rgba(0,255,204,.035)}.theater-caption b{display:block;color:#fff;font-size:11px;letter-spacing:.1em}.theater-caption span{display:block;color:var(--dim);font-size:12px;margin-top:3px}.theater-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+@media(max-width:700px){.theater-row{gap:5px}.theater-node{width:16%;min-height:74px;padding:6px 2px}.theater-node .nm{font-size:7px}.theater-stage{padding:16px 5px}}
+@media(prefers-reduced-motion:reduce){.theater-node,.theater-links path{transition:none!important}.theater-node.active{transform:none}}
 
 /* DRAWER */
 #scrim{position:fixed;inset:0;z-index:70;background:rgba(2,3,8,.66);backdrop-filter:blur(3px);display:none}
@@ -5271,12 +5283,20 @@ const cat = id => CAT_META[id] || { name:(id || 'UNKNOWN').toUpperCase(), icon:'
 
 /* ---------- learning routes ---------- */
 const ROUTES = [
-  { title:'KILL CHAIN: WEB TO SDLC', goal:'attacker mindset, top to bottom', why:'How an attacker thinks, then how you shut every door behind them.', stops:['SQL Injection','XSS','CSRF','SSRF','IDOR','CORS','Clickjacking','Content Security Policy','Threat Modeling','Secret Scanning'] },
-  { title:'KEYS & TOKENS', goal:'auth, identity and trust plumbing', why:'The chain of trust from a stolen password to a forged bearer token — and how every link snaps.', stops:['OAuth 2.0','OpenID Connect','JWT Expiry','Refresh Tokens','MFA','Hashing vs Encryption','Bcrypt and Argon2','Timing Attacks'] },
-  { title:'DATA AT DEPTH', goal:'how databases behave under load', why:'Reads that scan everything, writes that deadlock, indexes that lie — the database layer in anger.', stops:['Index Selectivity','N+1 Queries','Transactions','ACID','Isolation Levels','Deadlocks','Optimistic Locking','Foreign Keys','Cascading Deletes'] },
-  { title:'DISTRIBUTED TRUTH', goal:'consensus, clocks and the cost of lying', why:'Once state splits across machines, the questions become physics: who leads, when, and how wrong can "now" be?', stops:['CAP Theorem','Eventual Consistency','Strong Consistency','RAFT Consensus','Leader Election','Split-Brain','Quorums','Clock Skew','Consistent Hashing'] },
-  { title:'FLOW CONTROL', goal:'queues, retries and surviving pressure', why:'When load arrives faster than work, only flow control stands between you and a retry storm.', stops:['Backpressure','Load Shedding','Cascading Failures','Retry Storms','Dead Letter Queues','Poison Messages','Message Ordering','Throttling','Idempotency'] },
-  { title:'EDGE TO ORIGIN', goal:'caches, headers and hops', why:'A request\'s trip through the edge: caches, CDNs, connections, and the header contract that governs them.', stops:['Anycast','CDNs','Cache-Control Headers','HTTP/2','Keep-Alive','Load Balancing','Connection Pooling'] }
+  { title:'KILL CHAIN: WEB TO SDLC', goal:'attacker mindset, top to bottom', why:'How an attacker thinks, then how you shut every door behind them.', stops:['sql-injection','xss','csrf','ssrf','idor','cors','clickjacking','content-security-policy','threat-modeling','secret-scanning'] },
+  { title:'KEYS & TOKENS', goal:'auth, identity and trust plumbing', why:'The chain of trust from a stolen password to a forged bearer token — and how every link snaps.', stops:['oauth-2-0','openid-connect','jwt-expiry','refresh-tokens','mfa','hashing-vs-encryption','bcrypt-and-argon2','timing-attacks'] },
+  { title:'DATA AT DEPTH', goal:'how databases behave under load', why:'Reads that scan everything, writes that deadlock, indexes that lie — the database layer in anger.', stops:['indexes','n-plus-1-queries','transactions','acid','isolation-levels','deadlocks','optimistic-locking','foreign-keys','cascading-deletes'] },
+  { title:'DISTRIBUTED TRUTH', goal:'consensus, clocks and the cost of lying', why:'Once state splits across machines, the questions become physics: who leads, when, and how wrong can "now" be?', stops:['cap-theorem','eventual-consistency','strong-consistency','raft-consensus','leader-election','split-brain','quorums','clock-skew','consistent-hashing'] },
+  { title:'FLOW CONTROL', goal:'queues, retries and surviving pressure', why:'When load arrives faster than work, only flow control stands between you and a retry storm.', stops:['backpressure','load-shedding','cascading-failures','retry-storms','dead-letter-queues','poison-messages','message-ordering','load-shedding','exactly-once-semantics'] },
+  { title:'EDGE TO ORIGIN', goal:'caches, headers and hops', why:'A request\'s trip through the edge: caches, CDNs, connections, and the header contract that governs them.', stops:['cdns','cdns','cache-control-headers','http-2','keep-alive','health-checks','connection-pooling'] }
+];
+
+const routeStopSwaps = [
+  ['Index Selectivity','indexes','closest available database indexing concept; no selectivity term exists'],
+  ['Throttling','load-shedding','closest available flow-control response; no throttling term exists'],
+  ['Idempotency','exactly-once-semantics','closest available retry/message-processing guarantee; no idempotency term exists'],
+  ['Anycast','cdns','closest available edge-distribution concept; no anycast term exists'],
+  ['Load Balancing','health-checks','closest available traffic-routing support concept; no load-balancing term exists']
 ];
 
 /* ---------- helpers ---------- */
@@ -5434,20 +5454,70 @@ function renderIndex(list){
 /* ---------- paths ---------- */
 function buildRoutes(){
   $('#routes').innerHTML = ROUTES.map((r, i) => {
-    const stops = r.stops
-      .map(s => state.byName.get(s.toLowerCase()) || state.byId.get(s.toLowerCase()))
-      .filter(Boolean);
-    return '<article class="route"><h3>ROUTE 0' + (i + 1) + ' — ' + esc(r.title) + '</h3>' +
+    const stops = r.stops.map(id => state.byId.get(id));
+    if (stops.some(t => !t)) console.error('Unresolved route stop:', r.title);
+    return '<article class="route" data-route="' + i + '"><h3>ROUTE 0' + (i + 1) + ' — ' + esc(r.title) + '</h3>' +
       '<p class="goal">◇ ' + esc(r.goal) + '</p><p class="why">' + esc(r.why) + '</p>' +
       '<div class="trail">' + stops.map(t =>
         '<button class="stop" data-open="' + esc(t.id) + '"><span>' + esc(t.name) + '</span></button>').join('') +
-      '</div></article>';
+      '</div><div class="route-actions"><button class="route-play" data-play-route="' + i + '" aria-label="Play route ' + esc(r.title) + '">⏵ PLAY</button></div></article>';
   }).join('');
+  $('#routes').innerHTML += '<section id="theater" aria-label="Route theater"><div class="theater-head"><button class="theater-btn" data-theater-back aria-label="Back to route cards">← BACK</button><h3 id="theater-title"></h3></div><div class="theater-stage" id="theater-stage"><svg class="theater-links" aria-hidden="true"></svg><div class="theater-rows" id="theater-rows"></div></div><div class="theater-caption" id="theater-caption" aria-live="polite"></div><div class="theater-controls"><button class="theater-btn" data-theater-play aria-label="Play or pause route">⏸ PAUSE</button><button class="theater-btn" data-theater-replay aria-label="Replay route">↺ REPLAY</button><button class="theater-btn" data-theater-speed aria-label="Toggle playback speed">×1</button></div></section>';
   $('#routes').onclick = e => {
+    const play = e.target.closest('[data-play-route]');
+    if (play){ e.stopPropagation(); openTheater(Number(play.dataset.playRoute)); return; }
+    if (e.target.closest('[data-theater-back]')){ closeTheater(); return; }
+    if (e.target.closest('[data-theater-play]')){ toggleTheater(); return; }
+    if (e.target.closest('[data-theater-replay]')){ openTheater(theater.routeIndex); return; }
+    if (e.target.closest('[data-theater-speed]')){ theater.speed = theater.speed === 1 ? 2 : 1; e.target.closest('[data-theater-speed]').textContent = '×' + theater.speed; return; }
     const b = e.target.closest('[data-open]');
-    if (b) openDrawer(b.dataset.open);
+    if (b) { openDrawer(b.dataset.open); return; }
+    const card = e.target.closest('[data-route]'); if (card) openTheater(Number(card.dataset.route));
   };
 }
+
+/* ---------- animated route theater ---------- */
+const theater = { routeIndex:-1, step:-1, speed:1, timer:null, playing:false, resize:null };
+function clearTheaterTimer(){ if (theater.timer !== null){ clearTimeout(theater.timer); theater.timer = null; } }
+function paintTheater(){
+  const nodes = $$('#theater-rows .theater-node');
+  nodes.forEach((n,i) => { n.classList.toggle('done', i < theater.step); n.classList.toggle('active', i === theater.step); n.classList.toggle('future', i > theater.step); });
+  const route = ROUTES[theater.routeIndex], t = state.byId.get(route.stops[theater.step]);
+  $('#theater-caption').innerHTML = '<b>STEP ' + (theater.step + 1) + '/' + route.stops.length + ' — ' + esc(t.name) + '</b><span>' + esc(t.essence || shortDef(t,140)) + '</span>';
+  if (theater.step > 0){ const p = $('#theater-link-' + (theater.step - 1)); if (p) p.classList.add('drawn'); }
+}
+function drawTheaterLinks(){
+  const stage = $('#theater-stage'), svg = $('.theater-links'), nodes = $$('#theater-rows .theater-node');
+  const box = stage.getBoundingClientRect(); svg.setAttribute('viewBox','0 0 ' + box.width + ' ' + box.height); svg.setAttribute('width',box.width); svg.setAttribute('height',box.height);
+  svg.innerHTML = '';
+  for (let i=0;i<nodes.length-1;i++){
+    const a=nodes[i].getBoundingClientRect(), b=nodes[i+1].getBoundingClientRect();
+    const x1=a.left+a.width/2-box.left, y1=a.top+a.height/2-box.top, x2=b.left+b.width/2-box.left, y2=b.top+b.height/2-box.top;
+    const mid=(y1+y2)/2, d='M '+x1+' '+y1+' L '+((x1+x2)/2)+' '+y1+' L '+((x1+x2)/2)+' '+mid+' L '+((x1+x2)/2)+' '+y2+' L '+x2+' '+y2;
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path'); path.id='theater-link-'+i; path.setAttribute('d',d); path.style.setProperty('--length',String(path.getTotalLength())); svg.appendChild(path);
+  }
+  for(let i=0;i<theater.step;i++) $('#theater-link-'+i)?.classList.add('drawn');
+}
+function scheduleTheaterStep(){
+  clearTheaterTimer();
+  if (!theater.playing || theater.step >= ROUTES[theater.routeIndex].stops.length-1) { theater.playing=false; $('[data-theater-play]').textContent='⏵ PLAY'; return; }
+  theater.timer=setTimeout(() => { theater.timer=null; theater.step++; paintTheater(); scheduleTheaterStep(); }, 950/theater.speed);
+}
+function openTheater(index){
+  clearTheaterTimer(); if(theater.resize) removeEventListener('resize',theater.resize);
+  theater.routeIndex=index; theater.speed=1; theater.step=-1; theater.playing=true;
+  const r=ROUTES[index], reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  $('#routes').classList.add('theater-open'); $('#theater-title').textContent='ROUTE 0'+(index+1)+' — '+r.title;
+  const rows=[]; for(let i=0;i<r.stops.length;i+=6) rows.push(r.stops.slice(i,i+6));
+  $('#theater-rows').innerHTML=rows.map((ids,row)=>'<div class="theater-row '+(row%2?'reverse':'')+'">'+ids.map(id=>{const t=state.byId.get(id);return '<button class="theater-node" data-theater-id="'+esc(t.id)+'" style="--node-color:'+cat(t.category).color+'" aria-label="Open '+esc(t.name)+'"><span class="sym">'+esc(t.symbol||initials(t))+'</span><span class="nm">'+esc(t.name)+'</span></button>';}).join('')+'</div>').join('');
+  $('#theater-rows').onclick=e=>{const n=e.target.closest('[data-theater-id]');if(n)openDrawer(n.dataset.theaterId);};
+  if(reduced){drawTheaterLinks();theater.step=r.stops.length-1;theater.playing=false;paintTheater();$('[data-theater-play]').textContent='⏵ PLAY';}
+  else {drawTheaterLinks();theater.step=0;paintTheater();scheduleTheaterStep();}
+  theater.resize=()=>drawTheaterLinks(); addEventListener('resize',theater.resize);
+  $('[data-theater-play]').textContent=reduced?'⏵ PLAY':'⏸ PAUSE'; $('[data-theater-speed]').textContent='×1';
+}
+function closeTheater(){clearTheaterTimer();if(theater.resize)removeEventListener('resize',theater.resize);theater.resize=null;theater.playing=false;$('#routes').classList.remove('theater-open');}
+function toggleTheater(){if(theater.playing){theater.playing=false;clearTheaterTimer();$('[data-theater-play]').textContent='⏵ PLAY';}else{if(theater.step>=ROUTES[theater.routeIndex].stops.length-1)theater.step=-1;theater.playing=true;theater.step++;paintTheater();$('[data-theater-play]').textContent='⏸ PAUSE';scheduleTheaterStep();}}
 
 /* ---------- drawer ---------- */
 function openDrawer(id){
@@ -5470,7 +5540,7 @@ function openDrawer(id){
 }
 const closeDrawer = () => { $('#drawer').classList.remove('open'); $('#scrim').classList.remove('on'); };
 $('#close').onclick = $('#scrim').onclick = closeDrawer;
-addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+addEventListener('keydown', e => { if (e.key === 'Escape'){ if ($('#drawer').classList.contains('open')) closeDrawer(); else if ($('#routes').classList.contains('theater-open')) closeTheater(); } });
 document.addEventListener('click', e => {
   const t = e.target.closest('.card, .stop, .relbtn');
   if (!t) return;

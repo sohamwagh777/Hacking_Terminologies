@@ -13,60 +13,54 @@
 
 ```
 +-----------------------------------------------------------------------------------------+
-| [🛡️ LEXICON]               [⚛ ATLAS]   [🔤 INDEX (A-Z)]   [🛤️ PATHS]       [$ Search... /] |
+| [🛡️ LEXICON]              [⌂ HOME]   [🔤 INDEX (A-Z)]   [🛤️ PATHS]       [$ Search... /] |
 +-----------------------------------------------------------------------------------------+
-|                                                                                         |
-|        (o) SQLi --------- (o) IDOR                               +--------------------+ |
-|         |                   |                                    | IDOR               | |
-|         |                   |                                    | [Auth & Access]    | |
-|        (o) XSS ---------- (o) CSRF ------- (o) CORS              | [Intermediate]     | |
-|                                                                  | [Attack Concept]   | |
-|                                                                  | Insecure Direct... | |
-|                                                                  | > Why it matters   | |
-|                                                                  | > Real Payload     | |
-|                                                                  | > Related Terms    | |
-|                                                                  | > Read More (OWASP)| |
-|                                                                  +--------------------+ |
+|  LEXICON — 198 terms, one table, zero fluff.          [198 TERMS] [10 DOMAINS] [6 ROUTES]|
+|                                                                                        |
+|  ⚡ WEB EXPLOITATION ───────────────────────────────────────────────────────────────    |
+|   [SQLi] [XSS] [CSRF] [SSRF] [IDOR] [CORS] [CLICKJ] [CSP] …                            |
+|  ⛨ CRYPTO & IDENTITY ───────────────────────────────────────────────────────────────   |
+|   [HASH] [SALT] [BCRYPT] [JWT] [RT] [OAUTH2] [OIDC] [MFA] …      ← hover a tile:       |
+|  ⛁ DATA & DATABASES ───────────────────────────────────────────   essence tooltip;     |
+|   [IDX] [N+1] [TXN] [ACID] [ISO] [DEADLCK] [OCC] [FK] …         click: inspector       |
 +-----------------------------------------------------------------------------------------+
 ```
-*(Screenshot placeholder: Interactive 3D/2D Canvas Constellation graph with glowing filaments and slide-over inspector)*
+*HOME renders every term as an element tile in its domain band; the inspector slides over with definition, why-it-matters, a real example, related terms and vetted reading.*
 
 ---
 
 ## 🌟 Key Features
 
-1. **⚛ ATLAS Force-Directed Constellation Graph**
-   - High-performance HTML5 Canvas engine rendering all 198 terms as glowing, floating nodes.
-   - Dynamic filaments connecting related terms (~600 bidirectional semantic edges).
-   - Node size scales with the number of related concepts.
-   - Color-coded cluster orbits across 10 security and infrastructure domains.
-   - Spatial-hash neighbor lookups ($O(1)$) and viewport culling for buttery-smooth 60 FPS navigation.
-   - Interactive zoom, drag pan, and hover inspection tooltips.
+1. **🧪 HOME — Intro + Periodic Table of Terms**
+   - Every term is an element tile: its practitioner symbol (`SQLi`, `JWT`, `DLQ`…) in the category color, name underneath.
+   - Tiles are grouped into 10 domain bands; legend chips filter to a single domain, the topbar search dims non-matching tiles and shows a live match count.
+   - Hover or keyboard-focus a tile for a one-line essence tooltip; click opens the full inspector.
+   - Intro band explains what the glossary is and why the vocabulary matters, with live counts computed from the data at boot.
 
 2. **🔤 INDEX (A-Z Catalog View)**
    - Alphabetical A-Z jump rail for rapid keyboard or touch navigation.
    - Live real-time search across names, categories, natures, and definitions.
    - Expandable term rows with category badges, difficulty tags, and instant summary reads.
 
-3. **🛤️ PATHS (Domain Rail with Immersive Color Washes)**
-   - Dedicated navigation sidebar across all 10 specialized engineering domains.
-   - Each domain features its own distinct accent palette, glowing border, and background ambient tint/wash.
-   - Responsive card grid for systematic domain mastery.
+3. **🛤️ PATHS (Guided Routes with an Animated Theater)**
+   - Six curated routes (Kill Chain, Keys & Tokens, Data at Depth, Distributed Truth, Flow Control, Edge to Origin).
+   - Press play and the route animates stop-by-stop: connectors draw, tiles light up, and a caption walks you through each concept.
+   - Controls for play/pause, replay and speed; reduced-motion users get the full trail instantly. Every stop opens the inspector.
 
 4. **📑 DETAIL Inspector (Slide-Over Panel & Mobile Bottom Sheet)**
    - Comprehensive technical breakdown for every term:
      - Exact mechanism and invariant definitions (2–4 precise sentences, no marketing fluff).
      - **Why it matters & Risk profile** (real-world CVE classes, OWASP mappings, outage patterns).
-     - **Real-world code snippet / payload** with syntax formatting and one-click copy feedback.
+     - **Real-world code snippet / payload** — concrete, runnable-shaped examples, not lorem.
      - **Exploit vs. Defense nature tags** (`ATTACK`, `DEFENSE`, `TECHNIQUE`, `CONCEPT`, `TOOLING`).
-     - **Interactive related terms chips** with breadcrumb navigation history and `← Back` stack.
+     - **Interactive related-terms buttons** that jump the inspector between concepts, with a breadcrumb of domain / term.
      - **Verified external documentation links** (OWASP, RFC, MDN, PostgreSQL, Kubernetes, Google SRE).
 
 5. **⚡ Terminal Hacker Aesthetic**
-   - Deep `#050810` dark palette with phosphor cyan, neon pink, terminal green, and amber accents.
-   - JetBrains Mono typography, CRT scanline overlay, and glassmorphic panels.
+   - Deep `#04060d` void palette with phosphor cyan, hot pink, amber and per-domain accent colors.
+   - Monospace typography throughout, drifting nebula backdrop, fine engineering grid, drifting starfield.
    - Keyboard shortcuts: `/` to focus search, `Esc` to close panels or clear filters, `Enter` to open top match.
-   - Full URL hash routing (`#/atlas?term=idor`, `#/paths?category=auth-access`) for bookmarkable state.
+   - Full URL hash routing (`#/home`, `#/index`, `#/paths`; `#/atlas` redirects to `#/home`) for bookmarkable state.
 
 ---
 
@@ -75,9 +69,9 @@
 LEXICON is designed as an ultra-reliable, zero-dependency static single-page application (SPA):
 
 - **Zero Build Tools & Zero Bundlers**: No Node.js, Webpack, Vite, or npm installs required. Runs immediately on any static web server or GitHub Pages.
-- **Pure Vanilla ES2022 Modules**: Modular architecture split into clean domain concerns (`data-loader.js`, `atlas-graph.js`, `search.js`, `detail.js`, `router.js`).
-- **Data-Driven Architecture**: The entire glossary lives in a validated, schema-compliant JSON file (`data/terms.json`) loaded asynchronously at boot.
-- **Engineered for Resilience**: Spatial hash indexing, requestAnimationFrame animation cycles, and automatic simulation suspension on tab blur.
+- **One Inline Script**: The entire app (routing, table, index, routes theater, drawer) lives in a single ES2022 `<script>` in `index.html` — no phantom module files, nothing to bundle.
+- **Data-Driven Architecture**: The glossary lives in `data/terms.json`; `tools/inline_data.py` bakes it into the `<script id="lex-data">` block so the page works offline via `file://` (with a same-origin `fetch('./data/terms.json')` fallback when served beside the data).
+- **Verified, Not Assumed**: `tools/validate_data.py` (data contract) and `tools/verify_page.py` (browser-equivalent JSON parse, `node --check` per script block, DOM-stub boot) gate every change.
 
 ---
 
@@ -103,41 +97,34 @@ LEXICON is designed as an ultra-reliable, zero-dependency static single-page app
 
 To add a new term to the glossary:
 
-1. Add the term name to `Terminology.txt` (following the numbered format `199. Term Name`).
-2. Add the corresponding curated metadata entry to `data/curated-terms.json` conforming to this schema:
+1. Append a term object to `data/terms.json` conforming to this schema:
 
 ```json
 {
-  "new-term-slug": {
-    "category": "web-exploitation",
-    "difficulty": "intermediate",
-    "nature": "defense technique",
-    "definition": "Precise 2-4 sentence explanation detailing the technical mechanism, where the flaw or concept lives, and the concrete invariant it maintains.",
-    "why_matters": "Real-world consequence, operational risk, or defense leverage (e.g. OWASP category or outage pattern).",
-    "example": "-- Optional realistic snippet or shell command\nSELECT * FROM secure_table WHERE id = 1;",
-    "related": [
-      "sql-injection",
-      "input-validation"
-    ],
-    "links": [
-      {
-        "title": "OWASP Guidance",
-        "url": "https://cheatsheetseries.owasp.org/"
-      },
-      {
-        "title": "MDN Documentation",
-        "url": "https://developer.mozilla.org/en-US/docs/Web/Security"
-      }
-    ]
-  }
+  "id": "new-term-slug",
+  "name": "New Term",
+  "symbol": "NT",
+  "essence": "One plain sentence, <= 90 chars, for the tile tooltip.",
+  "category": "web-exploitation",
+  "difficulty": "intermediate",
+  "nature": "defense technique",
+  "definition": "Precise 2-4 sentence explanation detailing the technical mechanism, where the flaw or concept lives, and the concrete invariant it maintains.",
+  "why_matters": "Real-world consequence, operational risk, or defense leverage (e.g. OWASP category or outage pattern).",
+  "example": "-- Realistic runnable-shaped snippet, not lorem\nSELECT * FROM secure_table WHERE id = 1;",
+  "related": ["sql-injection", "input-validation"],
+  "links": [
+    { "title": "OWASP Guidance", "url": "https://cheatsheetseries.owasp.org/" }
+  ]
 }
 ```
 
-3. Re-build and validate the dataset using the standard toolchain:
+Requirements the gates enforce: `symbol` unique across all terms, 1-7 chars of `A-Za-z0-9/#+.-`; `essence` <= 90 chars; `related` entries must be existing ids; `links` must be https. Add the slug to `data/curated-terms.json` if it belongs to the curated set, and add a stop to `ROUTES` in `index.html` if it strengthens a guided route.
+
+2. Validate and rebuild:
 ```bash
-python3 scripts/build_data.py
-python3 scripts/validate.py
-python3 scripts/smoke.py
+python3 tools/validate_data.py   # data contract must PASS
+python3 tools/inline_data.py     # re-bake data into index.html
+python3 tools/verify_page.py     # browser-equivalent page gate must PASS
 ```
 
 ---
@@ -183,4 +170,4 @@ This project is open-source under the [MIT License](LICENSE).
 
 ## 🤖 AI-Assistance Attribution
 
-This glossary, data curation pipeline, and interactive interface were assembled with AI assistance utilizing **Gemini 3.8 Flash**, **Gemini 3.1 Pro**, and **Claude Sonnet 4.6** via the **Antigravity CLI** and **Hermes Agent**.
+This glossary, data curation pipeline, and interactive interface were assembled with AI assistance utilizing **Gemini 3.8 Flash** and **Claude Sonnet 4.6** via the **Antigravity CLI**, **GPT-5 Codex** via the **Codex CLI**, and orchestration/verification by the **Hermes Agent**.
