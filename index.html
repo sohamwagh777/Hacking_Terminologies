@@ -5952,6 +5952,7 @@ function showView(v){
 }
 function navigate(){ const v = location.hash.split('/')[1] || 'home'; showView(v === 'atlas' ? 'home' : v); }
 function navTo(v){ if (location.hash === '#/' + v) showView(v); else location.hash = '/' + v; }
+addEventListener('hashchange', navigate);
 
 /* ---------- search box ---------- */
 const qBox = $('#q');
